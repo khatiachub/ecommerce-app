@@ -7,7 +7,6 @@
   import RoomIcon from '@mui/icons-material/Room';
   import TwitterIcon from '@mui/icons-material/Twitter';
   import styled from "styled-components";
-  import { mobile } from "../responsive";
   
   const Container = styled.div`
     display: flex;
@@ -83,7 +82,7 @@
     return (
       <Container>
         <Left>
-          <Logo>LAMA.</Logo>
+          <Logo>CORAL.</Logo>
           <Desc>
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form, by injected
@@ -128,7 +127,7 @@
             <LocalPhoneOutlinedIcon style={{marginRight:"10px"}}/> +995 599-448-832
           </ContactItem>
           <ContactItem>
-            <MailOutlineOutlinedIcon style={{marginRight:"10px"}} /> contact@voral.dev
+            <MailOutlineOutlinedIcon style={{marginRight:"10px"}} /> contact@coral.dev
           </ContactItem>
           <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
         </Right>
