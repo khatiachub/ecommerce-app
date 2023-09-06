@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { sliderItems } from "../data";
 import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
+import { mobile } from "../responsive";
+
 
 const Container = styled.div`
   width: 100%;
@@ -10,6 +12,8 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+  ${mobile({display:'none'})}
+
 `;
 
 const Arrow = styled.div`
@@ -93,7 +97,9 @@ const Slider = () => {
       <Arrow direction="left" onClick={() => handleClick("left")}>
         <ArrowLeftOutlinedIcon />
       </Arrow>
-      <Wrapper slideIndex={slideIndex}>
+      <Wrapper 
+      slideIndex={slideIndex}
+      >
         {sliderItems.map((item) => (
           <Slide bg={item.bg} key={item.id}>
             <ImgContainer>
