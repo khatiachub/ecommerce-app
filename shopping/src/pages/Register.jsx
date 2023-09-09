@@ -53,6 +53,9 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+  @media screen and (max-width:568px) {
+    width:50%;
+  }
 `;
 
 const Register = () => {

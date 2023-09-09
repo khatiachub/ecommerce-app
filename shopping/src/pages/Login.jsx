@@ -20,8 +20,13 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
-  ${mobile({width:'75%'})}
-
+  @media screen and (max-width:970px) {
+    width:30%;
+  }
+  @media screen and (max-width:815px) {
+    width:45%;
+  };
+  ${mobile({width:'75%'})};
 `;
 
 const Title = styled.h1`

@@ -1,8 +1,8 @@
-
   import styled from "styled-components";
   import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
   import SearchOutlinedIcon from '@mui/icons-material/Search';
   import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+  import { mobile } from "../responsive";
 
   const Info = styled.div`
     opacity: 0;
@@ -24,6 +24,7 @@
     flex: 1;
     margin: 5px;
     min-width: 280px;
+    width:100%;
     height: 350px;
     display: flex;
     align-items: center;
@@ -33,6 +34,8 @@
     &:hover ${Info}{
       opacity: 1;
     }
+    ${mobile({minWidth:'95%'})}
+
   `;
   
   const Circle = styled.div`

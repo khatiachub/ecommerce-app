@@ -8,10 +8,15 @@
   import TwitterIcon from '@mui/icons-material/Twitter';
   import styled from "styled-components";
   import { mobile } from '../responsive';
+  import { tablet } from '../tablet';
+  
   
   const Container = styled.div`
     display: flex;
-    ${mobile({flexDirection:'column'})}
+    ${tablet({justifyContent:'space-between'})};
+    @media screen and (max-width:516px) {
+      flex-direction:column;
+    } 
   `;
   
   const Left = styled.div`
@@ -25,6 +30,7 @@
   
   const Desc = styled.p`
     margin: 20px 0px;
+    max-width:300px;
   `;
   
   const SocialContainer = styled.div`
@@ -46,7 +52,8 @@
   const Center = styled.div`
     flex: 1;
     padding: 20px;
-    ${mobile({display:'none'})}
+    ${mobile({display:'none'})};
+    ${tablet({display:'none'})}
   `;
   
   const Title = styled.h3`
@@ -68,15 +75,19 @@
   
   const Right = styled.div`
     flex: 1;
-    padding: 20px;  
-    ${mobile({backgroundColor:'#eee'})}
-
+    width: 200px;
+    padding: 20px; 
   `;
   
   const ContactItem = styled.div`
     margin-bottom: 20px;
     display: flex;
     align-items: center;
+    @media screen and (min-width:900px) {
+      margin-bottom:15px;
+    }
+    /* ${tablet({marginBottom:12})} */
+
   `;
   
   const Payment = styled.img`
@@ -134,7 +145,7 @@
           <ContactItem>
             <MailOutlineOutlinedIcon style={{marginRight:"10px"}} /> contact@coral.dev
           </ContactItem>
-          <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+          <Payment style={{marginLeft:1.5}} src="https://i.ibb.co/Qfvn4z6/payment.png" />
         </Right>
       </Container>
     );

@@ -40,20 +40,32 @@ const TopButton = styled.button`
 `;
 
 const TopTexts = styled.div`
-  ${mobile({display:"none"})}
+  @media screen and (max-width:657px) {
+    display:flex;
+    flex-direction:column;
+    } 
+    @media screen and (max-width:531px) {
+    position:absolute;
+    top:152px;
+    left:32px;
+    } 
+    ${mobile({ left:20})}
 
 `;
 const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
-  margin: 0px 10px;
+  margin: 2px 10px;
+
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({flexDirection:'column'})}
-
+  @media screen and (max-width:768px) {
+    flex-direction:column;
+    } 
 `;
 
 const Info = styled.div`
@@ -64,12 +76,12 @@ const Product = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
-
 `;
 
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  ${mobile({ flexDirection: "column" })} 
 `;
 
 const Image = styled.img`
@@ -85,16 +97,22 @@ const Details = styled.div`
 
 const ProductName = styled.span``;
 
-const ProductId = styled.span``;
+const ProductId = styled.span`
+  ${mobile({marginTop:10})}
+`;
 
 const ProductColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
+  ${mobile({marginTop:10})}
 `;
 
-const ProductSize = styled.span``;
+const ProductSize = styled.span`
+    ${mobile({marginTop:10})}
+
+`;
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -164,7 +182,6 @@ const Button = styled.button`
 const Cart = () => {
   return (
     <Container>
-      <Navbar />
       <Announcement />
       <Wrapper>
         <Title>YOUR BAG</Title>
@@ -252,7 +269,6 @@ const Cart = () => {
           </Summary>
         </Bottom>
       </Wrapper>
-      <Footer />
     </Container>
   );
 };

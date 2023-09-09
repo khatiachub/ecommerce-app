@@ -19,7 +19,10 @@ const FilterContainer = styled.div`
 
 const Filter = styled.div`
   margin: 20px;
-  ${mobile({width:'0px 20px',display:'flex',flexDirection:'column'})}
+  @media screen and (max-width:726px) {
+    display:flex;
+    flex-direction:column;    
+  }
 
 `;
 
@@ -32,7 +35,9 @@ const FilterText = styled.span`
 const Select = styled.select`
   padding: 10px;
   margin-right: 20px;
-  ${mobile({margin:'10px 0px'})}
+  @media screen and (max-width:726px) {
+    margin:10px 0px; 
+  }
 
 `;
 const Option = styled.option``;
@@ -40,8 +45,6 @@ const Option = styled.option``;
 const ProductList = () => {
   return (
     <Container>
-      <Navbar />
-      <Announcement />
       <Title>Dresses</Title>
       <FilterContainer>
         <Filter>
@@ -78,8 +81,6 @@ const ProductList = () => {
         </Filter>
       </FilterContainer>
       <Products />
-      <Newsletter />
-      <Footer />
     </Container>
   );
 };
