@@ -9,6 +9,9 @@ import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import { Link } from "react-router-dom";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
 
 const Container = styled.div`
   height: 60px;
@@ -188,7 +191,7 @@ const Navbar = () => {
     setSearch(false)
 
   }
-
+  const user=true
   return (
     <Overlay >
     <Container>
@@ -222,8 +225,16 @@ const Navbar = () => {
           <Logo>CORAL.</Logo>
         </Center>
         <Right>
-          <MenuItem type='account'>REGISTER</MenuItem>
-          <MenuItem type='account'>SIGN IN</MenuItem>
+          <MenuItem type='account'>
+            <Link to="register">
+              REGISTER
+            </Link>
+          </MenuItem>
+          <MenuItem type='account'>
+            <Link to='login'>
+              SIGN IN
+            </Link>            
+          </MenuItem>
           <MenuItem type='user'>   
             <PersonOutlineOutlinedIcon/>      
           </MenuItem>
