@@ -6,7 +6,11 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from '../responsive';
-
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { publicRequest } from '../requestMethods';
+import { useDispatch } from "react-redux";
+import {addProduct} from '../redux/cartRedux'
 
 const Container = styled.div``;
 
@@ -68,7 +72,7 @@ const FilterTitle = styled.span`
 `;
 
 const FilterColor = styled.div`
-  width: 20px;
+  min-width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
@@ -120,53 +124,86 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const Product = ({item}) => {
+  const location=useLocation();
+  const id=location.pathname.split("/")[2]
+  const [product, setProduct] = useState({});
+  const[quantity,setQuantity]=useState(1)
+  const[color,setColor]=useState('')
+  const[size,setSize]=useState('')
+  const dispatch=useDispatch();
+
+  const handleRemove=()=>{
+    if(quantity===1){
+      return
+    }else{
+      setQuantity(quantity-1)
+    }
+  }
+  const handleAdd=()=>{
+    setQuantity(quantity+1)
+  }
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/" + id);
+        setProduct(res.data);
+      } catch {}
+    };
+    getProduct();
+  }, [id]);
+
+  const handleClick=()=>{
+   dispatch(addProduct({...product,quantity,color,size}))
+  }
   return (
+    <>
+    <Announcement />
+      <Navbar />
     <Container>
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={product.img}/>
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
+          <Title>{product.title}</Title>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
+            {product.desc}
           </Desc>
-          <Price>$ 20</Price>
+          <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
+              {product.color&&product.color.map((c)=>{
+                return(
+                  <FilterColor onClick={()=>setColor(c)}  color={c} key={c} ></FilterColor>
+                )
+              })}              
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+              <FilterSize onChange={(e)=>setSize(e.target.value)}>
+                {product.size&&product.size.map((s,i)=>{
+                  return(
+                    <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                  )
+                })}
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <RemoveIcon />
-              <Amount>1</Amount>
-              <AddIcon />
+              <RemoveIcon onClick={handleRemove}/>
+              <Amount>{quantity}</Amount>
+              <AddIcon onClick={handleAdd}/>
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
       <Newsletter />
     </Container>
+    </>
   );
 };
 

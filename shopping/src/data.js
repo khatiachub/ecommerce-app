@@ -25,18 +25,45 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "SHIRT STYLE!",
+      img: "https://static.e-stradivarius.net/5/photos3/2023/I/0/1/p/6500/563/003/6500563003_2_1_1.jpg?t=1692022542437&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "JEANS",
+      cat:"JEANS"
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
+      img: "https://static.e-stradivarius.net/5/photos3/2023/I/0/1/p/5858/755/444/5858755444_1_1_1.jpg?t=1692787148785&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "JACKETS&&COATS",
+      cat:"COATS"
     },
     {
       id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "LIGHT JACKETS",
+      img: "https://static.e-stradivarius.net/5/photos3/2023/I/1/1/p/9853/270/040/9853270040_2_3_1.jpg?t=1693482005981&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "SHOES",
+      cat:"SHOES"
+    },
+    {
+      id: 4,
+      img: "https://static.e-stradivarius.net/5/photos3/2023/I/0/1/p/3540/501/203/3540501203_2_1_1.jpg?t=1692795963154&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "BAGS",
+      cat:"BAGS"
+    },
+    {
+      id: 5,
+      img: "https://static.e-stradivarius.net/5/photos3/2023/I/0/1/p/0242/404/004/0242404004_2_1_1.jpg?t=1692003787704&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "ACCESSORIES",
+      cat:"ACCESSORIES"
+    },
+    {
+      id: 6,
+      img: "https://static.e-stradivarius.net/5/photos3/2023/I/0/1/p/6254/429/430/6254429430_2_1_1.jpg?t=1692021935966&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "DRESS",
+      cat:"DRESS"
+    },
+    {
+      id: 7,
+      img: "https://static.e-stradivarius.net/5/photos3/2023/I/0/1/p/2711/711/003/2711711003_1_1_1.jpg?t=1692013215095&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "TOPS",
+      cat:"TOPS"
     },
   ];
 

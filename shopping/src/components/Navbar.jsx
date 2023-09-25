@@ -12,6 +12,7 @@ import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import { Link } from "react-router-dom";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import {useSelector} from 'react-redux'
 
 const Container = styled.div`
   height: 60px;
@@ -169,13 +170,17 @@ const Burgerbar=styled.div`
   }
 `
 const Overlay=styled.div`
- width:100%;
- height:100vh;
+@media screen and (max-width:768px) {
+  width:100%;
+  height:100vh;
+}
 `
 const RemoveButton=styled.div`
   
 `
 const Navbar = () => {
+  const quantity=useSelector(state=>state.cart.quantity)
+
   const[state,setState]=useState(false)
   const handleRemove=()=>{
     setState(!state)
@@ -241,11 +246,13 @@ const Navbar = () => {
           <MenuItem type='heart'>
             < FavoriteBorderOutlinedIcon/>
           </MenuItem>
+          <Link to={'/cart'}>
           <MenuItem type='carts'>
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={quantity} color="primary">
               <ShoppingCartOutlinedIcon/>
             </Badge>
           </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
       <Burger  open={state} onClick={handleClick}>
