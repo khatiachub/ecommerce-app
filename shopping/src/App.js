@@ -4,14 +4,14 @@ import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
-import {BrowserRouter as Router,Route,Switch,Navigate} from "react-router-dom";
+import {HashRouter,Route,Navigate,Routes} from "react-router-dom";
 import Success from "./pages/Success";
 
 function App() {
   const user=true
   return (
-      <Router>
-        <Switch>
+      <HashRouter>
+        <Routes>
         <Route path="/success" element={<Success/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
@@ -19,8 +19,8 @@ function App() {
         <Route path="/register" element={user?<Navigate to='/'/>:<Register/>}/>
         <Route path="/login" element={user?<Navigate to='/'/>:<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>
-        </Switch>
-      </Router>
+        </Routes>      
+        </HashRouter>
   );
 }
 
