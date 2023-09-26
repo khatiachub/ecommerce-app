@@ -13,9 +13,9 @@ const orderRoute = require("./routes/order");
 // const stripeRoute = require("./routes/stripe");
 
 dotenv.config();
-
+const MONGODB_URI = process.env.MONGO_URL ||"mongodb+srv://chubinidzekhatia6:chubinidzekhatia@cluster0.jpfmufi.mongodb.net/shop?retryWrites=true&w=majority"
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(MONGODB_URI, { useNewUrlParser: true })
   .then(() => console.log("DB Connection Successfull!"))
   .catch((err) => {
     console.log(err);

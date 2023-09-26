@@ -193,7 +193,6 @@ const Cart = () => {
   const onToken = (token) => {
     setStripeToken(token);
   };
-  console.log(stripeToken);
 
   
   useEffect(() => {
@@ -209,7 +208,7 @@ const Cart = () => {
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken,cart, navigate]);
+  }, [stripeToken,cart.total, navigate]);
 
 
   return (
