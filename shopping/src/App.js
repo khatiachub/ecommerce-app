@@ -4,15 +4,15 @@ import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
-import {HashRouter,Route,Routes,Navigate} from "react-router-dom";
+import {BrowserRouter,Route,Routes,Navigate} from "react-router-dom";
 import Success from "./pages/Success";
 
 function App() {
   const user=true
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path="/success"/>
+        <Route path="/success" element={<Success/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
         <Route path="/product/:id" element={<Product/>}/>
@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={user?<Navigate to='/'/>:<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
