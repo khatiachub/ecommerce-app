@@ -196,7 +196,6 @@ const Navbar = () => {
     setSearch(false)
 
   }
-  const user=true
   return (
     <Overlay >
     <Container>
