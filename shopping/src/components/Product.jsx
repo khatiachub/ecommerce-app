@@ -2,7 +2,7 @@
   import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
   import SearchOutlinedIcon from '@mui/icons-material/Search';
   import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-  import { mobile } from "../responsive";
+  // import { mobile } from "../responsive";
   import { Link } from "react-router-dom";
   const Info = styled.div`
     opacity: 0;

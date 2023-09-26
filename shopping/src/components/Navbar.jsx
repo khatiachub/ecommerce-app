@@ -10,8 +10,8 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import { Link } from "react-router-dom";
-import Register from "../pages/Register";
-import Login from "../pages/Login";
+// import Register from "../pages/Register";
+// import Login from "../pages/Login";
 import {useSelector} from 'react-redux'
 
 const Container = styled.div`
