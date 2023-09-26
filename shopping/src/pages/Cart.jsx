@@ -7,6 +7,10 @@ import Navbar from "../components/Navbar";
 import { mobile } from '../responsive';
 import { useSelector } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout'
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {userRequest} from '../requestMethods'
+
 
 const Container = styled.div``;
 
@@ -180,8 +184,34 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
+const REACT_APP_STRIPE="pk_test_51Ns2YUF4BbozQhllhG1mC07b90Jcz0c2AvoZ8RRSqB9FoE0jGLeeVoY21vWphHwdN2peKRMpzxp4XJvolrJ5Xtc000uPQUksYH"
 const Cart = () => {
   const cart=useSelector(state=>state.cart)
+  const [stripeToken, setStripeToken] = useState(null);
+
+  const navigate=useNavigate();
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+  console.log(stripeToken);
+
+  
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.total*100,
+        });
+        navigate("/success", {
+          stripeData: res.data,
+          products: cart, });
+      } catch {}
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken, cart.total, navigate]);
+
+
   return (
     <Container>
       <Announcement />
@@ -246,8 +276,19 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>${cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
-          </Summary>
+            <StripeCheckout
+              name="CORAL"
+              image="https://t3.ftcdn.net/jpg/02/47/48/00/360_F_247480017_ST4hotATsrcErAja0VzdUsrrVBMIcE4u.jpg"
+              billingAddress
+              shippingAddress
+              description={`Your total is $${cart.total}`}
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={REACT_APP_STRIPE}
+              >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>          
+            </Summary>
         </Bottom>
       </Wrapper>
     </Container>

@@ -5,12 +5,14 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import {HashRouter,Route,Routes,Navigate} from "react-router-dom";
+import Success from "./pages/Success";
 
 function App() {
   const user=true
   return (
     <HashRouter>
       <Routes>
+        <Route path="/success"/>
         <Route path="/" element={<Home/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
         <Route path="/product/:id" element={<Product/>}/>

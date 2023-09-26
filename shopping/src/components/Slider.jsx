@@ -48,15 +48,10 @@ const Slide = styled.div`
   display: flex;
   align-items: center;
   background-color: #${(props) => props.bg};
-`;
-
-const ImgContainer = styled.div`
-  height: 100%;
-  flex: 1;
-`;
-
-const Image = styled.img`
-  height: 80%;
+  background-image:url(${props => props.imageUrl});
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:top;
 `;
 
 const InfoContainer = styled.div`
@@ -101,10 +96,7 @@ const Slider = () => {
       slideIndex={slideIndex}
       >
         {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer>
-              <Image src={item.img} />
-            </ImgContainer>
+          <Slide bg={item.bg} key={item.id} imageUrl={item.img}>
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
