@@ -209,7 +209,7 @@ const Cart = () => {
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, navigate]);
+  }, [stripeToken,cart, navigate]);
 
 
   return (
