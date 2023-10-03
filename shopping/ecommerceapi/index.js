@@ -10,9 +10,10 @@ const bodyParser=require("express").json
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
-// const stripeRoute = require("./routes/stripe");
-
+const stripe=require("stripe")("sk_test_51Ns2YUF4BbozQhllNVAvgMjxWXCMGUPYsYeJ7w0HG6t9iTkyue48mHg7ezOoptPvupFlouF7f5jdQVbsZ5R4RUQG00Vx89CC1J")
 dotenv.config();
+
+
 const MONGODB_URI = process.env.MONGO_URL ||"mongodb+srv://chubinidzekhatia6:chubinidzekhatia@cluster0.jpfmufi.mongodb.net/shop?retryWrites=true&w=majority"
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true })
@@ -20,17 +21,42 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+app.use(cors({
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Authorization', 'Content-Type'],
+}));
 app.use(bodyParser())
-app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
-// app.use("/api/checkout", stripeRoute);
+app.use(express.static('public'));
 
 
+app.post("/api/payment",async(req,res)=>{
+  const {cart}=req.body
+  const lineItems=cart?.products&&cart?.products.map((product)=>({
+    price_data:{
+      currency:"USD",
+      product_data:{
+        name:product.title
+      },
+      unit_amount:product.price*100
+    },
+    quantity:product.quantity
+  }))
+  const session=await stripe.checkout.sessions.create({
+    payment_method_types:["card"],
+    line_items:lineItems,
+    mode:"payment",
+    success_url:"http://localhost:3000/#/success",
+    cancel_url:"http://localhost:3000/#/cancel"
+  })
+  res.json({id:session.id})
+  
+})
 
 
 app.listen(process.env.PORT || 5001, () => {

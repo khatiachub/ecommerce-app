@@ -5,22 +5,31 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import {HashRouter,Route,Navigate,Routes} from "react-router-dom";
-import Success from "./pages/Success";
+import Success from './pages/Success'
+import { useSelector } from "react-redux";
+import Userprofile from "./components/Userprofile";
+import SuccessRegister from "./pages/SuccessRegister";
+import UpdatePassword from "./pages/UpdatePassword";
+
 
 function App() {
-  const user=true
-  return (
+  const loginUser = useSelector((state) => state.user.currentUser);
+
+    return (
       <HashRouter>
         <Routes>
-        <Route path="/success" element={<Success/>}/>
         <Route path="/" element={<Home/>}/>
+        <Route path="/success" element={<Success/>}/>
+        <Route path="/successregister" element={<SuccessRegister/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
         <Route path="/product/:id" element={<Product/>}/>
-        <Route path="/register" element={user?<Navigate to='/'/>:<Register/>}/>
-        <Route path="/login" element={user?<Navigate to='/'/>:<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/login" element={loginUser?<Navigate to='/'/>:<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/userprofile/:id" element={<Userprofile/>}/>
+        <Route path="/updatepassword/:id" element={<UpdatePassword/>}/>
         </Routes>      
-        </HashRouter>
+      </HashRouter>
   );
 }
 

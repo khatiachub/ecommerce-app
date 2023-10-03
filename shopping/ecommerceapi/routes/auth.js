@@ -7,16 +7,37 @@ const jwt=require("jsonwebtoken")
 const app = express();
 
 
-
 //signup
 router.post("/signup",(req,res)=>{
-    let {username,email,password}=req.body
-    if (username !== undefined && email !== undefined && password !== undefined) {
+    let {name,lastname,username,email,password,confirmpassword,city,address,phonenumber}=req.body
+    if (username !== undefined 
+        && email !== undefined
+        && password !== undefined
+        &&name!==undefined
+        &&lastname!==undefined
+        &&address!==undefined
+        &&city!==undefined
+        &&phonenumber!==undefined
+        ) {
         username = username.trim();
         email = email.trim();
         password = password.trim();
+        name = name.trim();
+        lastname =lastname.trim();
+        confirmpassword = confirmpassword.trim();
+        address = address.trim();
+        city = city.trim();
     }
-    if(username==""||email==""||password==""){
+    if(username===""
+    ||email===""
+    ||password===""
+    ||name===""
+    ||lastname===""
+    ||confirmpassword===""
+    ||city===""
+    ||address===""
+    ||phonenumber===""
+    ){
         return res.json({
             status:"FAILED",
             message:"Empty input fields"
@@ -36,7 +57,13 @@ router.post("/signup",(req,res)=>{
             status:"FAILED",
             message:"Password is too short"
         })
-    }else{
+    }else if( !/^[a-zA-Z ]*$/.test(name)){
+        return res.json({
+            status:"FAILED",
+            message:"Invalid name entered"
+        })
+    }
+    else{
         User.find({email}).then(result=>{
             if(result.length){
                return res.json({
@@ -47,9 +74,15 @@ router.post("/signup",(req,res)=>{
                 const saltRounds=10;
                 bcrypt.hash(password,saltRounds).then(hashedPassword=>{
                     const newUser=new User({
+                        name,
+                        lastname,
                         username,
                         email,
                         password:hashedPassword,
+                        confirmpassword,
+                        city,
+                        phonenumber,
+                        address
                     })
                     newUser.save().then(result=>{
                         return res.json({
@@ -68,7 +101,7 @@ router.post("/signup",(req,res)=>{
                 .catch(err=>{
                     return res.json({
                         status:"FAILED",
-                        message:"An error occured while ashing password!"
+                        message:"An error occured while hashing password!"
                     })
                 })
             }
@@ -97,14 +130,18 @@ router.post("/signin",async(req,res)=>{
     if(username!==undefined){
         const accessToken = jwt.sign(
             {
-                id: user._id,
-                isAdmin: user.username,
+                id: user?._id,
+                isAdmin: user?.isAdmin,
             },
             process.env.JWT_SEC,
                 {expiresIn:"3d"}
             );
-            const { ...others } = user._doc;  
-        return res.json({accessToken,...others})
+            if(user){
+                const { ...others } = user._doc;  
+                return res.json({accessToken,...others})
+            }else{
+                return 
+            }
     }
     if (username !== undefined && password !== undefined) {
           username.trim();

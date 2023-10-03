@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 // import Login from "../pages/Login";
 import {useSelector} from 'react-redux'
 
+
 const Container = styled.div`
   height: 60px;
   ${mobile({height:'50px'})}
@@ -194,8 +195,9 @@ const Navbar = () => {
   }
   const onBackClick=()=>{
     setSearch(false)
-
   }
+  const loginUser = useSelector((state) => state.user.currentUser);
+
   return (
     <Overlay >
     <Container>
@@ -230,14 +232,14 @@ const Navbar = () => {
         </Center>
         <Right>
           <MenuItem type='account'>
-            <Link to="register">
+            <Link to="/register">
               REGISTER
             </Link>
           </MenuItem>
           <MenuItem type='account'>
-            <Link to='login'>
-              SIGN IN
-            </Link>            
+            <Link to={loginUser?.username?`/userprofile/${loginUser?._id}`:"/login"}>
+            {loginUser?loginUser?.username:"SIGNIN"}
+            </Link>
           </MenuItem>
           <MenuItem type='user'>   
             <PersonOutlineOutlinedIcon/>      

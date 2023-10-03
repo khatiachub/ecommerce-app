@@ -5,8 +5,7 @@ export default function Success() {
   console.log(loc);
   return (
     <div>
-
-      
+      <h1>successfull payment</h1>
     </div>
   )
 }

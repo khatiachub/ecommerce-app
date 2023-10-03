@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useState } from "react";
+import { register } from "../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 const Container = styled.div`
   width: 100vw;
@@ -32,6 +37,7 @@ const Title = styled.h1`
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
+  position:relative;
 `;
 
 const Input = styled.input`
@@ -59,22 +65,44 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const[name,setName]=useState("")
+  const[lastname,setLastname]=useState("")
+  const[username,setUsername]=useState("")
+  const[email,setEmail]=useState("")
+  const[password,setPassword]=useState("")
+  const[confirmpassword,setConfirmpassword]=useState("")
+  const[address,setAddress]=useState("")
+  const[city,setCity]=useState("")
+  const[phonenumber,setPhonenumber]=useState(null)
+
+  const dispatch=useDispatch();
+  const nav=useNavigate();
+
+  const handleClick=(e)=>{
+    e.preventDefault();
+    register(dispatch,{name,lastname,username,email,password,confirmpassword,address,city,phonenumber},nav("/successregister"))
+  }
+  
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          <Input onChange={(e)=>setName(e.target.value)} placeholder="name" />
+          <Input onChange={(e)=>setLastname(e.target.value)} placeholder="last name" />
+          <Input onChange={(e)=>setUsername(e.target.value)} placeholder="username" />
+          <Input onChange={(e)=>setEmail(e.target.value)} placeholder="email" />
+          <Input onChange={(e)=>setPassword(e.target.value)} placeholder="password" />
+          <Input onChange={(e)=>setConfirmpassword(e.target.value)} placeholder="confirm password" />
+          <Input onChange={(e)=>setCity(e.target.value)} placeholder="city" />
+          <Input onChange={(e)=>setAddress(e.target.value)} placeholder="your address" />
+          <Input onChange={(e)=>setPhonenumber(e.target.value)} placeholder="phonenumber" />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button onClick={handleClick}>CREATE</Button>
         </Form>
       </Wrapper>
     </Container>
