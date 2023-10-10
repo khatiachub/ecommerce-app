@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import { mobile } from "../responsive";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { register } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import avatar from '../images/avatar.png'
 
 const Container = styled.div`
   width: 100vw;
@@ -63,7 +63,26 @@ const Button = styled.button`
     width:50%;
   }
 `;
-
+const ImageButton=styled.button`
+  width: 20%;
+  border: none;
+  padding: 10px 10px;
+  background-color: teal;
+  color: white;
+  margin-top:20px;
+`
+const Img=styled.img`
+  border-radius:50%;
+  width:110px;
+  height:110px;
+  margin-top:20px;
+  object-fit:contain;
+  ${({ src }) =>
+    !src &&
+    css`
+      content: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+    `}
+`
 const Register = () => {
   const[name,setName]=useState("")
   const[lastname,setLastname]=useState("")
@@ -74,30 +93,68 @@ const Register = () => {
   const[address,setAddress]=useState("")
   const[city,setCity]=useState("")
   const[phonenumber,setPhonenumber]=useState(null)
+  const[image,setImage]=useState("")
+  const ref=useRef(null)
+  const [success,setSuccess]=useState(false)
+  const error= useSelector((state) => state.user.error);
+
 
   const dispatch=useDispatch();
   const nav=useNavigate();
 
+  const uploadImage=(e)=>{
+    var reader=new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+    reader.onload=()=>{
+      console.log(reader.result);
+      setImage(reader.result)
+    }
+  }
   const handleClick=(e)=>{
     e.preventDefault();
-    register(dispatch,{name,lastname,username,email,password,confirmpassword,address,city,phonenumber},nav("/successregister"))
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('lastname', lastname);
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('confirmpassword', confirmpassword);
+    formData.append('address', address);
+    formData.append('city', city);
+    formData.append('phonenumber', phonenumber);
+    formData.append('image', image);
+    register(dispatch,formData)
+      console.log(formData);
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
   }
-  
 
+    const onImageClick=()=>{
+      ref.current.click();
+    }
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input onChange={(e)=>setName(e.target.value)} placeholder="name" />
-          <Input onChange={(e)=>setLastname(e.target.value)} placeholder="last name" />
-          <Input onChange={(e)=>setUsername(e.target.value)} placeholder="username" />
-          <Input onChange={(e)=>setEmail(e.target.value)} placeholder="email" />
-          <Input onChange={(e)=>setPassword(e.target.value)} placeholder="password" />
-          <Input onChange={(e)=>setConfirmpassword(e.target.value)} placeholder="confirm password" />
-          <Input onChange={(e)=>setCity(e.target.value)} placeholder="city" />
-          <Input onChange={(e)=>setAddress(e.target.value)} placeholder="your address" />
-          <Input onChange={(e)=>setPhonenumber(e.target.value)} placeholder="phonenumber" />
+        <div style={{display:"flex", flexDirection:"column", alignItems:"baseline",justifyContent:"center"}}> 
+        {<Img onClick={onImageClick} src={image?image:avatar}/>}
+        <ImageButton onClick={() => document.querySelector('.uploadbutton').click()} >upload image</ImageButton>
+        </div>
+        <Form method="post" encType="multipart/form-data">
+          <Input ref={ref} onChange={uploadImage} accept="image/*" className="uploadbutton" name="image"  style={{display:"none"}} type="file"/>
+          <Input onChange={(e)=>setName(e.target.value)} placeholder="name" name="name"/>
+          <Input onChange={(e)=>setLastname(e.target.value)} placeholder="last name" name="lastname"/>
+          <Input onChange={(e)=>setUsername(e.target.value)} placeholder="username" name="username"/>
+          <Input onChange={(e)=>setEmail(e.target.value)} placeholder="email" name="email"/>
+          <Input onChange={(e)=>setPassword(e.target.value)} placeholder="password" name="password"/>
+          <Input onChange={(e)=>setConfirmpassword(e.target.value)} placeholder="confirm password"name="confirmpassword" />
+          <Input onChange={(e)=>setCity(e.target.value)} placeholder="city" name="city"/>
+          <Input onChange={(e)=>setAddress(e.target.value)} placeholder="your address" name="address"/>
+          <Input onChange={(e)=>setPhonenumber(e.target.value)} placeholder="phonenumber" name="phonenumber"/>
+          {success&&<p style={{color:"green"}}>registration is successfull</p>}
+          {error}
+
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>

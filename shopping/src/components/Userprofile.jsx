@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../redux/userRedux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Register from '../pages/Register';
-import { publicRequest } from '../requestMethods';
+import { publicRequest, userRequest } from '../requestMethods';
 import axios from 'axios';
-// import { Delete, update } from '../redux/apiCalls';
-
-import jwtDecode from 'jwt-decode';
-
+import { Delete, update,DeleteImage} from '../redux/apiCalls';
+import Navbar from './Navbar'
+import avatar from '../images/avatar.png'
 
 const UserDiv=styled.div`
   display:flex;
@@ -18,15 +17,13 @@ const UserDiv=styled.div`
   flex-direction:column;
 `
 
-const UserBox=styled.div`
-  width:400px;
+const UserBox=styled.form`
+  width:50%;
   display:flex;
   flex-direction:column;
-  background-color:pink;
   justify-content: center;
   align-items: center;
-  margin-top:10%;
-  height:200px;
+  /* margin-top:50px; */
 
 `
 const UserName=styled.p`
@@ -35,15 +32,18 @@ const UserName=styled.p`
   font-weight:400;
    
 `
-const Button=styled.button`
-  width:120px;
-  height: 40px;
-  background-color:pink;
-  border:none;
-  margin-top:20px;
-  border-radius:5px;
-
-`
+const Button = styled.button`
+  width: 150px;
+  height:50px;
+  border: none;
+  padding: 15px 20px;
+  background-color: teal;
+  color: white;
+  cursor: pointer;
+  @media screen and (max-width:568px) {
+    width:50%;
+  }
+`;
 // const LastName=styled.h3`
     
 // `
@@ -63,93 +63,163 @@ const UserImg=styled.img`
     
 `
 const Input=styled.input`
-  
+  border:none;
+  border-bottom:1px solid grey;
+  margin-top:10px;
+`
+const Title=styled.h2`
+  font-size:22px;
+  margin-top:30px;
+`
+const Label=styled.label`
+  font-size:13px;
+`
+const Img=styled.img`
+  border-radius:50%;
+  width:260px;
+  height:260px;
+  margin-top:20px;
+  object-fit:contain;
 `
 export default function Userprofile() {
-    const loginUser = useSelector((state) => state.user.currentUser);
-    const token = loginUser.accessToken;
-    const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
-
-
-
+    const loginUser = useSelector((state) => state.user?.currentUser);
     const {id}=useParams()
-    console.log(id);
     const dispatch=useDispatch()
     const nav=useNavigate()
     const handleClick=()=>{
         dispatch(loginSuccess(loginUser.username==="",loginUser.password===""),nav("/"))
     }
-    console.log(loginUser.accessToken);
-    const handleDelete=(id)=>{
-      // Delete(id,loginUser.accessToken,nav("/"))
+    const handleDelete=(e)=>{
+      e.preventDefault();
+      Delete(id,nav("/"))
+      dispatch(loginSuccess(loginUser.username==="",loginUser.password===""))
     }
+
 
     const[user,setUser]=useState({
       name:'',
       lastname:'',
-      // username:'',
-      // email:'',
-      // password:'',
-      // confirmpassword:'',
-      // address:'',
-      // city:'',
-      // phonenumber:null
+      username:'',
+      email:'',
+      address:'',
+      city:'',
+      phonenumber:null,
+      image:''
     })
-const accesstoken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmY0MjMwZGNkYWY3NjQ1MzE1ZWE1MyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTYzNjA2NzUsImV4cCI6MTY5NjYxOTg3NX0.5IOpJBfh9gF_jftjDWy84TXbDMZ2q5pdCQDrX_ixj0k"
-    useEffect(()=>{
-      axios.get("http://localhost:5001/api/users/find/"+id,{
-        headers: {
-          Authorization: `Bearer ${accesstoken}`,
-        }
-      })
-      .then(res=>{
-        setUser({...user,name:res.data.name,lastname:res.data.lastname})
-      })
-      .catch(err =>console.log(err))
-    },[])
+    // const[image,setImage]=useState('')
 
 
-
+    const[isLoading,setIsLoading]=useState(true)
     const handleUpdate=()=>{
-      // update(dispatch,id,user,nav("/"),loginUser.accessToken)
-      // axios.put("http://localhost:5000/api/users/"+id,{user},{
-        // headers: {
-        //   Authorization: `Bearer ${loginUser.accessToken}`,
-        // },
-      // })
-      // .then(res=>{
-      //   if(res.data.updated){
-      //     setValues(res.data.data)
-      //     nav("/")
-      //   }else{
-      //     console.log("erooooooor");
-      //   }
-      // })
+      update(dispatch,id,user)
     }
+   
+    useEffect(() => {
+      async function fetchData(){
+        try{
+        const response=await userRequest.get(`users/find/${loginUser._id}`)
+        setUser(response?.data);
+
+        } catch(error){
+          console.error('Error fetching data:', error);
+        };
+      }
+        fetchData();
+    },[]); 
+
+
     const handleChange=(e)=>{
       const name=e.target.name
       const value=e.target.value
       setUser({...user,[name]:value})
     }
+    const ref=useRef(null)
+    const onImageClick=()=>{
+      ref.current.click();
+    }
+    const handleImageChange=(e)=>{
+      var reader=new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+      reader.onload=()=>{
+        console.log(reader.result);
+        setUser({...user,image:reader.result})
+      }
+    }
+    const deleteImage=()=>{
+      DeleteImage(id)
+    }
+    
   return (
-    <UserDiv >
-        <UserBox>
-          {/* <Input name='name' value={user.name} onChange={(e)=>handleChange(e)} placeholder="name" />
-          <Input name='lastname' value={user.lastname} onChange={(e)=>handleChange(e)}  placeholder="last name" />
-          <Input name='username'   value={user.username} onChange={(e)=>handleChange(e)}  placeholder="username" />
-          <Input name='email'  value={user.email} onChange={(e)=>handleChange(e)}  placeholder="email" />
-          <Input name='password'  value={user.password} onChange={(e)=>handleChange(e)}  placeholder="password" />
-          <Input name='confirmpassword'  value={user.confirmpassword} onChange={(e)=>handleChange(e)}  placeholder="confirm password" />
-          <Input name='city'  value={user.city} onChange={(e)=>handleChange(e)}  placeholder="city" />
-          <Input name='address'  value={user.address} onChange={(e)=>handleChange(e)}  placeholder="your address" />
-          <Input name='phonenumber'  value={user.phonenumber} onChange={(e)=>handleChange(e)}  placeholder="phonenumber" /> */}
-          <input name='name' type="text" value={user.name}/>
-          <input name='lastname' type="text" value={user.lastname}/>
+    <>
+    <Navbar/>
+    <UserDiv>
+      <Img onClick={onImageClick} src={user?.image?user?.image:avatar}/>
+      <Button onClick={deleteImage}>delete profile picture</Button>
+      <input style={{display:"none"}} ref={ref} type='file' onChange={handleImageChange}/>
+      <div style={{display:"flex",width:"100%",justifyContent:"end",alignItems:"baseline"}}>
+              <Button style={{marginRight:15}} onClick={handleClick}>Logout</Button>
+              <Button  onClick={(e)=>handleDelete(e)}>Delete account</Button>
+      </div>
+        <UserBox >
+          <div style={{display:"flex",width:"100%",justifyContent:"space-between",alignItems:"baseline"}} >
+              <Title>YOUR PERSONAL DETAILS</Title>
+          </div>
+          <div style={{display:"flex", width:"100%", justifyContent:'space-between'}}>
+          <div style={{display:"flex", flexDirection:"column", width:"45%", marginTop:"25px"}}>
+          <Label>Name</Label>
+          <Input name='name' 
+          value={user.name} 
+          onChange={(e)=>handleChange(e)} placeholder="name" /></div>
+          <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          <Label>Surname</Label>
+          <Input name='lastname' 
+          value={user.lastname} 
+          onChange={(e)=>handleChange(e)}  placeholder="last name" /></div>
+          </div>
+          <div style={{display:"flex",  width:"100%", justifyContent:'space-between'}}>
+          <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          <Label>Username</Label>
+          <Input name='username'   
+          value={user.username} 
+          onChange={(e)=>handleChange(e)}  placeholder="username" /></div>
+           <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+           <Label>Email</Label>
+          <Input name='email'  
+          value={user.email} 
+          onChange={(e)=>handleChange(e)}  placeholder="email" /></div></div>
+          <div style={{display:"flex",  width:"100%", justifyContent:'space-between'}}>
+          {/* <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          <Label>Password</Label>
+          <Input name='password'  
+          value={user.password} 
+          onChange={(e)=>handleChange(e)}  placeholder="password" /></div> */}
+           {/* <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+           <Label>Confirm password</Label>
+          <Input name='confirmpassword'  
+          value={user.confirmpassword} 
+          onChange={(e)=>handleChange(e)}  placeholder="confirm password" /></div> */}
+          </div>
+          <div style={{display:"flex", width:"100%", justifyContent:'space-between'}}>
+          <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          <Label>City</Label>
+          <Input name='city'  
+          value={user.city} 
+          onChange={(e)=>handleChange(e)}  placeholder="city" /></div>
+           <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+           <Label>Address</Label>
+          <Input name='address'  
+          value={user.address} 
+          onChange={(e)=>handleChange(e)}  placeholder="your address" /></div></div>
+           <div style={{display:"flex", flexDirection:"column", width:"100%",marginTop:"25px"}}>
+           <Label>Telephone number</Label>
+          <Input
+          style={{marginTop:"25px", width:"100%"}}
+           name='phonenumber'  
+          value={user.phonenumber} 
+          onChange={(e)=>handleChange(e)}  placeholder="phonenumber" /></div>
+          <Button style={{marginTop:40, alignSelf:"flex-start"}} onClick={handleUpdate}>Update</Button>
         </UserBox>
-        <Button onClick={handleClick}>Logout</Button>
-        <Button onClick={handleDelete(loginUser._id)}>Delete account</Button>
-        <Button onClick={handleUpdate}>Update</Button>
     </UserDiv>
+    </>
   )
 }

@@ -6,12 +6,16 @@ const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const cors = require("cors");
-const bodyParser=require("express").json
+// const bodyParser=require("express").json
+const bodyParser = require('body-parser');
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripe=require("stripe")("sk_test_51Ns2YUF4BbozQhllNVAvgMjxWXCMGUPYsYeJ7w0HG6t9iTkyue48mHg7ezOoptPvupFlouF7f5jdQVbsZ5R4RUQG00Vx89CC1J")
 dotenv.config();
+// app.use(bodyParser())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '10mb' }));
 
 
 const MONGODB_URI = process.env.MONGO_URL ||"mongodb+srv://chubinidzekhatia6:chubinidzekhatia@cluster0.jpfmufi.mongodb.net/shop?retryWrites=true&w=majority"
@@ -21,11 +25,8 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-app.use(cors({
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Authorization', 'Content-Type'],
-}));
-app.use(bodyParser())
+
+app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
@@ -33,6 +34,8 @@ app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
+
+
 
 
 app.post("/api/payment",async(req,res)=>{
@@ -59,6 +62,6 @@ app.post("/api/payment",async(req,res)=>{
 })
 
 
-app.listen(process.env.PORT || 5001, () => {
+app.listen(process.env.PORT || 5006, () => {
   console.log("Backend server is running!");
 });

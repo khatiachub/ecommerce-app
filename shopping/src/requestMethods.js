@@ -1,13 +1,35 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5001/api/";
-const TOKEN=''
+
+const TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.accessToken;
+const BASE_URL = "http://localhost:5006/api/";
+console.log(TOKEN);
+
 export const publicRequest = axios.create({
     baseURL: BASE_URL,
+    headers:{
+      "Content-Type": 'application/json',
+      Accept:"application/json",
+      "Access-Control-Allow-Origin":"*"
+    }
   });
   
   export const userRequest = axios.create({
     baseURL: BASE_URL,
-    header: { token: `Bearer ${TOKEN}` },
+    headers: { token: `Bearer ${TOKEN}` ,
+    "Content-Type": 'application/json',
+    Accept:"application/json",
+  },
   });
+
+  // axios.interceptors.response.use(resp=>resp, async error=>{
+  //   if(error.response.status===401){
+  //     const response=await axios.post('refresh',{},{withCredentials:true})
+  //     if(response.status===200){
+  //       axios.defaults.headers.common["Authorization"]=`Bearer ${response.data.accessToken['token']}`
+  //       return axios((error.config))
+  //     }
+  //   }
+  //   return error
+  // })
 

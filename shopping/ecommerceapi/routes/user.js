@@ -37,13 +37,31 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
     res.status(500).json(err);
   }
 });
+//delete avatar image
+router.delete("/:id/image", verifyTokenAndAuthorization, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json("avatar has been deleted...");
+    if (!user.image) {
+      return res.status(400).json("User does not have an image");
+    }
+    user.image = undefined;
+    await user.save();
+
+    res.status(200).json("User image has been deleted...");
+
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 //GET USER
 router.get("/find/:id",  verifyTokenAndAuthorization, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    const { password, ...others } = user._doc;
+    const {accessToken, password, ...others } = user._doc;
     res.status(200).json(others);
+
   } catch (err) {
     res.status(500).json(err);
     return res.status(403).json("You are not allowed!");
@@ -51,7 +69,7 @@ router.get("/find/:id",  verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET ALL USER
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", verifyTokenAndAuthorization, async (req, res) => {
   const query = req.query.new;
   try {
     const users = query

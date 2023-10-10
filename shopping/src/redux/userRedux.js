@@ -18,9 +18,9 @@ const userReducer=createSlice({
        registerSuccess:(state,action)=>{
         state.registerUser=action.payload
        },
-    //    registerFailure:(state,action)=>{
-    //     state.error=true
-    //    },
+       registerFailure:(state,action)=>{
+        state.error=true
+       },
        loginFailure:(state)=>{
         state.error='wrong credentials'
        }
@@ -30,5 +30,5 @@ const userReducer=createSlice({
 
 
 
-export const {loginSuccess,registerSuccess,loginFailure}=userReducer.actions
+export const {loginSuccess,registerSuccess,loginFailure,registerFailure}=userReducer.actions
 export default userReducer.reducer

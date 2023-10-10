@@ -2,8 +2,9 @@ const mongoose=require("mongoose");
 const UserSchema=new mongoose.Schema(
 
     { 
-        name:{type:String,required:true, unique:true},
-        lastname:{type:String,required:true, unique:true},
+        image:{type:String,required:false},
+        name:{type:String,required:true},
+        lastname:{type:String,required:true},
         username:{type:String,required:true, unique:true},
         phonenumber:{type:Number,required:true},
         address:{type:String||Number,required:true},

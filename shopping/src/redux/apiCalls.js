@@ -1,5 +1,6 @@
-import {  loginSuccess,registerSuccess,loginFailure } from "./userRedux";
-import { publicRequest } from "../requestMethods";
+import {  loginSuccess,registerSuccess,loginFailure ,registerFailure} from "./userRedux";
+import { publicRequest, userRequest } from "../requestMethods";
+import axios from "axios";
 
 
 
@@ -13,51 +14,48 @@ export const login = async (dispatch,user) => {
   }
 };
 
-export const register = async (dispatch,user,nav) => {
+export const register = async (dispatch,formData,setSuccess) => {
   try {
-    const res = await publicRequest.post("/auth/signup",user);
+    const res = await publicRequest.post("/auth/signup",formData);
+    console.log(res.data);
     dispatch(registerSuccess(res.data));
-    dispatch(registerSuccess(null),nav);
+    dispatch(registerSuccess(null));
   } catch (err) {
     console.log(err);
+    dispatch(registerFailure);
   }
 };
 
-export const update=async(dispatch,id,user,nav,token)=>{
+export const update=async(dispatch,id,user)=>{
   try {
-    const res = await publicRequest.put(`/users/${id}`, user, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await userRequest.put(`/users/${id}`, user);
     if (res.status === 200) {
-      // Successful response
-      dispatch(loginSuccess(res.data.data));
-      nav("/"); // Navigate to the desired route upon success
-    } else {
-      // Handle other status codes or errors here
-      console.log("Request failed with status code:", res.status);
-    }
-
-    console.log(res.data,"dataaaaaaaa");
+      dispatch(loginSuccess(res.data));
+    } 
   } catch (err) {
     console.log(err);
   }
 }
 
-export const Delete=async(id,token)=>{
+export const Delete=async(id)=>{
   try{
-    await publicRequest.delete("/users/"+id,id,{
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-   })
-    window.location.reload()
-    
-    console.log(token);
-
+    const res=await userRequest.delete("/users/"+id)
+    if (res.status === 200) {
+      window.location.reload()
+    } 
  }catch(err){
    console.log(err);
  }
 }
+export const DeleteImage=async(id)=>{
+  try{
+    const res=await userRequest.delete(`/users/${id}/image`)
+    if (res.status === 200) {
+      window.location.reload()
+    } 
+ }catch(err){
+   console.log(err);
+ }
+}
+
 
