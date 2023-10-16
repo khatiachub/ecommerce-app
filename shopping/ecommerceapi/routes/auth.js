@@ -4,9 +4,10 @@ const User=require("../models/User")
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken")
 const CryptoJS = require("crypto-js");
-const { ImageList } = require("@mui/material");
-
 const multer = require('multer');
+const sendEmail=require('./sendEmail');
+const Token = require("../models/Token");
+const crypto=require("crypto")
 
 // Create a storage configuration for multer
 const storage = multer.diskStorage({
@@ -19,10 +20,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+const salt=10
+
 //signup
 router.post("/signup", upload.single('image'),async(req,res)=>{
-    let {name,lastname,username,email,password,confirmpassword,city,address,phonenumber,image}=req.body
-    // const image = req.file ? req.file.path : ''; 
+    let {name,lastname,username,email,password,confirmpassword,city,address,phonenumber,image,verified}=req.body
     const newUser = new User({
           username,
           email,
@@ -33,248 +35,100 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
           phonenumber,
           confirmpassword,
           image,
-          password: CryptoJS.AES.encrypt(
-            password,
-            process.env.PASS_SEC
-          ).toString(),
+          verified,
+        //   password: CryptoJS.AES.encrypt(
+        //     password,
+        //     process.env.PASS_SEC
+        //   ).toString(),
+        password
         });
       
         try {
-          const savedUser = await newUser.save();
-          // User.create({image:image})
-          res.status(201).json(savedUser);
+          const user = await newUser.save();
+          const token=new Token(
+            {
+              userId:user._id,
+              token:crypto.randomBytes(16).toString("hex")
+            }
+          )
+          await token.save()
+          console.log(token);
+          const url=`${process.env.BASE_URL}/#/users/${user._id}/verify/${token.token}`
+          await sendEmail(user.email,"verify email",url)
+          res.status(201).send({message:"Please verify email, link is sent to your account"})
         } catch (err) {
           res.status(500).json(err);
         }
-        })
+  })
 
 
+//verify email
 
-
-    // if (username !== undefined 
-    //     && email !== undefined
-    //     && password !== undefined
-    //     &&name!==undefined
-    //     &&lastname!==undefined
-    //     &&address!==undefined
-    //     &&city!==undefined
-    //     &&phonenumber!==undefined
-    //     &&img!==undefined
-    //     ) {
-    //     username = username.trim();
-    //     email = email.trim();
-    //     password = password.trim();
-    //     name = name.trim();
-    //     lastname =lastname.trim();
-    //     confirmpassword = confirmpassword.trim();
-    //     address = address.trim();
-    //     city = city.trim();
-    //     img=img.trim();
-    // }
-    // if(username===""
-    // ||email===""
-    // ||password===""
-    // ||name===""
-    // ||lastname===""
-    // ||confirmpassword===""
-    // ||city===""
-    // ||address===""
-    // ||phonenumber===""
-    // ||img===""
-    // ){
-    //     return res.json({
-    //         status:"FAILED",
-    //         message:"Empty input fields"
-    //     })
-    // }else if( !/^[a-zA-Z ]*$/.test(username)){
-    //     return res.json({
-    //         status:"FAILED",
-    //         message:"Invalid username entered"
-    //     })
-    // }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)){
-    //     return res.json({
-    //         status:"FAILED",
-    //         message:"Invalid email"
-    //     })
-    // }else if(password.length<8){
-    //    return res.json({
-    //         status:"FAILED",
-    //         message:"Password is too short"
-    //     })
-    // }else if( !/^[a-zA-Z ]*$/.test(name)){
-    //     return res.json({
-    //         status:"FAILED",
-    //         message:"Invalid name entered"
-    //     })
-    // }
-    // else{
-    //     User.find({email}).then(result=>{
-    //         if(result.length){
-    //            return res.json({
-    //                 status:"FAILED",
-    //                 message:"user with the provided email already exists!"
-    //             })
-    //         }else{
-    //             const saltRounds=10;
-    //             bcrypt.hash(password,saltRounds).then(hashedPassword=>{
-    //                 const newUser=new User({
-    //                     name,
-    //                     lastname,
-    //                     username,
-    //                     email,
-    //                     password:hashedPassword,
-    //                     confirmpassword,
-    //                     city,
-    //                     phonenumber,
-    //                     address,
-    //                     img
-    //                 })
-    //                 newUser.save().then(result=>{
-    //                     return res.json({
-    //                         status:"SUCCESS",
-    //                         message:"Signup is successful!",
-    //                         data:result
-    //                     })
-    //                 })
-    //                 .catch(err=>{
-    //                     return res.json({
-    //                         status:"FAILED",
-    //                         message:"An error occured while saving the user account!"
-    //                     })
-    //                 })
-    //             })
-    //             .catch(err=>{
-    //                 return res.json({
-    //                     status:"FAILED",
-    //                     message:"An error occured while hashing password!"
-    //                 })
-    //             })
-    //         }
-    //     }).catch(err=>{
-    //         console.log(err);
-    //         return res.json({
-    //             status:"FAILED",
-    //             message:"An error occured while checking for existing user!"
-    //         })
-    //     })
-    // }
-
-
+router.get("/:id/verify/:token",async(req,res)=>{
+  try{
+    const token=await Token.findOne({
+      token:req.params.token
+    })
+    console.log(token);
+   const info=await User.updateOne({_id:token.userId},{$set:{verified:true}})
+   await Token.findByIdAndRemove(token._id)
+    return res.status(200).send({message:"Email verified successfully"}) 
+  }catch(error){
+    return res.status(500).send(error)
+  }
+})
 
 
 // signin
 router.post("/signin",async(req,res)=>{
-//     const{password,username}=req.body
-//     const user = await User.findOne(
-//         {
-//             username: req.body.username,
-//         }
-//     );
-//     !user && res.status(401).json("Wrong username");
+    try {
+      const user = await User.findOne({ username: req.body.username });
+      !user && console.log("wrong username");
+      // res.send(401).json("Wrong username!");
+  
+      // const hashedPassword = CryptoJS.AES.decrypt(
+      //   user.password,
+      //   process.env.PASS_SEC
+      // );
+      // const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+  
+      // OriginalPassword !== req.body.password &&
+        // res.sendStatus(401).json("Wrong password!");
+      //   console.log("wrong password");
 
-//     // const hashedPassword = CryptoJS.AES.decrypt(
-//     //     user.password,
-//     //     process.env.PASS_SEC
-//     //   );
-//     // const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-//     // OriginalPassword !== req.body.password &&
-//     //   res.status(401).json("Wrong password!");
+      if(user?.password!==req.body.password){
+         return console.log("incorrect password");
+      }
 
-//     if(username!==undefined){
-//         const accessToken = jwt.sign(
-//             {
-//                 id: user?._id,
-//                 isAdmin: user?.isAdmin,
-//             },
-//             process.env.JWT_SEC,
-//                 {expiresIn:"3d"}
-//             );
-//             if(user){
-//                 const { ...others } = user._doc;  
-//                 return res.json({accessToken,...others})
-//             }else{
-//                 return 
-//             }
-//     }
-    
-//     if (username !== undefined && password !== undefined) {
-//           username.trim();
-//           password.trim();
-//     }
-//     if(username==""||password==""){
-//         return res.json({
-//             status:"FAILED",
-//             message:"Empty input fields"
-//         })
-//     }else{
-//         User.find({password})
-//         .then(data=>{
-//             if(data.length){
-//                 const hashedPassword=data[0].password
-//                 bcrypt.compare(password,hashedPassword).then(result=>{
-//                     if(result){
-//                         return res.json({
-//                             status:"SUCCESS",
-//                             message:"signin successful",
-//                             data:data
-//                         })
-//                     }else{
-//                         return res.json({
-//                             status:"FAILED",
-//                             message:"ivalid password entered"
-//                         })
-//                     }
-//                 })
-//                 .catch(err=>{
-//                     return res.json({
-//                         status:"FAILED",
-//                         message:"An error occured while comparing passwords"
-//                     })
-//                 })
-//             }else{
-//                 return res.json({
-//                     status:"FAILED",
-//                     message:"Invalid credentials"
-//                 })
-//             }
-//         })
-//         .catch(err=>{
-//             return res.json({
-//                 status:"FAILED",
-//                 message:"An error occured while checking existing user"
-//             })
-//         })
-//     }
+      const accessToken = jwt.sign(
+        {
+          id: user._id,
+          isAdmin: user.isAdmin,
+        },
+        process.env.JWT_SEC,
+        {expiresIn:"3d"}
+      );
+  
+      const { password, ...others } = user._doc;
 
-
-try {
-    const user = await User.findOne({ username: req.body.username });
-    !user && res.status(401).json("Wrong credentials!");
-
-    const hashedPassword = CryptoJS.AES.decrypt(
-      user?.password,
-      process.env.PASS_SEC
-    );
-    const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-
-    OriginalPassword !== req.body.password &&
-       res.status(401).json("Wrong credentials!");
-
-    const accessToken = jwt.sign(
-      {
-        id: user._id
-      },
-      process.env.JWT_SEC,
-      {expiresIn:"3d"}
-    );
-
-    const { password, ...others } = user._doc;
-
-   return res.status(200).json({accessToken,...others});
-  } catch (err) {
-    return res.status(500).json(err);
-    console.log(err);
-  }
+      if(!user.verified){
+        const token=new Token(
+          {
+            userId:user._id,
+            token:crypto.randomBytes(16).toString("hex")
+          }
+        )
+        await token.save()
+        console.log(token);
+          const url=`${process.env.BASE_URL}/#/users/${user._id}/verify/${token.token}`
+          await sendEmail(user.email,"verify email",url)
+          return res.status(400).json({message:"Please verify email, link is sent to your account"})
+      }else{
+        return res.status(200).json({...others, accessToken});
+      }
+    } catch (err) {
+      return res.status(500).json(err);
+    }
 });
 
 module.exports=router

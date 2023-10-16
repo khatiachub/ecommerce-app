@@ -3,38 +3,34 @@ import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  flex: 1;
-  margin: 3px;
-  height: 70vh;
-  position: relative;
-  display:flex;
-  flex-wrap:wrap;
+    width:280px;
+    margin-top:10px;
+    padding:10px;
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 100%;
+  height: 70vh;
   object-fit: cover;
-  ${mobile({height:'30vh'})}
-
+  position:absolute;
+  top:0;
+  left:0;
 `;
 
 const Info = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width:100%;
+  background-color:pink;
+  height: 70vh;
+  position: relative;
 `;
 
 const Title = styled.h1`
     color:white;
     font-size:20px;
-    margin-bottom: 20px;
+    position:absolute;
+    top:45%;
+    left:50%;
+    transform:translate(-50%,-50%);
 `;
 
 const Button = styled.button`
@@ -44,6 +40,10 @@ const Button = styled.button`
     color:gray;
     cursor: pointer;
     font-weight: 600;
+    position:absolute;
+    top:55%;
+    left:50%;
+    transform:translate(-50%,-50%);
 `;
   
 
@@ -51,8 +51,8 @@ const CategoryItem = ({ item }) => {
   return (
     <Container>
       <Link to={`/products/${item.cat}`}>
-      <Image src={item.img} />
       <Info>
+        <Image src={item.img} />
         <Title>{item.title}</Title>
         <Button>SHOP NOW</Button>
       </Info>

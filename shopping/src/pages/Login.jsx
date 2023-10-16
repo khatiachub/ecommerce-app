@@ -3,7 +3,7 @@ import { mobile } from "../responsive";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/apiCalls";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UpdatePassword from "./UpdatePassword";
 
 
@@ -81,6 +81,7 @@ const Login = () => {
   const[password,setPassword]=useState("")
   const dispatch=useDispatch();
   const error= useSelector((state) => state.user.error);
+  
 
   const handleClick=(e)=>{
     e.preventDefault();

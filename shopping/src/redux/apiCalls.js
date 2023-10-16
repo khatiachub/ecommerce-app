@@ -18,8 +18,8 @@ export const register = async (dispatch,formData,setSuccess) => {
   try {
     const res = await publicRequest.post("/auth/signup",formData);
     console.log(res.data);
-    dispatch(registerSuccess(res.data));
-    dispatch(registerSuccess(null));
+    dispatch(registerSuccess({ registerUser: res.data }));
+    setSuccess(true)
   } catch (err) {
     console.log(err);
     dispatch(registerFailure);

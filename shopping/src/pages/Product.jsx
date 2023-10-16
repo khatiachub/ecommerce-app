@@ -12,11 +12,16 @@ import { publicRequest } from '../requestMethods';
 import { useDispatch } from "react-redux";
 import {addProduct} from '../redux/cartRedux'
 
-const Container = styled.div``;
+
+const Container = styled.div`
+ width:93%;
+ margin:0 auto;
+ margin-top:10vh;
+`;
 
 const Wrapper = styled.div`
-  padding: 50px;
   display: flex;
+  width:100%;
   ${mobile({flexDirection:'column'})}
 
 `;
@@ -158,8 +163,6 @@ const Product = () => {
   }
   return (
     <>
-    <Announcement />
-      <Navbar />
     <Container>
       <Wrapper>
         <ImgContainer>

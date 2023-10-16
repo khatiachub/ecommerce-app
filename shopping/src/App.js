@@ -10,15 +10,17 @@ import { useSelector } from "react-redux";
 import Userprofile from "./components/Userprofile";
 import SuccessRegister from "./pages/SuccessRegister";
 import UpdatePassword from "./pages/UpdatePassword";
+import VerifyEmail from "./Emailverify/VerifyEmail";
+import Root from "./Root";
 
 
 function App() {
   const loginUser = useSelector((state) => state.user.currentUser);
-
-    return (
-      <HashRouter>
-        <Routes>
-        <Route path="/" element={<Home/>}/>
+  return(
+    <HashRouter>
+    <Routes>
+     <Route path="/" element={<Root/>}>
+        <Route index element={<Home/>}/>
         <Route path="/success" element={<Success/>}/>
         <Route path="/successregister" element={<SuccessRegister/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
@@ -28,9 +30,11 @@ function App() {
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/userprofile/:id" element={<Userprofile/>}/>
         <Route path="/updatepassword/:id" element={<UpdatePassword/>}/>
-        </Routes>      
-      </HashRouter>
-  );
+        <Route path="/users/:id/verify/:token" element={<VerifyEmail/>}/>
+      </Route>
+      </Routes>
+    </HashRouter>
+  )
 }
 
 export default App;

@@ -106,20 +106,18 @@ export default function Userprofile() {
       phonenumber:null,
       image:''
     })
-    // const[image,setImage]=useState('')
-
 
     const[isLoading,setIsLoading]=useState(true)
     const handleUpdate=()=>{
       update(dispatch,id,user)
     }
-   
+  //  const TOKEN=loginUser?.accessToken
+  //  console.log(TOKEN);
     useEffect(() => {
       async function fetchData(){
         try{
         const response=await userRequest.get(`users/find/${loginUser._id}`)
-        setUser(response?.data);
-
+        setUser(response.data);
         } catch(error){
           console.error('Error fetching data:', error);
         };

@@ -65,6 +65,23 @@ export const sliderItems = [
       title: "TOPS",
       cat:"TOPS"
     },
+    {
+      id: 8,
+      img:"https://static.e-stradivarius.net/5/photos4/2023/I/0/1/p/1308/308/003/1308308003_1_1_1.jpg?t=1696496469073&impolicy=stradivarius-itxmediumhigh&imwidth=333&imformat=chrome&imdensity=1",
+      title: "SHORTS",
+      cat:"SHORTS"
+    },
+    {
+      id: 9,
+      img:"https://static.zara.net/photos///2023/I/0/1/p/3046/233/800/2/w/563/3046233800_1_1_1.jpg?ts=1693214283858",
+      title: "LEGGINGS",
+      cat:"LEGGINGS"
+    },{
+      id: 10,
+      img:"https://static.zara.net/photos///2023/I/0/1/p/1355/906/800/3/w/563/1355906800_1_1_1.jpg?ts=1696518207122",
+      title: "UNDERWEARS",
+      cat:"UNDERWEARS"
+    },
   ];
 
   

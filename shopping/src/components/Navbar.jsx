@@ -18,8 +18,8 @@ import {useSelector} from 'react-redux'
 const Container = styled.div`
   height: 60px;
   ${mobile({height:'50px'})}
-  padding: 10px 0;
-  width:91%;
+  padding-top:30px;
+  width:93%;
   margin:0 auto;
   @media screen and (max-width:768px) {
     flex-direction:column;
@@ -76,7 +76,7 @@ const SearchButton=styled.div`
 const SearchOverlay=styled.div`
   width:100%;
   height:100vh;
-  position:absolute;
+  position:fixed;
   display:flex;
   justify-content: center;
   left:0;
@@ -98,6 +98,7 @@ const BackArrow=styled.div`
 
 const Center = styled.div`
   text-align: center;
+  /* margin-left:10vh; */
   @media screen and (max-width:837px) {
   }
 `;
@@ -138,7 +139,6 @@ const LeftBurger=styled.div`
   justify-content:space-between;
   width:90%;
   align-items: baseline;
-
 `
 const Burger=styled.div`
   display:none;
@@ -156,25 +156,24 @@ const Burgerbar=styled.div`
   display:none;
   z-index:2;
   @media screen and (max-width:768px) {
-    transform: ${({ open }) => (open ? 'translateX(-200vw)' : 'translateX(0)')};
-    max-width:250px;
-    width:100%;
-    height:100vh;
+    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-200vw)' )};
+    width:250px;
+    min-height:100%;
+    position:fixed;
     background-color:#f5fbfd;
     padding-left:15px;
     padding-top:15px;
     display:flex;
     transition:0.5s linear;
-    position:absolute;
     top:0;
     left:0;
   }
 `
 const Overlay=styled.div`
-@media screen and (max-width:768px) {
+/* @media screen and (max-width:768px) {
   width:100%;
   height:100vh;
-}
+} */
 `
 const RemoveButton=styled.div`
   
@@ -256,7 +255,7 @@ const Navbar = () => {
           </Link>
         </Right>
       </Wrapper>
-      <Burger  open={state} onClick={handleClick}>
+      <Burger  onClick={handleClick}>
            <MenuIcon />
         </Burger>
     </Container>

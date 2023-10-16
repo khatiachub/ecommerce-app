@@ -11,13 +11,15 @@ const Container = styled.div`
     margin-top:40px;
 `;
 
+// ygqn gvpd bdsk wjoj
+
 const Products = ({cat,filters,sort}) => {
   const[products,setProducts]=useState([]);
   const[filteredproducts,setFilteredProducts]=useState([])
 useEffect(()=>{
   const getProducts=async()=>{
     try{
-      const res=await axios.get(`http://localhost:5003/api/products?category=${cat}`)
+      const res=await axios.get(`http://localhost:50010/api/products?category=${cat}`)
       setProducts(res.data);
     }catch(err){ }
   }

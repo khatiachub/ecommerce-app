@@ -13,17 +13,23 @@
   
   const Container = styled.div`
     display: flex;
+    /* background-color:#f5fbfd; */
+    justify-content:space-between;
+    width:93%;
+    margin:0 auto;
+    margin-top:15vh;
     ${tablet({justifyContent:'space-between'})};
-    @media screen and (max-width:516px) {
+    @media screen and (max-width:700px) {
       flex-direction:column;
     } 
+    @media screen and (min-width:1450px) {
+      width:60%;
+    }
   `;
   
   const Left = styled.div`
-    flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
   `;
   
   const Logo = styled.h1``;
@@ -50,33 +56,42 @@
   `;
   
   const Center = styled.div`
-    flex: 1;
-    padding: 20px;
-    ${mobile({display:'none'})};
-    ${tablet({display:'none'})}
+    max-width:300px;
+    width:100%;
+    padding:0px 20px 0px 20px;
+    @media screen and (max-width:975px) {
+      display:none;
+    }
   `;
   
   const Title = styled.h3`
     margin-bottom: 30px;
+    @media screen and (max-width:700px) {
+      margin-top:40px;
+    }
   `;
   
+  const ListWrap=styled.div`
+    display:flex;
+    justify-content:space-between;
+    width:100%;
+  `
   const List = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction:column;
   `;
   
   const ListItem = styled.li`
-    width: 50%;
     margin-bottom: 10px;
+    width:105px;
   `;
   
   const Right = styled.div`
-    flex: 1;
-    width: 200px;
-    padding: 20px; 
+    max-width: 320px;
+    width:100%;
   `;
   
   const ContactItem = styled.div`
@@ -86,8 +101,6 @@
     @media screen and (min-width:900px) {
       margin-bottom:15px;
     }
-    /* ${tablet({marginBottom:12})} */
-
   `;
   
   const Payment = styled.img`
@@ -120,19 +133,23 @@
           </SocialContainer>
         </Left>
         <Center>
-          <Title>Useful Links</Title>
+          <Title style={{marginTop:8}}>Useful Links</Title>
+          <ListWrap>
           <List>
             <ListItem>Home</ListItem>
             <ListItem>Cart</ListItem>
             <ListItem>Man Fashion</ListItem>
             <ListItem>Woman Fashion</ListItem>
             <ListItem>Accessories</ListItem>
+           </List> 
+           <List>
             <ListItem>My Account</ListItem>
             <ListItem>Order Tracking</ListItem>
             <ListItem>Wishlist</ListItem>
             <ListItem>Wishlist</ListItem>
             <ListItem>Terms</ListItem>
           </List>
+          </ListWrap>
         </Center>
         <Right>
           <Title>Contact</Title>

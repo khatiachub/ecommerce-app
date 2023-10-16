@@ -6,7 +6,7 @@ const userReducer=createSlice({
     initialState:{
         currentUser:null,
         registerUser:null,
-        error:null
+        error:null,
     },
     reducers:{
     //    loginStart:(state)=>{

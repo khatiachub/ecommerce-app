@@ -5,6 +5,7 @@ import { register } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import avatar from '../images/avatar.png'
+import { registerSuccess } from "../redux/userRedux";
 
 const Container = styled.div`
   width: 100vw;
@@ -83,6 +84,22 @@ const Img=styled.img`
       content: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
     `}
 `
+const SuccessBox=styled.div`
+  width:500px;
+  height:350px;
+  border-radius:5px;
+  background-color:lightpink;
+  position:absolute;
+  top:30%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  justify-content:center;
+  align-items: center;
+ 
+  padding-left:10px;
+  padding-right:10px;
+`
 const Register = () => {
   const[name,setName]=useState("")
   const[lastname,setLastname]=useState("")
@@ -95,9 +112,9 @@ const Register = () => {
   const[phonenumber,setPhonenumber]=useState(null)
   const[image,setImage]=useState("")
   const ref=useRef(null)
-  const [success,setSuccess]=useState(false)
   const error= useSelector((state) => state.user.error);
-
+  const[success,setSuccess]=useState(false)
+  // const registerUser=useSelector((state) => state.user.registerUser)
 
   const dispatch=useDispatch();
   const nav=useNavigate();
@@ -123,16 +140,24 @@ const Register = () => {
     formData.append('city', city);
     formData.append('phonenumber', phonenumber);
     formData.append('image', image);
-    register(dispatch,formData)
-      console.log(formData);
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
+    register(dispatch,formData,setSuccess)
   }
+
+
+  useEffect(()=>{
+    if(success){
+      const timeoutId = setTimeout(() => {
+        nav('/login'); 
+        dispatch(registerSuccess({ registerUser: null}));
+      }, 5000);
+      return () => clearTimeout(timeoutId);
+    }
+   },[success])
 
     const onImageClick=()=>{
       ref.current.click();
     }
+
   return (
     <Container>
       <Wrapper>
@@ -152,7 +177,7 @@ const Register = () => {
           <Input onChange={(e)=>setCity(e.target.value)} placeholder="city" name="city"/>
           <Input onChange={(e)=>setAddress(e.target.value)} placeholder="your address" name="address"/>
           <Input onChange={(e)=>setPhonenumber(e.target.value)} placeholder="phonenumber" name="phonenumber"/>
-          {success&&<p style={{color:"green"}}>registration is successfull</p>}
+          {success&&<SuccessBox ><p style={{fontSize:35,color:"#fff",textAlign:"center"}}>Congratulations! registration is successfull</p></SuccessBox>}
           {error}
 
           <Agreement>

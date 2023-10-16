@@ -48,7 +48,7 @@ router.delete("/:id/image", verifyTokenAndAuthorization, async (req, res) => {
     user.image = undefined;
     await user.save();
 
-    res.status(200).json("User image has been deleted...");
+    return res.status(200).json("User image has been deleted...");
 
   } catch (err) {
     console.log(err);
@@ -64,7 +64,7 @@ router.get("/find/:id",  verifyTokenAndAuthorization, async (req, res) => {
 
   } catch (err) {
     res.status(500).json(err);
-    return res.status(403).json("You are not allowed!");
+    // return res.status(403).json("You are not allowed!");
   }
 });
 
