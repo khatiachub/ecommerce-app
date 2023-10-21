@@ -1,10 +1,5 @@
 import styled from "styled-components";
-// import Navbar from "../components/Navbar";
-// import Announcement from "../components/Announcement";
 import Products from "../components/Products";
-// import Newsletter from "../components/Newsletter";
-// import Footer from "../components/Footer";
-// import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 const Container = styled.div`
@@ -54,7 +49,7 @@ const Option = styled.option``;
 const ProductList = () => {
   const location=useLocation();
   const cat=location.pathname.split("/")[2]
-  const[filters,setFilters]=useState({})
+  const[filters,setFilters]=useState('')
   const[sort,setSort]=useState("Newest")
   const handleFilter=(e)=>{
     setFilters({
@@ -69,9 +64,9 @@ const ProductList = () => {
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
-          <Select name='color' onChange={handleFilter}>
-            <Option disabled >
-              Color
+          <Select  name='color' onChange={(e)=>handleFilter(e)}>
+            <Option  >
+              COLOR
             </Option>
             <Option>WHITE</Option>
             <Option>BLACK</Option>
@@ -84,12 +79,10 @@ const ProductList = () => {
             <Option>BROWN</Option>
             <Option>PINK</Option>
             <Option>GOLD</Option>
-
-
           </Select>
           <Select name='size' onChange={handleFilter} >
-            <Option disabled >
-              Size
+            <Option  >
+              SIZE
             </Option>
             <Option>XS</Option>
             <Option>S</Option>

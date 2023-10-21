@@ -14,6 +14,9 @@ const Container = styled.div`
 const Title = styled.h1`
   font-size: 70px;
   margin-bottom: 20px;
+  @media screen and (max-width:485px) {
+    font-size: 40px;
+  }
 `;
 
 const Desc = styled.div`

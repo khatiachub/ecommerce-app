@@ -13,16 +13,20 @@ import { Link } from "react-router-dom";
 // import Register from "../pages/Register";
 // import Login from "../pages/Login";
 import {useSelector} from 'react-redux'
+import Announcement from "./Announcement";
 
 
 const Container = styled.div`
   height: 60px;
   ${mobile({height:'50px'})}
   padding-top:30px;
-  width:93%;
+  width:95%;
   margin:0 auto;
   @media screen and (max-width:768px) {
     flex-direction:column;
+    /* background-color:red;
+    width:78%; */
+
   }
 `;
 
@@ -42,9 +46,9 @@ const Left = styled.div`
   align-items:center;
   justify-content:space-between;
   width:100px;
-  @media screen and (max-width:400px) {
+  /* @media screen and (max-width:400px) {
     width:50px;
-  }
+  } */
 `;
 
 const Language = styled.span`
@@ -83,7 +87,7 @@ const SearchOverlay=styled.div`
   top:0;
   background-color: #000;
   opacity:50%;
-  transform: ${({ searchbutton }) => (searchbutton ? 'translateY(0)' : 'translateY(-300vw)')};
+  transform: ${({ searchbutton }) => (searchbutton ? 'translateY(0)' : 'translateY(-400vw)')};
   transition:0.57s linear;
   z-index: 27;
   padding-top:30px;
@@ -147,16 +151,16 @@ const Burger=styled.div`
     transition:0.5s;
   }
   @media screen and (max-width:400px) {
-    position:absolute;
-    top:60px;
-    z-index:1;
+    /* position:absolute;
+    top:60px; */
+    /* z-index:1; */
   }
 `
 const Burgerbar=styled.div`  
   display:none;
   z-index:2;
   @media screen and (max-width:768px) {
-    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-200vw)' )};
+    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-300vw)' )};
     width:250px;
     min-height:100%;
     position:fixed;
@@ -167,9 +171,11 @@ const Burgerbar=styled.div`
     transition:0.5s linear;
     top:0;
     left:0;
+    z-index:11 ;
   }
 `
 const Overlay=styled.div`
+width:100%;
 /* @media screen and (max-width:768px) {
   width:100%;
   height:100vh;
@@ -199,6 +205,7 @@ const Navbar = () => {
 
   return (
     <Overlay >
+      <Announcement/>
     <Container>
       <Wrapper>
         <Burgerbar open={state}>

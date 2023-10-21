@@ -1,47 +1,67 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
-// import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
-import { mobile } from '../responsive';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { publicRequest } from '../requestMethods';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {addProduct} from '../redux/cartRedux'
+import ProductSlider from './ProductSlider';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 const Container = styled.div`
- width:93%;
+ width:100%;
  margin:0 auto;
  margin-top:10vh;
+
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  width:100%;
-  ${mobile({flexDirection:'column'})}
+  width:95%;
+  margin:0 auto;
+  justify-content: space-around;
+  @media screen and (max-width:768px) {
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  }
+  @media screen and (min-width:1400px) {
+    width:75%;
+  }
 
 `;
 
 const ImgContainer = styled.div`
-  flex: 1;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 90vh;
-  object-fit: cover;
-  ${mobile({height:"40vh"})};
+   height:700px;
+   /* background-color:red; */
+   max-width:440px;
+   width:100%;
+   @media screen and (max-width:880px) {
+    max-width:400px;
+  }
+   @media screen and (max-width:768px) {
+    max-width:600px;
+  }
+  @media screen and (min-width:1150px) {
+    max-width:600px;
+  }
 `;
 
 const InfoContainer = styled.div`
-  flex: 1;
-  padding: 0px 50px;
-  ${mobile({padding:10})}
-
+   max-width:450px;
+   margin-top:20px;
+   width:100%;
+   @media screen and (max-width:768px) {
+    max-width:600px;
+    margin-top:0;
+  }
+  @media screen and (min-width:768px) {
+    padding-left:30px;
+  }
+  
 `;
 
 const Title = styled.h1`
@@ -49,7 +69,11 @@ const Title = styled.h1`
 `;
 
 const Desc = styled.p`
-  margin: 20px 0px;
+  margin: 25px 0px;
+  max-width:300px;
+  width:100%;
+  line-height:1.5;
+  font-size:15px;
 `;
 
 const Price = styled.span`
@@ -58,17 +82,24 @@ const Price = styled.span`
 `;
 
 const FilterContainer = styled.div`
-  width: 50%;
-  margin: 30px 0px;
+  width:100px;
   display: flex;
-  justify-content: space-between;
-  ${mobile({width:"100%"})}
+  flex-direction:column;
+  /* justify-content: space-between; */
+  @media screen and (max-width:768px) {
+    flex-direction:column;
+  }
+
 
 `;
 
 const Filter = styled.div`
   display: flex;
   align-items: center;
+  margin-top:25px;
+
+  @media screen and (max-width:768px) {
+  }
 `;
 
 const FilterTitle = styled.span`
@@ -94,16 +125,39 @@ const FilterSizeOption = styled.option``;
 
 const AddContainer = styled.div`
   width: 50%;
+  height:50px;
   display: flex;
   align-items: center;
+  margin-left:10px;
+  margin-top:25px;
   justify-content: space-between;
-  ${mobile({width:'100%'})}
+  @media screen and (max-width:768px) {
+   position:sticky;
+   bottom:0;
+   z-index:10;
+  }
+  @media screen and (max-width:485px) {
+   width:93%;
+   margin-left:0;
+  }
 `;
+const Wishlist=styled.div`
+  display:flex;
+  width:25%;
+  justify-content: center;
+  align-items: center;
+  height:50px;
+  padding:0 15px 0 15px;
+  box-sizing:border-box;
+  background-color:#83dbf8;
+  border-radius:5px;
+`
 
 const AmountContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: 700;
+  margin-top:20px;
 `;
 
 const Amount = styled.span`
@@ -118,16 +172,27 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
+  width:70%;
+  height:50px;
+  border:none;
+  background-color:#83dbf8;
+  border-radius:5px;
+  color:#fff;
   cursor: pointer;
   font-weight: 500;
-
   &:hover{
-      background-color: #f8f4f4;
+      background-color: #f5fbfd;
+      color:#1f1e1e;
+      transition:0.5s linear;
   }
 `;
+const ItemContainer=styled.div`
+  display:flex;
+  @media screen and (max-width:485px) {
+   flex-direction:column;
+  }
+
+`
 
 const Product = () => {
   const location=useLocation();
@@ -161,15 +226,42 @@ const Product = () => {
   const handleClick=()=>{
    dispatch(addProduct({...product,quantity,color,size}))
   }
+  const loc=useLocation()
+  const colorSet=loc.state?.color
+  const navigate=useNavigate()
+  console.log(loc);
+
+
+  // dispatch(addProduct({color}))
+  // const storedColor=useSelector(state=>state.cart.setColor)
+
+  const onClickColor=(storedColor)=>{
+    setColor(storedColor)
+    // if(color.length>0){
+      navigate(loc.pathname, { state: {...loc.state, color: '' } });
+    // }else{
+    //   navigate(loc.pathname, { state: {...loc.state, color: colorSet } });
+    // }
+
+  }
+  console.log(loc.state.color);
+  console.log(color);
+
+  // console.log(cart);
+
+
+
   return (
     <>
     <Container>
       <Wrapper>
         <ImgContainer>
-          <Image src={product.img}/>
+        <ProductSlider setcolor={color} color={loc.state?.color}   image={product.img}/>
+
         </ImgContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
+          <Desc>product code:{product._id}</Desc>
           <Desc>
             {product.desc}
           </Desc>
@@ -177,11 +269,11 @@ const Product = () => {
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              {product.color&&product.color.map((c)=>{
+              {product.img&&product.img.map((color,i)=>{
                 return(
-                  <FilterColor onClick={()=>setColor(c)}  color={c} key={c} ></FilterColor>
+                  <FilterColor key={i} onClick={()=>onClickColor(color.color)}  color={color.color} ></FilterColor>               
                 )
-              })}              
+              })} 
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
@@ -194,14 +286,17 @@ const Product = () => {
               </FilterSize>
             </Filter>
           </FilterContainer>
-          <AddContainer>
+          <ItemContainer >
             <AmountContainer>
-              <RemoveIcon onClick={handleRemove}/>
+              <RemoveIcon  onClick={handleRemove}/>
               <Amount>{quantity}</Amount>
               <AddIcon onClick={handleAdd}/>
             </AmountContainer>
-            <Button onClick={handleClick}>ADD TO CART</Button>
+            <AddContainer>
+              <Button onClick={handleClick}>ADD TO CART</Button>
+              <Wishlist><FavoriteBorderIcon style={{color:"#fff"}}/></Wishlist>
           </AddContainer>
+          </ItemContainer>
         </InfoContainer>
       </Wrapper>
       <Newsletter />

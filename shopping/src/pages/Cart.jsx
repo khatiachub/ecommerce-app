@@ -208,7 +208,6 @@ const Cart = () => {
   }
   return (
     <Container>
-      <Announcement />
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>

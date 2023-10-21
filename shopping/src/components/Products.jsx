@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Product from "./Product";
 import { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
 import axios from "axios";
 const Container = styled.div`
     display: flex;
@@ -19,23 +20,30 @@ const Products = ({cat,filters,sort}) => {
 useEffect(()=>{
   const getProducts=async()=>{
     try{
-      const res=await axios.get(`http://localhost:50010/api/products?category=${cat}`)
+      const res=await axios.get(`http://localhost:5002/api/products?category=${cat}`)
       setProducts(res.data);
+      console.log(res.data);
     }catch(err){ }
   }
   getProducts();
 },[cat])
 
+
+
 useEffect(() => {
   cat &&
     setFilteredProducts(
-      products.filter((item) =>
-        Object.entries(filters).every(([key, value]) =>
-          item[key].includes(value)
-        )
-      )
+      products
+        .map((item) => {
+          const filteredImages = item.img.filter((image) => {
+            
+          });
+          
+          return { _id: item._id, images: filteredImages,price:item.price,createdAt:item.createdAt,updatedAt:item.updatedAt };
+        })
     );
 }, [products, cat, filters]);
+
 
 useEffect(()=>{
   if(sort==="Newest"){
@@ -48,13 +56,37 @@ useEffect(()=>{
     [...prev].sort((a,b)=>a.price-b.price)
     )
   }else{
-    setFilteredProducts((prev)=>
+    if(filters){
+      setFilteredProducts((prev)=>
     [...prev].sort((a,b)=>b.price-a.price)
-  )}
+    )
+    }else{
+      setProducts((prev)=>
+    [...prev].sort((a,b)=>b.price-a.price)
+  )
+    }
+    }
 },[sort])
+console.log(filteredproducts);
   return (
     <Container>
-      {filteredproducts.map((item) => <Product item={item} key={item.id} />)}
+      {filters?filteredproducts.map((item)=>{
+        return(
+          <div key={item._id}>
+          {item.images.map((image,i)=>(
+            <Product color={image.color} image={image} item={item}  key={i} />
+          ))}
+          </div>
+        )
+      }):products.map((item,i)=>(
+        item.img.map((image,i)=>(
+          <>
+          {image.color}
+
+          <Product color={image.color} image={image} item={item} key={i} />
+          </>
+        ))
+      ))}
     </Container>
   );
   }

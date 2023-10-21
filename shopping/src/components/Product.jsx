@@ -3,7 +3,8 @@
   import SearchOutlinedIcon from '@mui/icons-material/Search';
   import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
   // import { mobile } from "../responsive";
-  import { Link } from "react-router-dom";
+  import { Link, useLocation, useNavigate} from "react-router-dom";
+  
   const Info = styled.div`
     opacity: 0;
     width: 100%;
@@ -59,18 +60,25 @@
     }
   `;
   
-  const Product = ({ item }) => {
+  const Product = ({ item ,image,color}) => {
+    const nav=useNavigate()
+    const handleClick=()=>{
+      nav(`/product/${item._id}`,{
+        state:{
+          color:color
+        }
+      })
+    }
+
     return (
-      <Container>
-        <Image src={item.img}/>
+      <Container onClick={handleClick}>
+        <Image src={image.image}/>
         <Info>
           <Icon>
             <ShoppingCartOutlinedIcon />
           </Icon>
           <Icon>
-            <Link to={`/product/${item._id}`}>
             <SearchOutlinedIcon />
-            </Link>
           </Icon>
           <Icon>
             <FavoriteBorderOutlinedIcon />
