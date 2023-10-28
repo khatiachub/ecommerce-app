@@ -15,7 +15,7 @@
     display: flex;
     /* background-color:#f5fbfd; */
     justify-content:space-between;
-    width:93%;
+    width:95%;
     margin:0 auto;
     margin-top:15vh;
     ${tablet({justifyContent:'space-between'})};

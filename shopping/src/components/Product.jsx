@@ -2,9 +2,12 @@
   import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
   import SearchOutlinedIcon from '@mui/icons-material/Search';
   import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-  // import { mobile } from "../responsive";
   import { Link, useLocation, useNavigate} from "react-router-dom";
-  
+  import { addtoWishlist, removeFromWishlist } from "../redux/cartRedux";
+  import { useDispatch, useSelector } from "react-redux";
+  import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+
+
   const Info = styled.div`
     opacity: 0;
     width: 100%;
@@ -22,26 +25,42 @@
   `;
   
   const Container = styled.div`
-    flex: 1;
-    max-width: 370px;
-    width:100%;
+    width:300px;
     height: 370px;
-    margin-top:20px;
+    margin-top:100px;
     padding:3px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction:column;
+    align-items: self-start;
+    justify-content: start;
     position: relative;
     &:hover ${Info}{
       opacity: 1;
     }
+    @media screen and (max-width:485px) {
+      height:300px;
+      width:180px;
+    }
+    @media screen and (max-width:410px) {
+      height:250px;
+      width:140px;
+    }
+
   `;
   
   const Image = styled.img`
     height:370px;
-    width:370px;
+    width:300px;
     object-fit:cover;
     z-index: 2;
+    @media screen and (max-width:485px) {
+      height:300px;
+      width:180px;
+    }
+    @media screen and (max-width:410px) {
+      height:250px;
+      width:140px;
+    }
   `;
   
   const Icon = styled.div`
@@ -58,21 +77,66 @@
       background-color: #e9f5f5;
       transform: scale(1.1);
     }
+    @media screen and (max-width:485px) {
+      height:30px;
+      width:30px;
+    }
   `;
-  
-  const Product = ({ item ,image,color}) => {
+  const Title=styled.p`
+    font-weight:100;
+  `
+  const Price=styled.p`
+    margin-top:10px;
+    
+  `
+  const Desc=styled.div`
+    flex-direction:column;
+    justify-content:start;
+    margin-top:10px;
+  `
+  const Product = ({ item ,productImg,color,size}) => {
     const nav=useNavigate()
     const handleClick=()=>{
       nav(`/product/${item._id}`,{
         state:{
-          color:color
+          color:color,
+          size:size
         }
       })
     }
 
+
+
+    
+
+  const dispatch=useDispatch();
+  
+
+  const cart=useSelector(state=>state.cart.wishlist)
+  const favourites=cart&&cart.filter((product)=>(product._id===item._id))
+  const favs=favourites&&favourites.map((favorite)=>(favorite.favorite))
+  const favImage=favourites&&favourites.map((product)=>(product.img.filter((image)=>(image.color===color))))
+ const image=favImage&&favImage.map((image)=>(image.map((product)=>(product.image))))
+ console.log(favImage);
+  const addToFavorites=(event,id)=>{
+    event.stopPropagation()
+    const isProductInWishlist = cart.some((item) => item._id === id);
+    if (!isProductInWishlist) {
+      dispatch(addtoWishlist({ ...item,image,color,  size}));
+    } else {
+      console.log('Product is already in the wishlist');
+    }
+  }
+  const removefromFavorites=(event,index)=>{
+    event.stopPropagation()
+    dispatch(removeFromWishlist(index))
+  }
+console.log(color);
+  
     return (
       <Container onClick={handleClick}>
-        <Image src={image.image}/>
+        <div>
+        <Image src={productImg.image}/>
         <Info>
           <Icon>
             <ShoppingCartOutlinedIcon />
@@ -81,9 +145,17 @@
             <SearchOutlinedIcon />
           </Icon>
           <Icon>
-            <FavoriteBorderOutlinedIcon />
+            {favs[0]===true?
+            <FavoriteOutlinedIcon onClick={(event)=>removefromFavorites(event,item._id)}/>:
+            <FavoriteBorderOutlinedIcon onClick={(event)=>addToFavorites(event,item._id)}/>
+          }
           </Icon>
         </Info>
+        </div>
+        <Desc>
+          <Title>{item.title}</Title>
+          <Price>US$ {item.price}</Price>
+        </Desc>
       </Container>
     );
   };

@@ -7,7 +7,6 @@ import { Navigation, Pagination,  A11y } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { useLocation } from 'react-router-dom';
 
 
 const Slider=styled.div`
@@ -71,8 +70,8 @@ export default function ProductSlider(props) {
     };
  
 
-  const filtered= props.image&&props.image.filter((element)=>element.color===props.setcolor||element.color===props.color)
- const filteredimage=filtered&&filtered.map((item)=>(
+  const filtered= props.image&&props.image.filter((element)=>element.color===props.setcolor)
+  const filteredimage=filtered&&filtered.map((item)=>(
   item.image
  ))
  const getTotalImages = () => {

@@ -8,8 +8,8 @@ import avatar from '../images/avatar.png'
 import { registerSuccess } from "../redux/userRedux";
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height:auto;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
@@ -24,9 +24,13 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 40%;
-  padding: 20px;
-  background-color: white;
-  ${mobile({width:'75%'})}
+  padding: 50px 0px 50px 0px;
+  @media screen and (max-width:768px) {
+    width:70%;
+  }
+  @media screen and (max-width:485px) {
+    width:90%;
+  }
 
 `;
 
@@ -61,16 +65,19 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   @media screen and (max-width:568px) {
-    width:50%;
+    width:60%;
   }
 `;
 const ImageButton=styled.button`
-  width: 20%;
+  width: 30%;
   border: none;
   padding: 10px 10px;
   background-color: teal;
   color: white;
   margin-top:20px;
+  @media screen and (max-width:768px) {
+    width:40%;
+  }
 `
 const Img=styled.img`
   border-radius:50%;
@@ -96,10 +103,10 @@ const SuccessBox=styled.div`
   display:flex;
   justify-content:center;
   align-items: center;
- 
   padding-left:10px;
   padding-right:10px;
 `
+
 const Register = () => {
   const[name,setName]=useState("")
   const[lastname,setLastname]=useState("")
@@ -114,7 +121,6 @@ const Register = () => {
   const ref=useRef(null)
   const error= useSelector((state) => state.user.error);
   const[success,setSuccess]=useState(false)
-  // const registerUser=useSelector((state) => state.user.registerUser)
 
   const dispatch=useDispatch();
   const nav=useNavigate();

@@ -3,11 +3,12 @@ import Products from "../components/Products";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 const Container = styled.div`
-   width:93%;
+   width:95%;
    margin:0 auto;
+   margin-top:80px;
 `;
 
-const Title = styled.h1`
+const Title = styled.h3`
   margin-top: 20px;
 `;
 
@@ -28,7 +29,7 @@ const Filter = styled.div`
 
 const FilterText = styled.span`
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   margin-right: 20px;
 `;
 

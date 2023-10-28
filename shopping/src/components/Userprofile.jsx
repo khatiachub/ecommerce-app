@@ -7,7 +7,6 @@ import Register from '../pages/Register';
 import { publicRequest, userRequest } from '../requestMethods';
 import axios from 'axios';
 import { Delete, update,DeleteImage} from '../redux/apiCalls';
-import Navbar from './Navbar'
 import avatar from '../images/avatar.png'
 
 const UserDiv=styled.div`
@@ -149,7 +148,6 @@ export default function Userprofile() {
     
   return (
     <>
-    <Navbar/>
     <UserDiv>
       <Img onClick={onImageClick} src={user?.image?user?.image:avatar}/>
       <Button onClick={deleteImage}>delete profile picture</Button>

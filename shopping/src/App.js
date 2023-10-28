@@ -12,7 +12,7 @@ import SuccessRegister from "./pages/SuccessRegister";
 import UpdatePassword from "./pages/UpdatePassword";
 import VerifyEmail from "./Emailverify/VerifyEmail";
 import Root from "./Root";
-
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   const loginUser = useSelector((state) => state.user.currentUser);
@@ -20,7 +20,7 @@ function App() {
     <HashRouter>
     <Routes>
      <Route path="/" element={<Root/>}>
-        <Route index element={<Home/>}/>
+        <Route index={true} element={<Home/>}/>
         <Route path="/success" element={<Success/>}/>
         <Route path="/successregister" element={<SuccessRegister/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
@@ -31,6 +31,7 @@ function App() {
         <Route path="/userprofile/:id" element={<Userprofile/>}/>
         <Route path="/updatepassword/:id" element={<UpdatePassword/>}/>
         <Route path="/users/:id/verify/:token" element={<VerifyEmail/>}/>
+        <Route path="/wishlist" element={<Wishlist/>}/>
       </Route>
       </Routes>
     </HashRouter>

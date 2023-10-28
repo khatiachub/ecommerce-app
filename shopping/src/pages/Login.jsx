@@ -8,7 +8,7 @@ import UpdatePassword from "./UpdatePassword";
 
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
@@ -25,19 +25,25 @@ const Container = styled.div`
 const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
-  background-color: white;
+  background-color: teal;
   @media screen and (max-width:970px) {
     width:30%;
   }
   @media screen and (max-width:815px) {
     width:45%;
   };
-  ${mobile({width:'75%'})};
+  @media screen and (max-width:600px) {
+    width:60%;
+  }
+  @media screen and (max-width:485px) {
+    width:85%;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
+  color:#fff;
 `;
 
 const Form = styled.form`
@@ -56,7 +62,7 @@ const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
-  background-color: teal;
+  background-color: #57dfdf;
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
@@ -71,6 +77,7 @@ const Links = styled(Link)`
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
+  color:#fff;
 `;
 const Error=styled.p`
   color:red;

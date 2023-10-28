@@ -2,13 +2,18 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import styled from "styled-components";
 import Newsletter from "../components/Newsletter";
-import { useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate, useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { publicRequest } from '../requestMethods';
 import { useDispatch, useSelector } from "react-redux";
-import {addProduct} from '../redux/cartRedux'
+import {addProduct, addtoWishlist, removeFromWishlist} from '../redux/cartRedux'
 import ProductSlider from './ProductSlider';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { addToCart } from '../redux/apiCalls';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
+
 
 
 const Container = styled.div`
@@ -22,21 +27,24 @@ const Wrapper = styled.div`
   display: flex;
   width:95%;
   margin:0 auto;
-  justify-content: space-around;
+  justify-content:space-between;
   @media screen and (max-width:768px) {
     flex-direction:column;
     justify-content:center;
     align-items:center;
   }
-  @media screen and (min-width:1400px) {
-    width:75%;
+  @media screen and (min-width:1024px) {
+    width:60%;
   }
+  @media screen and (min-width:1400px) {
+    width:50%;
+  }
+ 
 
 `;
 
 const ImgContainer = styled.div`
-   height:700px;
-   /* background-color:red; */
+   height:auto;
    max-width:440px;
    width:100%;
    @media screen and (max-width:880px) {
@@ -45,27 +53,26 @@ const ImgContainer = styled.div`
    @media screen and (max-width:768px) {
     max-width:600px;
   }
-  @media screen and (min-width:1150px) {
-    max-width:600px;
-  }
 `;
 
 const InfoContainer = styled.div`
    max-width:450px;
-   margin-top:20px;
+   margin-top:50px;
    width:100%;
    @media screen and (max-width:768px) {
     max-width:600px;
-    margin-top:0;
+    margin-top:60px;
   }
   @media screen and (min-width:768px) {
     padding-left:30px;
   }
-  
 `;
 
 const Title = styled.h1`
   font-weight: 200;
+  @media screen and (max-width:485px) {
+  font-size:17px;
+  }
 `;
 
 const Desc = styled.p`
@@ -74,6 +81,9 @@ const Desc = styled.p`
   width:100%;
   line-height:1.5;
   font-size:15px;
+  @media screen and (max-width:768px) {
+    display: ${(props) => props.accordeon};
+  }
 `;
 
 const Price = styled.span`
@@ -82,24 +92,17 @@ const Price = styled.span`
 `;
 
 const FilterContainer = styled.div`
-  width:100px;
   display: flex;
-  flex-direction:column;
-  /* justify-content: space-between; */
-  @media screen and (max-width:768px) {
-    flex-direction:column;
-  }
-
-
+  max-width:300px;
+  width:100%;
+  justify-content: space-between;
+  align-items:center;
 `;
 
 const Filter = styled.div`
   display: flex;
   align-items: center;
   margin-top:25px;
-
-  @media screen and (max-width:768px) {
-  }
 `;
 
 const FilterTitle = styled.span`
@@ -114,6 +117,7 @@ const FilterColor = styled.div`
   background-color: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
+  border: ${(props) =>props.isSelected&&"1.5px solid #83dbf8"};
 `;
 
 const FilterSize = styled.select`
@@ -121,24 +125,21 @@ const FilterSize = styled.select`
   padding: 5px;
 `;
 
-const FilterSizeOption = styled.option``;
+const FilterSizeOption = styled.option`
+  
+`;
 
 const AddContainer = styled.div`
-  width: 50%;
-  height:50px;
+ max-width:300px;
+  width:100%;  height:50px;
   display: flex;
   align-items: center;
-  margin-left:10px;
   margin-top:25px;
   justify-content: space-between;
   @media screen and (max-width:768px) {
    position:sticky;
    bottom:0;
    z-index:10;
-  }
-  @media screen and (max-width:485px) {
-   width:93%;
-   margin-left:0;
   }
 `;
 const Wishlist=styled.div`
@@ -149,33 +150,17 @@ const Wishlist=styled.div`
   height:50px;
   padding:0 15px 0 15px;
   box-sizing:border-box;
-  background-color:#83dbf8;
+  background-color:teal;
   border-radius:5px;
+  cursor: pointer;
 `
-
-const AmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-  margin-top:20px;
-`;
-
-const Amount = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid teal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
-`;
 
 const Button = styled.button`
   width:70%;
   height:50px;
   border:none;
-  background-color:#83dbf8;
+  background-color:teal;
+  background-color: ${(props) => props.size===''?"#b7e4f3":'teal'};
   border-radius:5px;
   color:#fff;
   cursor: pointer;
@@ -186,33 +171,44 @@ const Button = styled.button`
       transition:0.5s linear;
   }
 `;
-const ItemContainer=styled.div`
-  display:flex;
-  @media screen and (max-width:485px) {
-   flex-direction:column;
-  }
 
+const Accordeon=styled.p`
+  display:none;
+  @media screen  and (max-width:768px){
+    display:block;
+  }
+`
+const AccordeonDiv=styled.div`
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:130px;
+  margin-top:20px;
+  padding-bottom:20px;
+`
+const Arrow=styled.div`
+  display:none;
+  @media screen  and (max-width:768px){
+    display:block;
+  }
 `
 
+
+
+
 const Product = () => {
+  const loc=useLocation()
+  const colorSet=loc.state?.color
+  const sizeSet=loc.state?.size
   const location=useLocation();
   const id=location.pathname.split("/")[2]
   const [product, setProduct] = useState({});
   const[quantity,setQuantity]=useState(1)
-  const[color,setColor]=useState('')
-  const[size,setSize]=useState('')
+  const[color,setColor]=useState(colorSet)
+  const[size,setSize]=useState(sizeSet[0])
   const dispatch=useDispatch();
 
-  const handleRemove=()=>{
-    if(quantity===1){
-      return
-    }else{
-      setQuantity(quantity-1)
-    }
-  }
-  const handleAdd=()=>{
-    setQuantity(quantity+1)
-  }
+ 
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -222,81 +218,120 @@ const Product = () => {
     };
     getProduct();
   }, [id]);
-
+  const nav=useNavigate()
+  const filtered=product.img&&product.img.filter((element)=>element.color===color)
+  const image=filtered&&filtered.map((image)=>(image.image).map((image)=>(image)))
+  const loginUser = useSelector((state) => state.user?.currentUser);
+  const data={
+    userId:loginUser._id,
+    products:[
+      {
+        productId:id,
+        quantity:quantity
+      }
+    ]
+  }
+  const filteredSize=product.img&&product.img.filter((size)=>(
+    size.color===color
+  ))
+  
   const handleClick=()=>{
-   dispatch(addProduct({...product,quantity,color,size}))
+   if(color&&size){
+    nav('/cart')
+    dispatch(addProduct({...product,quantity,color,size,image}))
+    addToCart(data,dispatch)
+   }else{
+    return
+   }
   }
-  const loc=useLocation()
-  const colorSet=loc.state?.color
-  const navigate=useNavigate()
-  console.log(loc);
+  console.log(image);
 
 
-  // dispatch(addProduct({color}))
-  // const storedColor=useSelector(state=>state.cart.setColor)
+  const cart=useSelector(state=>state.cart.wishlist)
+  const addToFavorites=(id)=>{
+    const isProductInWishlist = cart.some((item) => item._id === id);
+    if (!isProductInWishlist) {
+      dispatch(addtoWishlist({ ...product, color, size, image }));
+    } else {
+      console.log('Product is already in the wishlist');
+    }
+  }
+  const params=useParams()
+  const favourites=cart&&cart.filter((product)=>(product._id===params.id))
+  const favs=favourites&&favourites.map((favorite)=>(favorite.favorite))
 
+
+  const removefromFavorites=(index)=>{
+    dispatch(removeFromWishlist(index))
+  }
+
+  const[currentColor,setCurrentColor]=useState('')
   const onClickColor=(storedColor)=>{
-    setColor(storedColor)
-    // if(color.length>0){
-      navigate(loc.pathname, { state: {...loc.state, color: '' } });
-    // }else{
-    //   navigate(loc.pathname, { state: {...loc.state, color: colorSet } });
-    // }
-
+      setColor(storedColor)
+      setCurrentColor(storedColor)
   }
-  console.log(loc.state.color);
-  console.log(color);
-
-  // console.log(cart);
-
-
-
+ 
+  const[closed,setClosed]=useState(true)
+  const handleOpen=()=>{
+    setClosed(false)
+  }
+  const handleClose=()=>{
+    setClosed(true)
+  }
   return (
     <>
     <Container>
       <Wrapper>
         <ImgContainer>
-        <ProductSlider setcolor={color} color={loc.state?.color}   image={product.img}/>
+        <ProductSlider 
+        size={filteredSize}
+        setcolor={color}
+        image={product.img}/>
 
         </ImgContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
-          <Desc>product code:{product._id}</Desc>
-          <Desc>
+          <AccordeonDiv >
+          <Accordeon>Product details</Accordeon>
+          <Arrow>
+          {closed?<KeyboardArrowDownOutlinedIcon onClick={handleOpen}/>:
+          <KeyboardArrowUpOutlinedIcon onClick={handleClose}/>}</Arrow>
+          </AccordeonDiv>
+          <Desc accordeon={closed?'none':'block'}>product code:{product._id}</Desc>
+          <Desc accordeon={closed?'none':'block'}>
             {product.desc}
           </Desc>
           <Price>$ {product.price}</Price>
+
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
               {product.img&&product.img.map((color,i)=>{
                 return(
-                  <FilterColor key={i} onClick={()=>onClickColor(color.color)}  color={color.color} ></FilterColor>               
+                  <FilterColor isSelected={color.color===currentColor}  key={i} onClick={()=>onClickColor(color.color)}  color={color.color} ></FilterColor>               
                 )
               })} 
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e)=>setSize(e.target.value)}>
-                {product.size&&product.size.map((s,i)=>{
+                {filteredSize&&filteredSize.map((size,i)=>{
                   return(
-                    <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                    size.size.map((size)=>(
+                      <FilterSizeOption key={size}>{size}</FilterSizeOption>
+                    ))
                   )
                 })}
               </FilterSize>
             </Filter>
           </FilterContainer>
-          <ItemContainer >
-            <AmountContainer>
-              <RemoveIcon  onClick={handleRemove}/>
-              <Amount>{quantity}</Amount>
-              <AddIcon onClick={handleAdd}/>
-            </AmountContainer>
             <AddContainer>
-              <Button onClick={handleClick}>ADD TO CART</Button>
-              <Wishlist><FavoriteBorderIcon style={{color:"#fff"}}/></Wishlist>
+              <Button size={size} onClick={handleClick}>ADD TO CART</Button>
+              <Wishlist >
+                {favs[0]===true?<FavoriteOutlinedIcon onClick={()=>removefromFavorites(product._id)} style={{color:"#fff"}}/>:
+                <FavoriteBorderIcon onClick={()=>addToFavorites(product._id)} style={{color:"#fff"}}/>}
+              </Wishlist>
           </AddContainer>
-          </ItemContainer>
         </InfoContainer>
       </Wrapper>
       <Newsletter />

@@ -1,34 +1,47 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
-// import Footer from "../components/Footer";
-// import Navbar from "../components/Navbar";
 import { mobile } from '../responsive';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-// import {userRequest} from '../requestMethods'
 import {loadStripe} from '@stripe/stripe-js'
+import { addProduct, addProductId, clearCart, decrementItem, incrementItem, removeProduct } from '../redux/cartRedux';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { deleteProduct } from '../redux/apiCalls';
 
-const Container = styled.div``;
+
+const Container = styled.div`
+    width:100%;
+`;
 
 const Wrapper = styled.div`
-  padding: 20px;
-  ${mobile({padding:'10px'})}
+  width:95%;
+  margin:0 auto;
+  margin-top:20px;
 
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   font-weight: 300;
-  text-align: center;
+  text-align:start;
+  border-bottom:1px solid #000;
+  padding-bottom:5px;
+  margin-top:50px; 
+  @media screen and (max-width:485px) {
+    font-weight:100;
+    font-size:22px;
+    /* margin-top:110px;  */
+    } 
 `;
 
 const Top = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  margin-top:50px;
+  @media screen and (max-width:485px) {
+    width:100%;
+    } 
 `;
 
 const TopButton = styled.button`
@@ -43,25 +56,6 @@ const TopButton = styled.button`
 
 `;
 
-const TopTexts = styled.div`
-  @media screen and (max-width:657px) {
-    display:flex;
-    flex-direction:column;
-    } 
-    @media screen and (max-width:531px) {
-    position:absolute;
-    top:152px;
-    left:32px;
-    } 
-    ${mobile({ left:20})}
-
-`;
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 2px 10px;
-
-`;
 
 const Bottom = styled.div`
   display: flex;
@@ -79,44 +73,91 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top:25px;
   ${mobile({ flexDirection: "column" })}
 `;
 
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
-  ${mobile({ flexDirection: "column" })} 
+  @media screen and (max-width:485px) {
+    /* flex-direction:column; */
+    /* justify-content:center; */
+    align-items:center;
+    margin-top:20px;
+  }
 `;
 
 const Image = styled.img`
   width: 200px;
+  cursor: pointer;
+  @media screen and (max-width:485px) {
+    max-width:200px;
+    width:100%;
+    height:360px;
+    object-fit:cover;
+  }
+  @media screen and (max-width:390px) {
+    max-width:170px;
+    width:100%;
+    height:300px;
+    object-fit:cover;
+  }
 `;
 
 const Details = styled.div`
-  padding: 20px;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  @media screen and (max-width:485px) {
+    max-width:280px;
+    width:100%;
+    height:200px;
+  }
+  @media screen and (max-width:390px) {
+    padding-left:10px;
+  }
+
 `;
 
-const ProductName = styled.span``;
-
-const ProductId = styled.span`
-  ${mobile({marginTop:10})}
+const ProductName = styled.span`
+  max-width:400px;
+  width:100%;
+  font-size:15px;
+  @media screen and (max-width:390px) {
+    font-size:12px;
+  }
 `;
 
-const ProductColor = styled.div`
+const Color = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  margin-left:10px;
   background-color: ${(props) => props.color};
-  ${mobile({marginTop:10})}
+`;
+const ProductColor = styled.span`
+    display:flex;
+    align-items:center;
+    @media screen and (max-width:390px) {
+      font-size:14px;
+  }
 `;
 
 const ProductSize = styled.span`
-    ${mobile({marginTop:10})}
-
+@media screen and (max-width:390px) {
+  font-size:14px;
+  }
 `;
+const Price=styled.div`
+  display:flex;
+  align-items:center;
+  @media screen and (max-width:390px) {
+    font-size:14px;
+  }
+
+`
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -124,6 +165,9 @@ const PriceDetail = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width:485px) {
+    margin-top:20px;
+  }
 `;
 
 const ProductAmountContainer = styled.div`
@@ -141,8 +185,10 @@ const ProductAmount = styled.div`
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
-  ${mobile({marginBottom:'20px'})}
-
+  margin-left:10px;
+  @media screen and (max-width:390px) {
+    font-size:16px;
+  }
 `;
 
 const Hr = styled.hr`
@@ -155,8 +201,8 @@ const Summary = styled.div`
   flex: 1;
   border: 0.5px solid lightgray;
   border-radius: 10px;
-  padding: 20px;
-  height: 50vh;
+  padding: 30px;
+  margin-top:23px;
 `;
 
 const SummaryTitle = styled.h1`
@@ -182,9 +228,13 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
+
+const Text=styled.h2`
+  margin-top:20%;
+  padding-bottom:100px;
+`
 const Cart = () => {
   const cart=useSelector(state=>state.cart)
-  console.log(cart);
   const makePayment=async()=>{
     const stripe=await loadStripe("pk_test_51Ns2YUF4BbozQhllhG1mC07b90Jcz0c2AvoZ8RRSqB9FoE0jGLeeVoY21vWphHwdN2peKRMpzxp4XJvolrJ5Xtc000uPQUksYH")
     const body={
@@ -206,49 +256,76 @@ const Cart = () => {
       console.log(result.error);
     }
   }
+  const dispatch=useDispatch()
+  const ClearCart=()=>{
+    dispatch(clearCart())
+  }
+const nav=useNavigate()
+const handleNavigation=(id,color,size)=>{
+  nav(`/product/${id}`,{
+    state:{
+      color:color,
+      size:size
+    }
+  })
+}
+
+const increment=(i)=>{
+  dispatch(incrementItem(i))
+}
+const decrement=(i)=>{
+    dispatch(decrementItem(i))
+}
+
+const deleteItem=(index,productId)=>{
+  deleteProduct(productId)
+  dispatch(removeProduct(index))
+}
+console.log(cart.products);
   return (
     <Container>
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
+          <TopButton onClick={ClearCart}>CLEAR CART</TopButton>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
+        {cart.products.length===0?<Text> Your cart is empty..</Text>:''}
         <Bottom>
-          <Info>
-            {cart.products&&cart.products.map(product=>(
-            <>            
+          <Info >
+            {cart.products&&cart.products.map((product,i)=>(
+            <div  key={i}>            
             <Product>
               <ProductDetail>
-                <Image src={product.img} />
-                <Details>
+                <Image src={product.image} onClick={()=>handleNavigation(product._id,product.color,product.size)}/>
+              <Details>
                   <ProductName>
-                    <b>Product:</b> {product.title}
+                    <b>PRODUCT:</b> {product.title}
                   </ProductName>
-                  <ProductId>
-                    <b>ID:</b>{product._id}
-                  </ProductId>
-                  <ProductColor color={product.color} />
+                  <ProductColor>
+                  <b>COLOR:</b> 
+                  <Color color={product.color} />
+                  </ProductColor>
                   <ProductSize>
-                    <b>Size:</b> {product.size}
+                    <b>SIZE:</b> {product.size}
                   </ProductSize>
+                  <Price >
+                  <b>PRICE:</b><ProductPrice >${product.price*product.quantity}</ProductPrice>
+                  </Price>
                 </Details>
               </ProductDetail>
               <PriceDetail>
                 <ProductAmountContainer>
-                  <AddIcon />
+                  <AddIcon onClick={()=>increment(i)}/>
                   <ProductAmount>{product.quantity}</ProductAmount>
-                  <RemoveIcon />
+                  {product.quantity===1?<DeleteOutlineIcon onClick={()=>deleteItem(i,product._id)}/>:
+                  <RemoveIcon onClick={()=>decrement(i)}/>}
                 </ProductAmountContainer>
-                <ProductPrice>${product.price*product.quantity}</ProductPrice>
+                <DeleteOutlineIcon style={{display:`${product.quantity===1?'none':'block'}`}} onClick={()=>deleteItem(i,product._id)}/>
               </PriceDetail>
             </Product>
             <Hr />
-            </>
+            </div>
              ))}
           </Info>
           <Summary>

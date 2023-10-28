@@ -12,7 +12,6 @@ const Container = styled.div`
     margin-top:40px;
 `;
 
-// ygqn gvpd bdsk wjoj
 
 const Products = ({cat,filters,sort}) => {
   const[products,setProducts]=useState([]);
@@ -35,9 +34,11 @@ useEffect(() => {
     setFilteredProducts(
       products
         .map((item) => {
-          const filteredImages = item.img.filter((image) => {
-            
-          });
+          const filteredImages = item.img.filter((image) => (
+            Object.entries(filters).every(([key, value]) =>
+            image[key].includes(value)
+          )
+          ));
           
           return { _id: item._id, images: filteredImages,price:item.price,createdAt:item.createdAt,updatedAt:item.updatedAt };
         })
@@ -47,24 +48,28 @@ useEffect(() => {
 
 useEffect(()=>{
   if(sort==="Newest"){
-    setFilteredProducts((prev)=>
+      setFilteredProducts((prev)=>
     [...prev].sort((a,b)=>a.createdAt-b.createdAt)
-
     )
+      setProducts((prev)=>
+      [...prev].sort((a,b)=>a.createdAt-b.createdAt)
+    )
+    
   }else if(sort==="asc"){
-    setFilteredProducts((prev)=>
-    [...prev].sort((a,b)=>a.price-b.price)
+      setFilteredProducts((prev)=>
+      [...prev].sort((a,b)=>a.price-b.price)
+      )
+      setProducts((prev)=>
+      [...prev].sort((a,b)=>a.price-b.price)
     )
+    
   }else{
-    if(filters){
       setFilteredProducts((prev)=>
     [...prev].sort((a,b)=>b.price-a.price)
     )
-    }else{
       setProducts((prev)=>
     [...prev].sort((a,b)=>b.price-a.price)
   )
-    }
     }
 },[sort])
 console.log(filteredproducts);
@@ -74,16 +79,14 @@ console.log(filteredproducts);
         return(
           <div key={item._id}>
           {item.images.map((image,i)=>(
-            <Product color={image.color} image={image} item={item}  key={i} />
+            <Product  color={image.color} productImg={image} item={item}  key={i} />
           ))}
           </div>
         )
       }):products.map((item,i)=>(
         item.img.map((image,i)=>(
           <>
-          {image.color}
-
-          <Product color={image.color} image={image} item={item} key={i} />
+          <Product  size={image.size}  color={image.color} productImg={image} item={item} key={i} />
           </>
         ))
       ))}

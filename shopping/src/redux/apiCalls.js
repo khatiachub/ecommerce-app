@@ -1,6 +1,7 @@
 import {  loginSuccess,registerSuccess,loginFailure ,registerFailure} from "./userRedux";
 import { publicRequest, userRequest } from "../requestMethods";
 import axios from "axios";
+import { addProductId } from "./cartRedux";
 
 
 
@@ -56,6 +57,24 @@ export const DeleteImage=async(id)=>{
  }catch(err){
    console.log(err);
  }
+}
+export const addToCart=async(data,dispatch)=>{
+  try{
+    const res=await userRequest.post("/carts/",data)
+    console.log(res.data);
+    dispatch(addProductId(res.data))
+  }catch(err){
+    console.log(err);
+  }
+}
+
+export const deleteProduct=async(productId)=>{
+  try{
+    const res=await userRequest.delete(`/carts/${productId}`)
+    console.log(res);
+  }catch(err){
+    console.log(err);
+  }
 }
 
 

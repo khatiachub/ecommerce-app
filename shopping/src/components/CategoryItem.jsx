@@ -1,16 +1,18 @@
 import styled from "styled-components";
-import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    width:280px;
+    width:100%;
     margin-top:10px;
-    padding:10px;
+    @media screen and (min-width:485px) {
+      max-width:400px;
+      padding:10px;
+    }
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 70vh;
+  height: 90vh;
   object-fit: cover;
   position:absolute;
   top:0;
@@ -19,8 +21,7 @@ const Image = styled.img`
 
 const Info = styled.div`
   width:100%;
-  background-color:pink;
-  height: 70vh;
+  height: 90vh;
   position: relative;
 `;
 
