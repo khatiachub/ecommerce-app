@@ -61,6 +61,7 @@ const InfoContainer = styled.div`
 
 const Title = styled.h1`
   font-size: 70px;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Desc = styled.p`
@@ -68,11 +69,13 @@ const Desc = styled.p`
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 3px;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Button = styled.button`
   padding: 10px;
   font-size: 20px;
+  font-family: 'Roboto Condensed', sans-serif;
   background-color: transparent;
   cursor: pointer;
 `;

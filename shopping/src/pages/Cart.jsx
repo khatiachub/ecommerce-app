@@ -24,6 +24,7 @@ const Wrapper = styled.div`
 const Title = styled.h2`
   font-weight: 300;
   text-align:start;
+  font-family: 'Roboto Condensed', sans-serif;
   border-bottom:1px solid #000;
   padding-bottom:5px;
   margin-top:50px; 
@@ -47,6 +48,7 @@ const Top = styled.div`
 const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
+  font-family: 'Roboto', sans-serif;
   cursor: pointer;
   border: ${(props) => props.type === "filled" && "none"};
   background-color: ${(props) =>
@@ -56,12 +58,11 @@ const TopButton = styled.button`
 
 `;
 
-
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({flexDirection:'column'})}
-  @media screen and (max-width:768px) {
+  @media screen and (max-width:1118px) {
     flex-direction:column;
     } 
 `;
@@ -73,16 +74,17 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items:center;
   margin-top:25px;
-  ${mobile({ flexDirection: "column" })}
-`;
+  @media screen and (max-width:485px) {
+    flex-direction:column;
+    /* align-items:self-start; */
+  }`;
 
 const ProductDetail = styled.div`
-  flex: 2;
   display: flex;
+  width:100%;
   @media screen and (max-width:485px) {
-    /* flex-direction:column; */
-    /* justify-content:center; */
     align-items:center;
     margin-top:20px;
   }
@@ -91,18 +93,16 @@ const ProductDetail = styled.div`
 const Image = styled.img`
   width: 200px;
   cursor: pointer;
+  @media screen and (max-width:768px) {
+    max-width:160px;
+    width:100%;  }
   @media screen and (max-width:485px) {
-    max-width:200px;
+    max-width:130px;
     width:100%;
-    height:360px;
+    height:250px;
     object-fit:cover;
   }
-  @media screen and (max-width:390px) {
-    max-width:170px;
-    width:100%;
-    height:300px;
-    object-fit:cover;
-  }
+  
 `;
 
 const Details = styled.div`
@@ -110,6 +110,10 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  width:100%;
+  @media screen and (max-width:768px) {
+    padding-left: 7px;
+  }
   @media screen and (max-width:485px) {
     max-width:280px;
     width:100%;
@@ -118,18 +122,22 @@ const Details = styled.div`
   @media screen and (max-width:390px) {
     padding-left:10px;
   }
-
 `;
 
 const ProductName = styled.span`
-  max-width:400px;
-  width:100%;
   font-size:15px;
+  display:flex;
+  font-family: 'Roboto', sans-serif;
   @media screen and (max-width:390px) {
-    font-size:12px;
   }
 `;
 
+const ProductTitle=styled.p`
+  margin-left:10px;
+  @media screen and (max-width:768px) {
+    font-size:10px;
+  }
+`
 const Color = styled.div`
   width: 20px;
   height: 20px;
@@ -146,27 +154,41 @@ const ProductColor = styled.span`
 `;
 
 const ProductSize = styled.span`
-@media screen and (max-width:390px) {
-  font-size:14px;
+  font-family: 'Roboto', sans-serif;
+  display:flex;
+  justify-content:space-between;
+  width:70px;
+  @media screen and (max-width:768px) {
+    margin-left:10px;
+  }
+  @media screen and (max-width:390px) {
+  /* font-size:14px; */
   }
 `;
 const Price=styled.div`
   display:flex;
   align-items:center;
-  @media screen and (max-width:390px) {
-    font-size:14px;
+  @media screen and (max-width:768px) {
+    font-size:10px;
   }
 
 `
 
 const PriceDetail = styled.div`
-  flex: 1;
+  max-width:150px;
+  width:100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   @media screen and (max-width:485px) {
-    margin-top:20px;
+    padding:20px;
+  }
+  @media screen and (max-width:1118px) {
+    max-width:100px;
+    }
+  @media screen and (max-width:768px) {
+    max-width:80px;
   }
 `;
 
@@ -186,6 +208,7 @@ const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
   margin-left:10px;
+  font-family: 'Roboto', sans-serif;
   @media screen and (max-width:390px) {
     font-size:16px;
   }
@@ -203,12 +226,19 @@ const Summary = styled.div`
   border-radius: 10px;
   padding: 30px;
   margin-top:23px;
+  height:400px;
 `;
 
-const SummaryTitle = styled.h1`
-  font-weight: 200;
+const SummaryTitle = styled.h2`
+  font-weight:200;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
-
+const ProductText=styled.p`
+  font-family: 'Roboto Condensed', sans-serif;
+  @media screen and (max-width:768px) {
+    display:none;
+  }
+`
 const SummaryItem = styled.div`
   margin: 30px 0px;
   display: flex;
@@ -217,9 +247,14 @@ const SummaryItem = styled.div`
   font-size: ${(props) => props.type === "total" && "24px"};
 `;
 
-const SummaryItemText = styled.span``;
+const SummaryItemText = styled.span`
+    font-family: 'Roboto', sans-serif;
+`;
 
-const SummaryItemPrice = styled.span``;
+const SummaryItemPrice = styled.span`
+    font-family: 'Roboto', sans-serif;
+
+`;
 
 const Button = styled.button`
   width: 100%;
@@ -227,11 +262,13 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const Text=styled.h2`
   margin-top:20%;
   padding-bottom:100px;
+  font-family: 'Roboto', sans-serif;
 `
 const Cart = () => {
   const cart=useSelector(state=>state.cart)
@@ -300,28 +337,31 @@ console.log(cart.products);
                 <Image src={product.image} onClick={()=>handleNavigation(product._id,product.color,product.size)}/>
               <Details>
                   <ProductName>
-                    <b>PRODUCT:</b> {product.title}
+                    <ProductText>PRODUCT:</ProductText> 
+                    <ProductTitle >
+                      {product.title}
+                      </ProductTitle>
                   </ProductName>
                   <ProductColor>
-                  <b>COLOR:</b> 
+                  <ProductText>COLOR:</ProductText> 
                   <Color color={product.color} />
                   </ProductColor>
                   <ProductSize>
-                    <b>SIZE:</b> {product.size}
+                    <ProductText>SIZE:</ProductText> {product.size}
                   </ProductSize>
                   <Price >
-                  <b>PRICE:</b><ProductPrice >${product.price*product.quantity}</ProductPrice>
+                  <ProductText>PRICE:</ProductText><ProductPrice >${product.price*product.quantity}</ProductPrice>
                   </Price>
                 </Details>
-              </ProductDetail>
+                </ProductDetail>
               <PriceDetail>
                 <ProductAmountContainer>
-                  <AddIcon onClick={()=>increment(i)}/>
-                  <ProductAmount>{product.quantity}</ProductAmount>
-                  {product.quantity===1?<DeleteOutlineIcon onClick={()=>deleteItem(i,product._id)}/>:
-                  <RemoveIcon onClick={()=>decrement(i)}/>}
+                  <AddIcon style={{color:'#5e5c5c'}} onClick={()=>increment(i)}/>
+                  <ProductAmount style={{color:'#5e5c5c'}}>{product.quantity}</ProductAmount>
+                  {product.quantity===1?<DeleteOutlineIcon style={{color:'#5e5c5c'}}  onClick={()=>deleteItem(i,product._id)}/>:
+                  <RemoveIcon style={{color:'#5e5c5c'}} onClick={()=>decrement(i)}/>}
                 </ProductAmountContainer>
-                <DeleteOutlineIcon style={{display:`${product.quantity===1?'none':'block'}`}} onClick={()=>deleteItem(i,product._id)}/>
+                <DeleteOutlineIcon  style={{display:`${product.quantity===1?'none':'block'}`,color:'#5e5c5c'}} onClick={()=>deleteItem(i,product._id)}/>
               </PriceDetail>
             </Product>
             <Hr />

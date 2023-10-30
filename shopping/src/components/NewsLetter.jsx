@@ -11,9 +11,11 @@ const Container = styled.div`
   flex-direction: column;
   margin-top:10vh;
 `;
-const Title = styled.h1`
-  font-size: 70px;
+const Title = styled.h4`
+  font-size: 50px;
   margin-bottom: 20px;
+  color:#292626;
+  font-family: 'Roboto Condensed', sans-serif;
   @media screen and (max-width:485px) {
     font-size: 40px;
   }
@@ -21,6 +23,7 @@ const Title = styled.h1`
 
 const Desc = styled.div`
   font-size: 24px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   margin-bottom: 20px;
   ${mobile({textAlign:'center'})}

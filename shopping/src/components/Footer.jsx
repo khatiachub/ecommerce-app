@@ -32,11 +32,17 @@
     flex-direction: column;
   `;
   
-  const Logo = styled.h1``;
+  const Logo = styled.h1`
+  color:teal;
+  font-family: 'Roboto Condensed', sans-serif;
+
+
+  `;
   
   const Desc = styled.p`
     margin: 20px 0px;
     max-width:300px;
+    font-family: 'Roboto', sans-serif;
   `;
   
   const SocialContainer = styled.div`
@@ -66,6 +72,8 @@
   
   const Title = styled.h3`
     margin-bottom: 30px;
+    font-family: 'Roboto Condensed', sans-serif;
+    color:teal;
     @media screen and (max-width:700px) {
       margin-top:40px;
     }
@@ -87,6 +95,7 @@
   const ListItem = styled.li`
     margin-bottom: 10px;
     width:105px;
+    font-family: 'Roboto', sans-serif;
   `;
   
   const Right = styled.div`
@@ -96,6 +105,7 @@
   
   const ContactItem = styled.div`
     margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     align-items: center;
     @media screen and (min-width:900px) {

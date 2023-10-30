@@ -44,6 +44,7 @@ const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
   color:#fff;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Form = styled.form`
@@ -62,6 +63,7 @@ const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
+  font-family: 'Roboto Condensed', sans-serif;
   background-color: #57dfdf;
   color: white;
   cursor: pointer;
@@ -74,6 +76,7 @@ const Button = styled.button`
 
 const Links = styled(Link)`
   margin: 5px 0px;
+  font-family: 'Roboto Condensed', sans-serif;
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;

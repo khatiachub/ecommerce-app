@@ -6,6 +6,7 @@ const Container = styled.div`
   color: white;
   display: flex;
   align-items: center;
+  font-family: 'Roboto Condensed', sans-serif;
   justify-content: center;
   font-size: 14px;
   font-weight: 500;

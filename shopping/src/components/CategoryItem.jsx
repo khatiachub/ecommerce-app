@@ -23,6 +23,7 @@ const Info = styled.div`
   width:100%;
   height: 90vh;
   position: relative;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Title = styled.h1`
@@ -30,6 +31,7 @@ const Title = styled.h1`
     font-size:20px;
     position:absolute;
     top:45%;
+    font-family: 'Roboto Condensed', sans-serif;
     left:50%;
     transform:translate(-50%,-50%);
 `;
@@ -39,6 +41,7 @@ const Button = styled.button`
     padding: 10px;
     background-color: white;
     color:gray;
+    font-family: 'Roboto Condensed', sans-serif;
     cursor: pointer;
     font-weight: 600;
     position:absolute;

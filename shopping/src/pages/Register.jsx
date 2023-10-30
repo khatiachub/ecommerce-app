@@ -37,6 +37,7 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Form = styled.form`
@@ -55,10 +56,12 @@ const Input = styled.input`
 const Agreement = styled.span`
   font-size: 12px;
   margin: 20px 0px;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Button = styled.button`
   width: 40%;
+  font-family: 'Roboto Condensed', sans-serif;
   border: none;
   padding: 15px 20px;
   background-color: teal;
@@ -73,6 +76,7 @@ const ImageButton=styled.button`
   border: none;
   padding: 10px 10px;
   background-color: teal;
+  font-family: 'Roboto Condensed', sans-serif;
   color: white;
   margin-top:20px;
   @media screen and (max-width:768px) {
@@ -129,7 +133,6 @@ const Register = () => {
     var reader=new FileReader()
     reader.readAsDataURL(e.target.files[0])
     reader.onload=()=>{
-      console.log(reader.result);
       setImage(reader.result)
     }
   }
@@ -185,7 +188,6 @@ const Register = () => {
           <Input onChange={(e)=>setPhonenumber(e.target.value)} placeholder="phonenumber" name="phonenumber"/>
           {success&&<SuccessBox ><p style={{fontSize:35,color:"#fff",textAlign:"center"}}>Congratulations! registration is successfull</p></SuccessBox>}
           {error}
-
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>

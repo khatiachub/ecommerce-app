@@ -45,6 +45,7 @@ const SliderImages=styled.img`
 `
 const Arrow=styled.div`
     position:absolute;
+    color:#fff;
     top:40%;
     right: ${(props) => props.direction === "forward" && "5%"};
     left: ${(props) => props.direction === "back" && "5%"};

@@ -109,8 +109,8 @@ const BackArrow=styled.div`
 
 
 const Logo = styled.h1`
-  font-weight: bold;
-  color:#292929;
+font-family: 'Roboto Condensed', sans-serif;
+  color:teal;
   ${mobile({fontSize:22})}
   @media screen and (max-width:768px) {
     font-size:44px;
@@ -141,6 +141,7 @@ const MenuItem = styled.div`
 `;
 const UserLink=styled(Link)`
   color:teal;
+  font-family: 'Roboto', sans-serif;
   position: relative;
   &::before{
     content: "";

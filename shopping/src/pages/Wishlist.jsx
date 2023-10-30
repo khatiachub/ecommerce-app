@@ -15,24 +15,27 @@ margin:0 auto;
 `
 const Title=styled.h3`
 text-align:center;
+font-family: 'Roboto Condensed', sans-serif;
 margin-top:20vh;
 `
 const Parag=styled.p`
 text-align:center;
 margin-top:20px;
+font-family: 'Roboto Condensed', sans-serif;
 `
 const WishList=styled.h1`
 margin-top:20px;
+font-family: 'Roboto Condensed', sans-serif;
 `
 const Image=styled.img`
-  width:320px;
+  width:310px;
   height:420px;
   object-fit:cover;
   margin-top:40px;
 `
 const Wrapper=styled.div`
     position: relative;
-    width:320px;
+    width:310px;
 
 
 `
@@ -49,15 +52,18 @@ const ProductTitle=styled.h4`
   position: absolute;
   bottom:10px;
   left:10px;
+  font-family: 'Roboto Condensed', sans-serif;
 `
 const ProductPrice=styled.h4`
   position: absolute;
   bottom:10px;
+  font-family: 'Roboto Condensed', sans-serif;
   right:10px;
 `
 const TopButton = styled.button`
   padding: 10px;
   margin-top:40px;
+  font-family: 'Roboto Condensed', sans-serif;
   font-weight: 600;
   cursor: pointer;
   border: ${(props) => props.type === "filled" && "none"};
@@ -96,7 +102,7 @@ const favQuantity=useSelector(state=>state.cart.favQuantity)
       <Empty>
         <WishList>YOUR WISH LIST ({favQuantity})</WishList>
         <TopButton  onClick={handleRemove}>CLEAR WISHLIST</TopButton>
-        {cart.length===0?<><Title>Your list is empty</Title>
+        {cart?.length===0?<><Title>Your list is empty</Title>
         <Parag>Start adding products :)</Parag></>:
         <Container>
           {cart&&cart.map((product,i)=>(

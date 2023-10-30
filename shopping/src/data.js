@@ -76,12 +76,7 @@ export const sliderItems = [
       img:"https://static.zara.net/photos///2023/I/0/1/p/3046/233/800/2/w/563/3046233800_1_1_1.jpg?ts=1693214283858",
       title: "LEGGINGS",
       cat:"LEGGINGS"
-    },{
-      id: 10,
-      img:"https://static.zara.net/photos///2023/I/0/1/p/1355/906/800/3/w/563/1355906800_1_1_1.jpg?ts=1696518207122",
-      title: "UNDERWEARS",
-      cat:"UNDERWEARS"
-    },
+    }
   ];
 
   

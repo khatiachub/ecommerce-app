@@ -39,8 +39,6 @@ const Wrapper = styled.div`
   @media screen and (min-width:1400px) {
     width:50%;
   }
- 
-
 `;
 
 const ImgContainer = styled.div`
@@ -68,14 +66,16 @@ const InfoContainer = styled.div`
   }
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   font-weight: 200;
+  font-family: 'Roboto Condensed', sans-serif;
   @media screen and (max-width:485px) {
   font-size:17px;
   }
 `;
 
 const Desc = styled.p`
+font-family: 'Roboto', sans-serif;
   margin: 25px 0px;
   max-width:300px;
   width:100%;
@@ -85,10 +85,22 @@ const Desc = styled.p`
     display: ${(props) => props.accordeon};
   }
 `;
+const DescCode=styled.p`
+  font-family: 'Roboto', sans-serif;
+  margin: 25px 0px;
+  max-width:300px;
+  width:100%;
+  line-height:1.5;
+  font-size:15px;
+  @media screen and (max-width:768px) {
+    display: ${(props) => props.accordeon};
+  }
+`
 
 const Price = styled.span`
   font-weight: 100;
   font-size: 40px;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const FilterContainer = styled.div`
@@ -105,9 +117,10 @@ const Filter = styled.div`
   margin-top:25px;
 `;
 
-const FilterTitle = styled.span`
+const FilterTitle = styled.p`
   font-size: 20px;
   font-weight: 200;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const FilterColor = styled.div`
@@ -158,9 +171,10 @@ const Wishlist=styled.div`
 const Button = styled.button`
   width:70%;
   height:50px;
+  font-family: 'Roboto', sans-serif;
   border:none;
   background-color:teal;
-  background-color: ${(props) => props.size===''?"#b7e4f3":'teal'};
+  background-color: teal;
   border-radius:5px;
   color:#fff;
   cursor: pointer;
@@ -236,7 +250,7 @@ const Product = () => {
   ))
   
   const handleClick=()=>{
-   if(color&&size){
+   if(color){
     nav('/cart')
     dispatch(addProduct({...product,quantity,color,size,image}))
     addToCart(data,dispatch)
@@ -297,7 +311,7 @@ const Product = () => {
           {closed?<KeyboardArrowDownOutlinedIcon onClick={handleOpen}/>:
           <KeyboardArrowUpOutlinedIcon onClick={handleClose}/>}</Arrow>
           </AccordeonDiv>
-          <Desc accordeon={closed?'none':'block'}>product code:{product._id}</Desc>
+          <DescCode accordeon={closed?'none':'block'}>product code:{product._id}</DescCode>
           <Desc accordeon={closed?'none':'block'}>
             {product.desc}
           </Desc>

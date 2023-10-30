@@ -2,14 +2,19 @@ import styled from "styled-components";
 import Products from "../components/Products";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
+
+
+
 const Container = styled.div`
    width:95%;
    margin:0 auto;
    margin-top:80px;
+   padding-bottom:100px;
 `;
 
 const Title = styled.h3`
   margin-top: 20px;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const FilterContainer = styled.div`
@@ -31,6 +36,7 @@ const FilterText = styled.span`
   font-size: 20px;
   font-weight: 500;
   margin-right: 20px;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Select = styled.select`
@@ -45,7 +51,10 @@ const Select = styled.select`
   }
 
 `;
-const Option = styled.option``;
+const Option = styled.option`
+  font-family: 'Roboto Condensed', sans-serif;
+
+`;
 
 const ProductList = () => {
   const location=useLocation();
@@ -70,16 +79,20 @@ const ProductList = () => {
               COLOR
             </Option>
             <Option>WHITE</Option>
+            <Option>BEIGE</Option>
             <Option>BLACK</Option>
             <Option>RED</Option>
             <Option>BLUE</Option>
-            <Option>YELLOW</Option>
+            <Option>LIGHTBLUE</Option>
             <Option>GREEN</Option>
             <Option>GREY</Option>
             <Option>DARK GREY</Option>
             <Option>BROWN</Option>
             <Option>PINK</Option>
             <Option>GOLD</Option>
+            <Option>DARKRED</Option>
+            <Option>TAN</Option>
+
           </Select>
           <Select name='size' onChange={handleFilter} >
             <Option  >

@@ -26,7 +26,7 @@
   
   const Container = styled.div`
     width:300px;
-    height: 370px;
+    height:500px;
     margin-top:100px;
     padding:3px;
     display: flex;
@@ -49,7 +49,7 @@
   `;
   
   const Image = styled.img`
-    height:370px;
+    height:500px;
     width:300px;
     object-fit:cover;
     z-index: 2;
@@ -83,9 +83,11 @@
     }
   `;
   const Title=styled.p`
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight:100;
   `
   const Price=styled.p`
+    font-family: 'Roboto Condensed', sans-serif;
     margin-top:10px;
     
   `
