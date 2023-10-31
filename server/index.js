@@ -35,6 +35,9 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+  res.redirect('/api/auth'); // Redirect to the /api/auth endpoint
+});
 
 
 
