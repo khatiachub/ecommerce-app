@@ -36,16 +36,17 @@ app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  // Handle the root request here
+  res.send("get request")
 });
 app.post('/', (req, res) => {
   // Handle the root request here
+  res.send("post request")
 });
 app.put('/', (req, res) => {
-  // Handle the root request here
+  res.send("put request")
 });
 app.delete('/', (req, res) => {
-  // Handle the root request here
+  res.send("delete request")
 });
 
 
