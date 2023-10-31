@@ -39,6 +39,7 @@ app.use(express.static('public'));
 
 
 
+
 app.post("/api/payment",async(req,res)=>{
   const {cart}=req.body
   const lineItems=cart?.products&&cart?.products.map((product)=>({
@@ -59,7 +60,6 @@ app.post("/api/payment",async(req,res)=>{
     cancel_url:"http://localhost:3000/#/cancel"
   })
   res.json({id:session.id})
-  
 })
 
 

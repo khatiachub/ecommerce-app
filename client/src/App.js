@@ -19,7 +19,7 @@ function App() {
   return(
     <HashRouter>
     <Routes>
-     <Route path="/" element={<Root/>}>
+     <Route path="/api" element={<Root/>}>
         <Route index={true} element={<Home/>}/>
         <Route path="/success" element={<Success/>}/>
         <Route path="/successregister" element={<SuccessRegister/>}/>
