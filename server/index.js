@@ -35,6 +35,18 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+  // Handle the root request here
+});
+app.post('/', (req, res) => {
+  // Handle the root request here
+});
+app.put('/', (req, res) => {
+  // Handle the root request here
+});
+app.delete('/', (req, res) => {
+  // Handle the root request here
+});
 
 
 
