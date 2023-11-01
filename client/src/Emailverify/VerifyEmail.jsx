@@ -1,6 +1,6 @@
 // import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link,  useNavigate, useParams } from 'react-router-dom'
 import { userRequest } from '../requestMethods'
 import styled from 'styled-components'
 
@@ -50,11 +50,10 @@ export default function VerifyEmail() {
     },[params])
   return (
     <>
-        {validurl?
+        {validurl&&
         <SuccessVerify>
             Email verified successfully
-        </SuccessVerify>:
-        <p>404 NOT FOUND</p>}
+        </SuccessVerify>}
     </>
   )
 }

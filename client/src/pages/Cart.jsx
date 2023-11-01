@@ -293,6 +293,7 @@ const Cart = () => {
       console.log(result.error);
     }
   }
+  
   const dispatch=useDispatch()
   const ClearCart=()=>{
     dispatch(clearCart())
@@ -318,7 +319,6 @@ const deleteItem=(index,productId)=>{
   deleteProduct(productId)
   dispatch(removeProduct(index))
 }
-console.log(cart.products);
   return (
     <Container>
       <Wrapper>

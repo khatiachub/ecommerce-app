@@ -112,17 +112,27 @@ router.post("/signin",async(req,res)=>{
       const { password, ...others } = user._doc;
 
       if(!user.verified){
-        const token=new Token(
-          {
-            userId:user._id,
-            token:crypto.randomBytes(16).toString("hex")
-          }
-        )
-        await token.save()
-        console.log(token);
-          const url=`${process.env.BASE_URL}/#/users/${user._id}/verify/${token.token}`
-          await sendEmail(user.email,"verify email",url)
-          return res.status(400).json({message:"Please verify email, link is sent to your account"})
+        const existingToken = await Token.findOne({ userId: user._id });
+        if(existingToken){
+          existingToken.updatedAt = new Date();
+          await existingToken.save();
+          const url = `${process.env.BASE_URL}/#/users/${user._id}/verify/${existingToken.token}`;
+          await sendEmail(user.email, "verify email", url);
+      
+          return res.status(400).json({ message: "Verification email resent" });
+        }else{
+          const token=new Token(
+            {
+              userId:user._id,
+              token:crypto.randomBytes(16).toString("hex")
+            }
+          )
+          await token.save()
+          console.log(token);
+            const url=`${process.env.BASE_URL}/#/users/${user._id}/verify/${token.token}`
+            await sendEmail(user.email,"verify email",url)
+            return res.status(400).json({message:"Please verify email, link is sent to your account"})
+        }
       }else{
         return res.status(200).json({...others, accessToken});
       }

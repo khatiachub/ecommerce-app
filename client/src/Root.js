@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './components/Navbar'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
 import styled from 'styled-components'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -64,11 +64,12 @@ export default function Root() {
   const loginUser = useSelector((state) => state.user.currentUser);
   const quantity=useSelector(state=>state.cart.quantity)
   const favQuantity=useSelector(state=>state.cart.favQuantity)
-
+  const loc=useLocation()
+  console.log(loc);
   
   return (
     <div>
-      <Navbar/>
+      {loc.pathname==='/users/:id/verify/:token'?'':<Navbar/>}
       <Outlet/>
       <NavigateBar>
         <Nav>
@@ -102,9 +103,8 @@ export default function Root() {
                  <Language>GE</Language>
             </Select>
         </Nav>
-
       </NavigateBar>
-      <Footer/>
+      {loc.pathname==='/users/:id/verify/:token'?'':<Footer/>}
     </div>
   )
 }
