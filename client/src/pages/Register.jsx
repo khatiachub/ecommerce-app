@@ -96,10 +96,10 @@ const Img=styled.img`
     `}
 `
 const SuccessBox=styled.div`
-  width:500px;
+  width:520px;
   height:350px;
   border-radius:5px;
-  background-color:lightpink;
+  background-color:teal;
   position:absolute;
   top:30%;
   left:50%;
@@ -186,7 +186,7 @@ const Register = () => {
           <Input onChange={(e)=>setCity(e.target.value)} placeholder="city" name="city"/>
           <Input onChange={(e)=>setAddress(e.target.value)} placeholder="your address" name="address"/>
           <Input onChange={(e)=>setPhonenumber(e.target.value)} placeholder="phonenumber" name="phonenumber"/>
-          {success&&<SuccessBox ><p style={{fontSize:35,color:"#fff",textAlign:"center"}}>Congratulations! registration is successfull</p></SuccessBox>}
+          {success&&<SuccessBox ><p style={{fontSize:35,color:"#fff",textAlign:"center"}}>You registered successfully! Please verify your account, link is sent to your email.</p></SuccessBox>}
           {error}
           <Agreement>
             By creating an account, I consent to the processing of my personal

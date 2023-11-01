@@ -8,7 +8,6 @@ import {BrowserRouter,Route,Navigate,Routes,HashRouter} from "react-router-dom";
 import Success from './pages/Success'
 import { useSelector } from "react-redux";
 import Userprofile from "./components/Userprofile";
-import SuccessRegister from "./pages/SuccessRegister";
 import UpdatePassword from "./pages/UpdatePassword";
 import VerifyEmail from "./Emailverify/VerifyEmail";
 import Root from "./Root";
@@ -22,7 +21,6 @@ function App() {
      <Route path="/" element={<Root/>}>
         <Route index={true} element={<Home/>}/>
         <Route path="/success" element={<Success/>}/>
-        <Route path="/successregister" element={<SuccessRegister/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
         <Route path="/product/:id" element={<Product/>}/>
         <Route path="/register" element={<Register/>}/>

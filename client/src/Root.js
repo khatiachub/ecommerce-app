@@ -63,6 +63,8 @@ const NavigateBar=styled.div`
 export default function Root() {
   const loginUser = useSelector((state) => state.user.currentUser);
   const quantity=useSelector(state=>state.cart.quantity)
+  const favQuantity=useSelector(state=>state.cart.favQuantity)
+
   
   return (
     <div>
@@ -86,8 +88,15 @@ export default function Root() {
                 <PersonOutlineOutlinedIcon style={{ marginBottom: 3 ,fontSize:30}}/>      
             </Links>
             <Links  to={'/wishlist'}>
-            <FavoriteBorderOutlinedIcon style={{ marginBottom: 3 ,fontSize:30}}/>
+            {favQuantity > 0 ? (
+            <Badge badgeContent={favQuantity} color='primary'>
+               <FavoriteBorderOutlinedIcon />
+            </Badge>
+             ) : (
+              <FavoriteBorderOutlinedIcon style={{ marginBottom: 3 ,fontSize:30}}/>
+              )}
             </Links>
+            
              <Select>
                  <Language>EN</Language>
                  <Language>GE</Language>

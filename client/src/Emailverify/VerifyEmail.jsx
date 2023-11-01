@@ -2,8 +2,24 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { userRequest } from '../requestMethods'
+import styled from 'styled-components'
 
 
+const SuccessVerify=styled.div`
+  width:520px;
+  height:350px;
+  border-radius:5px;
+  background-color:teal;
+  position:absolute;
+  top:30%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  padding-left:10px;
+  padding-right:10px;
+`
 
 export default function VerifyEmail() {
     const[validurl,setValidurl]=useState(false)
@@ -23,7 +39,6 @@ export default function VerifyEmail() {
             try{
                 const url=`/auth/${params.id}/verify/${params.token}`
                 const{data}=await userRequest.get(url)
-                console.log(data);
                 setValidurl(true)
 
             }catch(error){
@@ -36,9 +51,9 @@ export default function VerifyEmail() {
   return (
     <>
         {validurl?
-        <div>
-            <h1>Email verified successfully</h1>
-        </div>:
+        <SuccessVerify>
+            Email verified successfully
+        </SuccessVerify>:
         <p>404 NOT FOUND</p>}
     </>
   )

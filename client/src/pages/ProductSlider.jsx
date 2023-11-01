@@ -43,12 +43,18 @@ const SliderImages=styled.img`
         height:80px;
   }
 `
-const Arrow=styled.div`
+const ArrowLeft=styled.div`
     position:absolute;
     color:#fff;
     top:40%;
-    right: ${(props) => props.direction === "forward" && "5%"};
-    left: ${(props) => props.direction === "back" && "5%"};
+    left:5%;
+    transform:translateY(-50%);
+`
+const ArrowRight=styled.div`
+    position:absolute;
+    color:#fff;
+    top:40%;
+    right: 5%;
     transform:translateY(-50%);
 `
 
@@ -111,12 +117,12 @@ export default function ProductSlider(props) {
   ))} 
         </SliderBox>
   </Swiper>
-         <Arrow direction='forward' onClick={()=>handleClick("forward")}>
+         <ArrowRight direction='forward' onClick={()=>handleClick("forward")}>
             <ArrowForwardIosIcon style={{fontSize:35}}/>
-         </Arrow>
-         <Arrow direction='back' onClick={()=>handleClick("back")}>
+         </ArrowRight>
+         <ArrowLeft direction='back' onClick={()=>handleClick("back")}>
            <ArrowBackIosIcon style={{fontSize:35}}/>
-         </Arrow>
+         </ArrowLeft>
     </Slider>
   )
 }

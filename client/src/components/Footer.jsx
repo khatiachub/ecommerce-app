@@ -25,6 +25,9 @@
     @media screen and (min-width:1450px) {
       width:60%;
     }
+    @media screen and (max-width:485px) {
+      margin-bottom:65px;
+    } 
   `;
   
   const Left = styled.div`
