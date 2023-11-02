@@ -19,7 +19,7 @@ const Products = ({cat,filters,sort}) => {
 useEffect(()=>{
   const getProducts=async()=>{
     try{
-      const res=await axios.get(`https://ecommerce-krayx74le-khatia-chubinidzes-projects.vercel.app/api/products?category=${cat}`)
+      const res=await axios.get(`https://ecommerce-app-two-alpha.vercel.app/api/products?category=${cat}`)
       setProducts(res.data);
       console.log(res.data);
     }catch(err){ }
