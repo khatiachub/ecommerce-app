@@ -222,7 +222,6 @@ const Product = () => {
   const[size,setSize]=useState(sizeSet[0])
   const dispatch=useDispatch();
 
- 
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -237,7 +236,7 @@ const Product = () => {
   const image=filtered&&filtered.map((image)=>(image.image).map((image)=>(image)))
   const loginUser = useSelector((state) => state.user?.currentUser);
   const data={
-    userId:loginUser._id,
+    userId:loginUser?._id,
     products:[
       {
         productId:id,
