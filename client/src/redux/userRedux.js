@@ -6,12 +6,8 @@ const userReducer=createSlice({
     initialState:{
         currentUser:null,
         registerUser:null,
-        error:null,
     },
     reducers:{
-    //    loginStart:(state)=>{
-    //     state.isFetching=true
-    //    },
        loginSuccess:(state,action)=>{
         state.currentUser=action.payload
        },
@@ -20,15 +16,10 @@ const userReducer=createSlice({
        },
        registerFailure:(state,action)=>{
         state.error=true
-       },
-       loginFailure:(state)=>{
-        state.error='wrong credentials'
        }
 
     }
 })
 
-
-
-export const {loginSuccess,registerSuccess,loginFailure,registerFailure}=userReducer.actions
+export const {loginSuccess,registerSuccess,registerFailure}=userReducer.actions
 export default userReducer.reducer

@@ -66,8 +66,6 @@ export default function ProductSlider(props) {
     
     const handleClick = (direction) => {
       const totalImages = getTotalImages();
-      console.log(totalImages);
-
   
       if (direction === 'forward') {
         setCurrentImage((prevIndex) => (prevIndex + 1) % totalImages);

@@ -21,7 +21,6 @@ useEffect(()=>{
     try{
       const res=await axios.get(`https://ecommerce-app-two-alpha.vercel.app/api/products?category=${cat}`)
       setProducts(res.data);
-      console.log(res.data);
     }catch(err){ }
   }
   getProducts();
@@ -72,7 +71,6 @@ useEffect(()=>{
   )
     }
 },[sort])
-console.log(filteredproducts);
   return (
     <Container>
       {filters?filteredproducts.map((item)=>{

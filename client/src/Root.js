@@ -65,7 +65,6 @@ export default function Root() {
   const quantity=useSelector(state=>state.cart.quantity)
   const favQuantity=useSelector(state=>state.cart.favQuantity)
   const loc=useLocation()
-  console.log(loc);
   
   return (
     <div>

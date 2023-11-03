@@ -119,7 +119,6 @@
   const favs=favourites&&favourites.map((favorite)=>(favorite.favorite))
   const favImage=favourites&&favourites.map((product)=>(product.img.filter((image)=>(image.color===color))))
  const image=favImage&&favImage.map((image)=>(image.map((product)=>(product.image))))
- console.log(favImage);
   const addToFavorites=(event,id)=>{
     event.stopPropagation()
     const isProductInWishlist = cart.some((item) => item._id === id);
@@ -133,7 +132,6 @@
     event.stopPropagation()
     dispatch(removeFromWishlist(index))
   }
-console.log(color);
   
     return (
       <Container onClick={handleClick}>

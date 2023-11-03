@@ -257,7 +257,6 @@ const Product = () => {
     return
    }
   }
-  console.log(image);
 
 
   const cart=useSelector(state=>state.cart.wishlist)

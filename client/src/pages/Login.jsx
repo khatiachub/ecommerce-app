@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/apiCalls";
 import { Link, useNavigate } from "react-router-dom";
 import UpdatePassword from "./UpdatePassword";
+import { useForm } from 'react-hook-form'
 
 
 const Container = styled.div`
@@ -68,6 +69,7 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  margin-top:10px;
   &:disabled{
     color:green;
     cursor:not-allowed
@@ -87,28 +89,30 @@ const Error=styled.p`
 `
 
 const Login = () => {
-  const[username,setUsername]=useState("")
-  const[password,setPassword]=useState("")
+  const { register, handleSubmit,watch, reset, formState: { errors } } = useForm({ criteriaMode: "all" });
+  const username=watch("username")
+  const password=watch("password")
+  const[errorMessage,setErrorMessage]=useState(false)
   const dispatch=useDispatch();
-  const error= useSelector((state) => state.user.error);
-  
-
-  const handleClick=(e)=>{
-    e.preventDefault();
-    login(dispatch,{username,password})
+  const handleClick=()=>{
+    login(dispatch,{username,password},setErrorMessage)
     // UpdatePassword(dispatch,{username,password})
   }
   
-  
+  const userName=register("username",{required:true})
+  const Password=register("password",{required:true})
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
-        <Form>
-          <Input  placeholder="username" onChange={(e)=>setUsername(e.target.value)}/>
-          <Input  placeholder="password" type="password" onChange={(e)=>setPassword(e.target.value)}/>
+        <Form onSubmit={handleSubmit(handleClick)}>
+          <Input  {...userName} placeholder="username" style={{border:`${errors.username||username===''?'1px solid red':'1px solid grey'}`}}/>
+          {errors.username&&<Error>This field is mandatory</Error>}
+
+          <Input {...Password} style={{border:`${errors.password||password===''?'1px solid red':'1px solid grey'}`}}  placeholder="password" type="password" />
+          {errors.password&&<Error>This field is mandatory</Error>}
+          {errorMessage&&<Error>Wrong credentials!</Error>}
           <Button onClick={handleClick} disabled={username===""||password===""}>LOGIN</Button>
-          <Error>{error}</Error>
           <Links to='/updatepassword'>DO NOT YOU REMEMBER THE PASSWORD?</Links>
           <Links to='/register'>CREATE A NEW ACCOUNT</Links>
         </Form>
@@ -116,5 +120,4 @@ const Login = () => {
     </Container>
   );
 };
-
 export default Login;

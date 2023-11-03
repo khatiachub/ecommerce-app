@@ -1,11 +1,15 @@
 import styled, {css} from "styled-components";
 import { mobile } from "../responsive";
 import { useEffect, useRef, useState } from "react";
-import { register } from "../redux/apiCalls";
+import { login, registerUser } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import avatar from '../images/avatar.png'
 import { registerSuccess } from "../redux/userRedux";
+import { useForm } from 'react-hook-form'
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { ErrorMessage } from '@hookform/error-message';
+
 
 const Container = styled.div`
   width: 100%;
@@ -44,13 +48,6 @@ const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   position:relative;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 20px 10px 0px 0px;
-  padding: 10px;
 `;
 
 const Agreement = styled.span`
@@ -110,22 +107,43 @@ const SuccessBox=styled.div`
   padding-left:10px;
   padding-right:10px;
 `
+const ErrorFields=styled.div`
+  min-width:50%;
+  position: relative;
+  @media screen and (max-width:1032px) {
+    width:100%;
+  }
+`
+const Input = styled.input`
+  /* flex: 1; */
+  min-width: 85%;
+  margin: 20px 10px 0px 0px;
+  padding: 10px;
+`;
+const ErrorMessages=styled.p`
+  color:red;
+  font-family: 'Roboto Condensed', sans-serif;
+  margin-top:10px;
+  font-size:12px;
+`
 
 const Register = () => {
-  const[name,setName]=useState("")
-  const[lastname,setLastname]=useState("")
-  const[username,setUsername]=useState("")
-  const[email,setEmail]=useState("")
-  const[password,setPassword]=useState("")
-  const[confirmpassword,setConfirmpassword]=useState("")
-  const[address,setAddress]=useState("")
-  const[city,setCity]=useState("")
-  const[phonenumber,setPhonenumber]=useState(null)
+  const { register, handleSubmit,watch, reset, formState: { errors } } = useForm({ criteriaMode: "all" });
+  const name=watch("name")
+  const lastname=watch("lastname")
+  const username=watch("username")
+  const email=watch("email")
+  const password=watch("password")
+  const confirmpassword=watch("confirmpassword")
+  const address=watch("address")
+  const city=watch("city")
+  const phonenumber=watch("phonenumber")
+
+
   const[image,setImage]=useState("")
   const ref=useRef(null)
   const error= useSelector((state) => state.user.error);
   const[success,setSuccess]=useState(false)
-
   const dispatch=useDispatch();
   const nav=useNavigate();
 
@@ -136,8 +154,7 @@ const Register = () => {
       setImage(reader.result)
     }
   }
-  const handleClick=(e)=>{
-    e.preventDefault();
+  const handleClick=()=>{
     const formData = new FormData();
     formData.append('name', name);
     formData.append('lastname', lastname);
@@ -149,7 +166,7 @@ const Register = () => {
     formData.append('city', city);
     formData.append('phonenumber', phonenumber);
     formData.append('image', image);
-    register(dispatch,formData,setSuccess)
+    registerUser(dispatch,formData,setSuccess)
   }
 
 
@@ -167,6 +184,45 @@ const Register = () => {
       ref.current.click();
     }
 
+    const firstName = register('name', { required: true, 
+      pattern:{
+        value:/^[A-Za-z]+$/i,
+        message:"Only symbols are allowed"
+      }})
+    const lastName = register('lastname', { required: true, 
+      pattern:{
+        value:/^[A-Za-z]+$/i,
+        message:"Only symbols are allowed"
+      }})
+    const userName = register('username', { required: true,  minLength: 2 })
+    const Email = register('email', {
+      required: true,
+      pattern: {
+        value: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/,
+        message: "Invalid email address",
+      },
+      minLength: 2,
+    });
+    
+    const Password = register('password', {
+       required: true, 
+       pattern: {
+        value:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.*[a-zA-Z0-9@#$%^&+=!]).{8,}$/,
+        message:"Password is too weak!"
+       },
+        minLength: 8 })
+    const confirmPassword = register('confirmpassword', { required: true })
+    const Number = register('phonenumber', { required: true, pattern: {
+      value:/^(\+?995)?(79\d{7}|5\d{8})$/,
+      message:"Invalid mobile number"
+    }})
+    const Address = register('address', { required: true, minLength: 2 })
+    const City = register('city', { required: true, pattern:{
+      value: /^[A-Za-z]+$/i,
+      message:"Only symbols are allowed"
+    }, minLength: 2 })
+    const[visiblePassword,setVisiblePassword]=useState(false)
+    const[visibleConfirm,setVisibleConfirm]=useState(false)
   return (
     <Container>
       <Wrapper>
@@ -175,24 +231,169 @@ const Register = () => {
         {<Img onClick={onImageClick} src={image?image:avatar}/>}
         <ImageButton onClick={() => document.querySelector('.uploadbutton').click()} >upload image</ImageButton>
         </div>
-        <Form method="post" encType="multipart/form-data">
-          <Input ref={ref} onChange={uploadImage} accept="image/*" className="uploadbutton" name="image"  style={{display:"none"}} type="file"/>
-          <Input onChange={(e)=>setName(e.target.value)} placeholder="name" name="name"/>
-          <Input onChange={(e)=>setLastname(e.target.value)} placeholder="last name" name="lastname"/>
-          <Input onChange={(e)=>setUsername(e.target.value)} placeholder="username" name="username"/>
-          <Input onChange={(e)=>setEmail(e.target.value)} placeholder="email" name="email"/>
-          <Input onChange={(e)=>setPassword(e.target.value)} placeholder="password" name="password"/>
-          <Input onChange={(e)=>setConfirmpassword(e.target.value)} placeholder="confirm password"name="confirmpassword" />
-          <Input onChange={(e)=>setCity(e.target.value)} placeholder="city" name="city"/>
-          <Input onChange={(e)=>setAddress(e.target.value)} placeholder="your address" name="address"/>
-          <Input onChange={(e)=>setPhonenumber(e.target.value)} placeholder="phonenumber" name="phonenumber"/>
+        <Form onSubmit={handleSubmit(handleClick)}>
+          <Input 
+          ref={ref} onChange={uploadImage} 
+          accept="image/*" 
+          className="uploadbutton" 
+          name="image"  
+          style={{display:"none"}} 
+          type="file"/>
+          <ErrorFields>
+          <Input 
+          className=""
+          {...firstName}
+          placeholder="name" 
+          name="name"
+          style={{border:`${errors.name||name===''?'1px solid red':'1px solid grey'}`}}
+          />
+          {name===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+          <ErrorMessage
+              errors={errors}
+              name="name"
+              render={({ messages }) =>
+              messages &&
+              Object.entries(messages).map(([type, message]) => (
+                <ErrorMessages key={type}>{message}</ErrorMessages>
+                ))
+              }
+          />
+          </ErrorFields>
+          <ErrorFields>
+          <Input 
+          {...lastName}
+          placeholder="last name" 
+          name="lastname"
+          style={{border:`${errors.lastname||lastname===''?'1px solid red':'1px solid grey'}`}}
+          />
+           {lastname===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+           <ErrorMessage
+              errors={errors}
+              name="lastname"
+              render={({ messages }) =>
+              messages &&
+              Object.entries(messages).map(([type, message]) => (
+                 <ErrorMessages key={type}>{message}</ErrorMessages>
+              ))
+              }
+          />
+          </ErrorFields>
+          <ErrorFields>
+          <Input 
+          {...userName}
+          placeholder="username" 
+          name="username"
+          style={{border:`${errors.username||username===''?'1px solid red':'1px solid grey'}`}}
+          />
+           {username===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+          </ErrorFields>
+          <ErrorFields>
+          <Input 
+          {...Email}
+          placeholder="email" 
+          name="email"
+          style={{border:`${errors.email||email===''?'1px solid red':'1px solid grey'}`}}
+          />
+           {email===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+           <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ messages }) =>
+              messages &&
+              Object.entries(messages).map(([type, message]) => (
+                <ErrorMessages key={type}>{message}</ErrorMessages>
+                ))
+              }
+          />
+          </ErrorFields>
+          <ErrorFields>
+          <Input 
+          type={`${visiblePassword?'':'password'}`}
+          {...Password}
+          placeholder="password" 
+          name="password"
+          style={{border:`${errors.password||password===''?'1px solid red':'1px solid grey'}`}}
+          />
+           {password===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+           <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ messages }) =>
+              messages &&
+              Object.entries(messages).map(([type, message]) => (
+                <ErrorMessages key={type}>{message}</ErrorMessages>
+                ))
+              }
+          />
+           <VisibilityIcon style={{position:"absolute",right:25,top:26}} onClick={()=>setVisiblePassword(!visiblePassword)}/>
+          </ErrorFields>
+          
+          <ErrorFields>
+          <Input 
+          type={`${visibleConfirm?'':'password'}`}
+          {...confirmPassword}
+          placeholder="confirm password"
+          name="confirmpassword" 
+          style={{border:`${errors.confirmpassword||confirmpassword===''?'1px solid red':'1px solid grey'}`}}
+          />
+           <VisibilityIcon style={{position:"absolute",right:25,top:26}} onClick={()=>setVisibleConfirm(!visibleConfirm)}/>
+           {confirmpassword===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+           {<ErrorMessages>{password===confirmpassword||confirmpassword===''?'':'passwords did not match'}</ErrorMessages>}
+          </ErrorFields>
+          <ErrorFields>
+          <Input 
+          {...City}
+          placeholder="city" 
+          name="city"
+          style={{border:`${errors.city||city===''?'1px solid red':'1px solid grey'}`}}
+          />
+           {city===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+           <ErrorMessage
+              errors={errors}
+              name="city"
+              render={({ messages }) =>
+              messages &&
+              Object.entries(messages).map(([type, message]) => (
+                <ErrorMessages key={type}>{message}</ErrorMessages>
+                ))
+              }
+          />
+          </ErrorFields>
+          <ErrorFields>
+          <Input 
+          {...Address}
+          placeholder="your address" 
+          name="address"
+          style={{border:`${errors.address||address===''?'1px solid red':'1px solid grey'}`}}
+          />
+           {address===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+          </ErrorFields>
+          <ErrorFields>
+          <Input 
+          {...Number}
+          placeholder="phonenumber" 
+          name="phonenumber"
+          style={{border:`${errors.phonenumber||phonenumber===''?'1px solid red':'1px solid grey'}`}}
+          />
+           {phonenumber===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+           <ErrorMessage
+              errors={errors}
+              name="phonenumber"
+              render={({ messages }) =>
+              messages &&
+              Object.entries(messages).map(([type, message]) => (
+                <ErrorMessages key={type}>{message}</ErrorMessages>
+                ))
+              }
+          />
+          </ErrorFields>
           {success&&<SuccessBox ><p style={{fontSize:35,color:"#fff",textAlign:"center"}}>You registered successfully! Please verify your account, link is sent to your email.</p></SuccessBox>}
           {error}
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button onClick={handleClick}>CREATE</Button>
+          <Button type="submit" >CREATE</Button>
         </Form>
       </Wrapper>
     </Container>

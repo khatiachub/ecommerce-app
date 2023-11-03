@@ -17,12 +17,14 @@ const UserDiv=styled.div`
 `
 
 const UserBox=styled.form`
-  width:50%;
+  width:60%;
   display:flex;
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  /* margin-top:50px; */
+  @media screen and (max-width:870px) {
+    width:95%;
+  }
 
 `
 const UserName=styled.p`
@@ -32,17 +34,16 @@ const UserName=styled.p`
    
 `
 const Button = styled.button`
-  width: 150px;
-  height:50px;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
+  width: ${(props) => props.type === 'update'?'100%':'140px'};
+  padding: 10px;
+  background-color: black;
   color: white;
-  cursor: pointer;
-  @media screen and (max-width:568px) {
-    width:50%;
-  }
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+  margin-top:10px;
+  height:auto;
 `;
+
 // const LastName=styled.h3`
     
 // `
@@ -65,13 +66,17 @@ const Input=styled.input`
   border:none;
   border-bottom:1px solid grey;
   margin-top:10px;
+  font-family: 'Roboto', sans-serif;
+
 `
 const Title=styled.h2`
   font-size:22px;
   margin-top:30px;
+  font-family: 'Roboto', sans-serif;
 `
 const Label=styled.label`
   font-size:13px;
+  font-family: 'Roboto', sans-serif;
 `
 const Img=styled.img`
   border-radius:50%;
@@ -80,8 +85,20 @@ const Img=styled.img`
   margin-top:20px;
   object-fit:contain;
 `
+const UserInput=styled.div`
+  display:flex;
+  flex-direction:column;
+  margin-top:55px;
+  width:45%;
+`
+const UserInputDiv=styled.div`
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+`
 export default function Userprofile() {
     const loginUser = useSelector((state) => state.user?.currentUser);
+
     const {id}=useParams()
     const dispatch=useDispatch()
     const nav=useNavigate()
@@ -110,8 +127,6 @@ export default function Userprofile() {
     const handleUpdate=()=>{
       update(dispatch,id,user)
     }
-  //  const TOKEN=loginUser?.accessToken
-  //  console.log(TOKEN);
     useEffect(() => {
       async function fetchData(){
         try{
@@ -138,7 +153,6 @@ export default function Userprofile() {
       var reader=new FileReader()
       reader.readAsDataURL(e.target.files[0])
       reader.onload=()=>{
-        console.log(reader.result);
         setUser({...user,image:reader.result})
       }
     }
@@ -150,40 +164,43 @@ export default function Userprofile() {
     <>
     <UserDiv>
       <Img onClick={onImageClick} src={user?.image?user?.image:avatar}/>
-      <Button onClick={deleteImage}>delete profile picture</Button>
       <input style={{display:"none"}} ref={ref} type='file' onChange={handleImageChange}/>
-      <div style={{display:"flex",width:"100%",justifyContent:"end",alignItems:"baseline"}}>
-              <Button style={{marginRight:15}} onClick={handleClick}>Logout</Button>
-              <Button  onClick={(e)=>handleDelete(e)}>Delete account</Button>
-      </div>
         <UserBox >
-          <div style={{display:"flex",width:"100%",justifyContent:"space-between",alignItems:"baseline"}} >
+          <div style={{display:"flex",width:"100%",flexDirection:"column",justifyContent:"center",alignItems:"baseline",marginTop:50}} >
+              <Button style={{marginBottom:25}} onClick={deleteImage}>delete profile picture</Button>
+              <Button style={{marginBottom:25}} onClick={handleClick}>Logout</Button>
+              <Button  onClick={(e)=>handleDelete(e)}>Delete account</Button>
               <Title>YOUR PERSONAL DETAILS</Title>
           </div>
-          <div style={{display:"flex", width:"100%", justifyContent:'space-between'}}>
-          <div style={{display:"flex", flexDirection:"column", width:"45%", marginTop:"25px"}}>
+          <UserInputDiv >
+          <UserInput >
           <Label>Name</Label>
           <Input name='name' 
           value={user.name} 
-          onChange={(e)=>handleChange(e)} placeholder="name" /></div>
-          <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          onChange={(e)=>handleChange(e)} placeholder="name" />
+          </UserInput>
+          <UserInput >
           <Label>Surname</Label>
           <Input name='lastname' 
           value={user.lastname} 
-          onChange={(e)=>handleChange(e)}  placeholder="last name" /></div>
-          </div>
-          <div style={{display:"flex",  width:"100%", justifyContent:'space-between'}}>
-          <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          onChange={(e)=>handleChange(e)}  placeholder="last name" />
+          </UserInput>
+          </UserInputDiv>
+          <UserInputDiv >
+          <UserInput >
           <Label>Username</Label>
           <Input name='username'   
           value={user.username} 
-          onChange={(e)=>handleChange(e)}  placeholder="username" /></div>
-           <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          onChange={(e)=>handleChange(e)}  placeholder="username" />
+          </UserInput>
+           <UserInput >
            <Label>Email</Label>
           <Input name='email'  
           value={user.email} 
-          onChange={(e)=>handleChange(e)}  placeholder="email" /></div></div>
-          <div style={{display:"flex",  width:"100%", justifyContent:'space-between'}}>
+          onChange={(e)=>handleChange(e)}  placeholder="email" />
+          </UserInput>
+          </UserInputDiv>
+          <div >
           {/* <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
           <Label>Password</Label>
           <Input name='password'  
@@ -195,25 +212,29 @@ export default function Userprofile() {
           value={user.confirmpassword} 
           onChange={(e)=>handleChange(e)}  placeholder="confirm password" /></div> */}
           </div>
-          <div style={{display:"flex", width:"100%", justifyContent:'space-between'}}>
-          <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          <UserInputDiv >
+          <UserInput >
           <Label>City</Label>
           <Input name='city'  
           value={user.city} 
-          onChange={(e)=>handleChange(e)}  placeholder="city" /></div>
-           <div style={{display:"flex", flexDirection:"column", width:"45%",marginTop:"25px"}}>
+          onChange={(e)=>handleChange(e)}  placeholder="city" />
+          </UserInput>
+           <UserInput >
            <Label>Address</Label>
           <Input name='address'  
           value={user.address} 
-          onChange={(e)=>handleChange(e)}  placeholder="your address" /></div></div>
-           <div style={{display:"flex", flexDirection:"column", width:"100%",marginTop:"25px"}}>
+          onChange={(e)=>handleChange(e)}  placeholder="your address" />
+          </UserInput>
+          </UserInputDiv>
+           <UserInputDiv style={{display:"flex", flexDirection:"column", width:"100%",marginTop:"25px"}}>
            <Label>Telephone number</Label>
           <Input
           style={{marginTop:"25px", width:"100%"}}
            name='phonenumber'  
           value={user.phonenumber} 
-          onChange={(e)=>handleChange(e)}  placeholder="phonenumber" /></div>
-          <Button style={{marginTop:40, alignSelf:"flex-start"}} onClick={handleUpdate}>Update</Button>
+          onChange={(e)=>handleChange(e)}  placeholder="phonenumber" />
+          </UserInputDiv>
+          <Button type='update' style={{marginTop:55, alignSelf:"flex-start"}} onClick={handleUpdate}>Update</Button>
         </UserBox>
     </UserDiv>
     </>

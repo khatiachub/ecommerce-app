@@ -24,7 +24,6 @@ const SuccessVerify=styled.div`
 export default function VerifyEmail() {
     const[validurl,setValidurl]=useState(false)
     const params=useParams()
-    console.log(params);
     const nav=useNavigate()
     useEffect(()=>{
         const timeoutId = setTimeout(() => {
@@ -42,7 +41,6 @@ export default function VerifyEmail() {
                 setValidurl(true)
 
             }catch(error){
-                 console.log(error);
                  setValidurl(false)
             }
         }
