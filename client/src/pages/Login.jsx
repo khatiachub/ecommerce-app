@@ -111,7 +111,7 @@ const Login = () => {
 
           <Input {...Password} style={{border:`${errors.password||password===''?'1px solid red':'1px solid grey'}`}}  placeholder="password" type="password" />
           {errors.password&&<Error>This field is mandatory</Error>}
-          {errorMessage&&<Error>Wrong credentials!</Error>}
+          {errorMessage&&password!==''||username!==''?<Error>Wrong credentials!</Error>:''}
           <Button onClick={handleClick} disabled={username===""||password===""}>LOGIN</Button>
           <Links to='/updatepassword'>DO NOT YOU REMEMBER THE PASSWORD?</Links>
           <Links to='/register'>CREATE A NEW ACCOUNT</Links>
