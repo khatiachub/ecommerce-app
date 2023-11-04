@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchIcon from '@mui/icons-material/Search';
-import {Badge} from "@mui/material"
+import {Badge, useScrollTrigger} from "@mui/material"
 import { mobile } from "../responsive";
 // import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useSelector} from 'react-redux'
 import Announcement from "./Announcement";
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+
 
 const Container = styled.div`
   height: 60px;
@@ -208,16 +209,36 @@ const LinkItem=styled(Link)`
 const Navbar = () => {
   const quantity=useSelector(state=>state.cart.quantity)
   const favQuantity=useSelector(state=>state.cart.favQuantity)
+  const nav=useNavigate()
 
-  const[search,setSearch]=useState(false)
+  const [searchValue,setSearchValue]=useState('')
+  const value=searchValue.toUpperCase()
+
+ 
+  const handleSearch=(e)=>{
+    setSearchValue(e.target.value)
+  }
+
+  useEffect(() => {
+    nav("/searchbar",{
+      state:{
+        search:value
+      }
+  })  }, [value]);
+
+ const[search,setSearch]=useState(false)
   const onSearchClick=()=>{
     setSearch(true)
   }
+  const handleSearchClick=()=>{
+    setSearch(false)
+  }
+
+
   const onBackClick=()=>{
     setSearch(false)
   }
   const loginUser = useSelector((state) => state.user.currentUser);
-
   return (
     <Overlay >
       <Announcement/>
@@ -237,9 +258,9 @@ const Navbar = () => {
                <ArrowBackOutlinedIcon style={{fontSize:30}}/>
             </BackArrow>
           <SearchContainer >
-            <Input  placeholder="Search" />
+            <Input onChange={(e)=>handleSearch(e)}  placeholder="Search" />
             <SearchButtonLight >
-             <SearchIcon  onClick={onSearchClick} style={{ color: "#fff", fontSize: 25,marginTop:3,marginLeft:3}} />
+             <SearchIcon  onClick={handleSearchClick} style={{ color: "#fff", fontSize: 25,marginTop:3,marginLeft:3}} />
              </SearchButtonLight>
           </SearchContainer>
           </SearchOverlay>

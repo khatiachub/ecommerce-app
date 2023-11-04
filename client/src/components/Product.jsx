@@ -111,45 +111,13 @@
 
     
 
-  const dispatch=useDispatch();
-  
 
-  const cart=useSelector(state=>state.cart.wishlist)
-  const favourites=cart&&cart.filter((product)=>(product._id===item._id))
-  const favs=favourites&&favourites.map((favorite)=>(favorite.favorite))
-  const favImage=favourites&&favourites.map((product)=>(product.img.filter((image)=>(image.color===color))))
- const image=favImage&&favImage.map((image)=>(image.map((product)=>(product.image))))
-  const addToFavorites=(event,id)=>{
-    event.stopPropagation()
-    const isProductInWishlist = cart.some((item) => item._id === id);
-    if (!isProductInWishlist) {
-      dispatch(addtoWishlist({ ...item,image,color,  size}));
-    } else {
-      console.log('Product is already in the wishlist');
-    }
-  }
-  const removefromFavorites=(event,index)=>{
-    event.stopPropagation()
-    dispatch(removeFromWishlist(index))
-  }
   
     return (
       <Container onClick={handleClick}>
         <div>
         <Image src={productImg.image}/>
         <Info>
-          <Icon>
-            <ShoppingCartOutlinedIcon />
-          </Icon>
-          <Icon>
-            <SearchOutlinedIcon />
-          </Icon>
-          <Icon>
-            {favs[0]===true?
-            <FavoriteOutlinedIcon onClick={(event)=>removefromFavorites(event,item._id)}/>:
-            <FavoriteBorderOutlinedIcon onClick={(event)=>addToFavorites(event,item._id)}/>
-          }
-          </Icon>
         </Info>
         </div>
         <Desc>

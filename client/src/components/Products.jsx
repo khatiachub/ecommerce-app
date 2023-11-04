@@ -27,7 +27,6 @@ useEffect(()=>{
 },[cat])
 
 
-
 useEffect(() => {
   cat &&
     setFilteredProducts(
@@ -73,11 +72,11 @@ useEffect(()=>{
 },[sort])
   return (
     <Container>
-      {filters?filteredproducts.map((item)=>{
+      {filters?filteredproducts&&filteredproducts.map((item)=>{
         return(
           <div key={item._id}>
-          {item.images.map((image,i)=>(
-            <Product  color={image.color} productImg={image} item={item}  key={i} />
+          {item.images&&item.images.map((image,i)=>(
+            <Product size={image.size}   color={image.color} productImg={image} item={item}  key={i} />
           ))}
           </div>
         )

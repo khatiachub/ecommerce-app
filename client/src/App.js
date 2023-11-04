@@ -12,6 +12,8 @@ import UpdatePassword from "./pages/UpdatePassword";
 import VerifyEmail from "./Emailverify/VerifyEmail";
 import Root from "./Root";
 import Wishlist from "./pages/Wishlist";
+import SearchBar from "./components/SearchBar";
+
 
 function App() {
   const loginUser = useSelector((state) => state.user.currentUser);
@@ -30,6 +32,7 @@ function App() {
         <Route path="/updatepassword/:id" element={<UpdatePassword/>}/>
         <Route path="/users/:id/verify/:token" element={<VerifyEmail/>}/>
         <Route path="/wishlist" element={<Wishlist/>}/>
+        <Route path="/searchbar" element={<SearchBar/>}/>
       </Route>
       </Routes>
     </HashRouter>

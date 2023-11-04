@@ -95,7 +95,11 @@ const Login = () => {
   const[errorMessage,setErrorMessage]=useState(false)
   const dispatch=useDispatch();
   const handleClick=()=>{
-    login(dispatch,{username,password},setErrorMessage)
+    if(username===''||password===''){
+      return
+    }else{
+      login(dispatch,{username,password},setErrorMessage)
+    }
     // UpdatePassword(dispatch,{username,password})
   }
   
