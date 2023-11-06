@@ -25,7 +25,6 @@ const UserBox=styled.form`
   @media screen and (max-width:870px) {
     width:95%;
   }
-
 `
 const UserName=styled.p`
   margin-top:15px;
@@ -67,6 +66,7 @@ const Input=styled.input`
   border-bottom:1px solid grey;
   margin-top:10px;
   font-family: 'Roboto', sans-serif;
+  word-break:break-all;
 
 `
 const Title=styled.h2`
