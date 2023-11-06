@@ -25,12 +25,11 @@ const NavigateBar=styled.div`
   }
   `
   const Nav=styled.div`
-    width:80%;
+    width:76%;
     margin:0 auto;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    /* background-color:red; */
     height:60px;
 
   `
@@ -46,20 +45,20 @@ const NavigateBar=styled.div`
         transition:0.5s;
       }
   `
-  const Language = styled.option`
-      font-size: 14px;
-      cursor: pointer;
-      margin-left:3px;
-`;
-  const Select=styled.select`
-      border-radius:50%;
-      color:#fff;
-      background-color: teal;
-      border:1px solid #fff;
-      padding:3px;
-      height:30px;
-      margin-bottom:4px;
-  `
+//   const Language = styled.option`
+//       font-size: 14px;
+//       cursor: pointer;
+//       margin-left:3px;
+// `;
+//   const Select=styled.select`
+//       border-radius:50%;
+//       color:#fff;
+//       background-color: teal;
+//       border:1px solid #fff;
+//       padding:3px;
+//       height:30px;
+//       margin-bottom:4px;
+//   `
 export default function Root() {
   const loginUser = useSelector((state) => state.user.currentUser);
   const quantity=useSelector(state=>state.cart.quantity)
@@ -97,10 +96,10 @@ export default function Root() {
               )}
             </Links>
             
-             <Select>
+             {/* <Select>
                  <Language>EN</Language>
                  <Language>GE</Language>
-            </Select>
+            </Select> */}
         </Nav>
       </NavigateBar>
       {loc.pathname==='/users/:id/verify/:token'?'':<Footer/>}

@@ -130,7 +130,7 @@ const FilterColor = styled.div`
   background-color: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
-  border: ${(props) =>props.isSelected&&"1.5px solid #83dbf8"};
+  border: ${(props) =>props.isselected&&"1.5px solid #83dbf8"};
 `;
 
 const FilterSize = styled.select`
@@ -320,7 +320,7 @@ const Product = () => {
               <FilterTitle>Color</FilterTitle>
               {product.img&&product.img.map((color,i)=>{
                 return(
-                  <FilterColor isSelected={color.color===currentColor}  key={i} onClick={()=>onClickColor(color.color)}  color={color.color} ></FilterColor>               
+                  <FilterColor isselected={color.color===currentColor}  key={i} onClick={()=>onClickColor(color.color)}  color={color.color} ></FilterColor>               
                 )
               })} 
             </Filter>
@@ -340,8 +340,11 @@ const Product = () => {
             <AddContainer>
               <Button size={size} onClick={handleClick}>ADD TO CART</Button>
               <Wishlist >
-                {favs[0]===true?<FavoriteOutlinedIcon onClick={()=>removefromFavorites(product._id)} style={{color:"#fff"}}/>:
-                <FavoriteBorderIcon onClick={()=>addToFavorites(product._id)} style={{color:"#fff"}}/>}
+             {favs[0] ? 
+               <FavoriteOutlinedIcon onClick={() => removefromFavorites(product._id)} style={{ color: "#fff" }} />
+                : 
+               <FavoriteBorderIcon onClick={() => addToFavorites(product._id)} style={{ color: "#fff" }} />}
+              
               </Wishlist>
           </AddContainer>
         </InfoContainer>

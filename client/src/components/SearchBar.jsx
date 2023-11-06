@@ -8,11 +8,11 @@ import Product from './Product';
 const SearchContainer=styled.div`
     width:95%;
     min-height:100vh;
-;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin:0 auto;
+    padding-bottom:20vh;
 `
 const SearchBox=styled.div`
   
@@ -43,11 +43,13 @@ useEffect(()=>{
     <SearchContainer >
      {value&&product&&product.map((item)=>{
         return(
-          <SearchBox  key={item._id}>
+          // <SearchBox  key={item._id}>
+          <>
           {item.img&&item.img.map((image,i)=>(
             <Product  size={image.size}   color={image.color} productImg={image} item={item}  key={i} />
           ))}
-          </SearchBox>
+          </>
+          // </SearchBox>
         )
       })}  
     </SearchContainer>

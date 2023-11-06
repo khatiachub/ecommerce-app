@@ -220,11 +220,17 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    nav("/searchbar",{
-      state:{
-        search:value
-      }
-  })  }, [value]);
+    if (value === '') {
+      nav("/");
+    } else {
+      nav("/searchbar", {
+        state: {
+          search: value
+        }
+      });
+    }
+  }, [value]);
+  
 
  const[search,setSearch]=useState(false)
   const onSearchClick=()=>{
@@ -268,12 +274,12 @@ const Navbar = () => {
           <Right >
           <Search onClick={onSearchClick}>
             <InputSearch  placeholder="Search" />
-            <InputSearchButton >
+            <InputSearchButton>
              <SearchIcon />
              </InputSearchButton>
           </Search>
-        <SearchButton >
-             <i onClick={onSearchClick}   class="fa-solid fa-magnifying-glass"></i>
+        <SearchButton style={{marginBottom:5,color:"teal"}}>
+             <i onClick={onSearchClick}   className="fa-solid fa-magnifying-glass"></i>
           </SearchButton>
           <MenuItem  type='account'>
             <UserLink  to="/register">

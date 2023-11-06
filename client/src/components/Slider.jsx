@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { sliderItems } from "../data";
 import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
-import { mobile } from "../responsive";
 
 
 const Container = styled.div`
@@ -12,8 +11,6 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-  ${mobile({display:'none'})}
-
 `;
 
 const Arrow = styled.div`
@@ -39,7 +36,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   transition: all 1.5s ease;
-  transform: translateX(${(props) => props.slideIndex * -100}vw);
+  transform: translateX(${(props) => props.slideindex * -100}vw);
 `;
 
 const Slide = styled.div`
@@ -48,10 +45,13 @@ const Slide = styled.div`
   display: flex;
   align-items: center;
   background-color: #${(props) => props.bg};
-  background-image:url(${props => props.imageUrl});
+  background-image:url(${props => props.imageurl});
   background-repeat:no-repeat;
   background-size:cover;
   background-position:top;
+  @media screen and (max-width:485px) {
+    height:600px;
+  }
 `;
 
 const InfoContainer = styled.div`
@@ -62,6 +62,9 @@ const InfoContainer = styled.div`
 const Title = styled.h1`
   font-size: 70px;
   font-family: 'Roboto Condensed', sans-serif;
+  @media screen and (max-width:485px) {
+    font-size:25px;
+  }
 `;
 
 const Desc = styled.p`
@@ -70,6 +73,9 @@ const Desc = styled.p`
   font-weight: 500;
   letter-spacing: 3px;
   font-family: 'Roboto Condensed', sans-serif;
+  @media screen and (max-width:485px) {
+    font-size: 15px;
+  }
 `;
 
 const Button = styled.button`
@@ -81,12 +87,12 @@ const Button = styled.button`
 `;
 
 const Slider = () => {
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [slideindex, setSlideIndex] = useState(0);
   const handleClick = (direction) => {
     if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+      setSlideIndex(slideindex > 0 ? slideindex - 1 : 2);
     } else {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+      setSlideIndex(slideindex < 2 ? slideindex + 1 : 0);
     }
   };
 
@@ -96,10 +102,10 @@ const Slider = () => {
         <ArrowLeftOutlinedIcon />
       </Arrow>
       <Wrapper 
-      slideIndex={slideIndex}
+      slideindex={slideindex}
       >
         {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id} imageUrl={item.img}>
+          <Slide bg={item.bg} key={item.id} imageurl={item.img}>
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>

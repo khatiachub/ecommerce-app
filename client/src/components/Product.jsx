@@ -1,13 +1,6 @@
   import styled from "styled-components";
-  import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
-  import SearchOutlinedIcon from '@mui/icons-material/Search';
-  import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-  import { Link, useLocation, useNavigate} from "react-router-dom";
-  import { addtoWishlist, removeFromWishlist } from "../redux/cartRedux";
-  import { useDispatch, useSelector } from "react-redux";
-  import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-
-
+  import { useNavigate} from "react-router-dom";
+  
   const Info = styled.div`
     opacity: 0;
     width: 100%;
@@ -106,13 +99,6 @@
         }
       })
     }
-
-
-
-    
-
-
-  
     return (
       <Container onClick={handleClick}>
         <div>

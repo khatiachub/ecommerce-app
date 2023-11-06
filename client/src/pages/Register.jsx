@@ -115,7 +115,6 @@ const ErrorFields=styled.div`
   }
 `
 const Input = styled.input`
-  /* flex: 1; */
   min-width: 85%;
   margin: 20px 10px 0px 0px;
   padding: 10px;
@@ -125,6 +124,20 @@ const ErrorMessages=styled.p`
   font-family: 'Roboto Condensed', sans-serif;
   margin-top:10px;
   font-size:12px;
+`
+const Visible=styled.div`
+  position:absolute;
+  right:25px;
+  top:26px;
+  @media screen and (max-width:1032px) {
+    right:45px;
+  }
+  @media screen and (max-width:768px) {
+    right:65px;
+  }
+  @media screen and (max-width:600px) {
+    right:45px;
+  }
 `
 
 const Register = () => {
@@ -325,7 +338,9 @@ const Register = () => {
                 ))
               }
           />
-           <VisibilityIcon style={{position:"absolute",right:25,top:26}} onClick={()=>setVisiblePassword(!visiblePassword)}/>
+          <Visible>
+           <VisibilityIcon  onClick={()=>setVisiblePassword(!visiblePassword)}/>
+           </Visible>
           </ErrorFields>
           
           <ErrorFields>
@@ -336,7 +351,9 @@ const Register = () => {
           name="confirmpassword" 
           style={{border:`${errors.confirmpassword||confirmpassword===''?'1px solid red':'1px solid grey'}`}}
           />
-           <VisibilityIcon style={{position:"absolute",right:25,top:26}} onClick={()=>setVisibleConfirm(!visibleConfirm)}/>
+          <Visible>
+           <VisibilityIcon  onClick={()=>setVisibleConfirm(!visibleConfirm)}/>
+           </Visible>
            {confirmpassword===''&&<ErrorMessages>this field is required!</ErrorMessages>}
            {<ErrorMessages>{password===confirmpassword||confirmpassword===''?'':'passwords did not match'}</ErrorMessages>}
           </ErrorFields>
