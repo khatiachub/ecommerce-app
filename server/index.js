@@ -35,9 +35,9 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
-// app.get('/', (req, res) => {
-//   res.send("get request")
-// });
+app.get('/', (req, res) => {
+  res.send("get request")
+});
 app.post('/', (req, res) => {
   // Handle the root request here
   res.send("post request")
