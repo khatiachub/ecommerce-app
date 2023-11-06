@@ -48,6 +48,8 @@ app.put('/', (req, res) => {
 app.delete('/', (req, res) => {
   res.send("delete request")
 });
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 
 
 
