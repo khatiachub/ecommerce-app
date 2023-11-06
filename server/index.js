@@ -48,7 +48,10 @@ app.put('/', (req, res) => {
 app.delete('/', (req, res) => {
   res.send("delete request")
 });
-app.get('/favicon.ico', (req, res) => res.status(204));
+app.get('/favicon.ico', (req, res) => {
+  // Serve your custom favicon here, or return a 404 status
+  // if you don't want to provide a favicon.
+});
 
 
 
