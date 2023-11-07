@@ -48,12 +48,10 @@ app.put('/', (req, res) => {
 app.delete('/', (req, res) => {
   res.send("delete request")
 });
-app.get('/favicon.ico', (req, res) => {
-  res.send("get favicon")
-});
 
-
-
+// app.get('/favicon.ico', (req, res) => {
+//   res.send("get favicon")
+// });
 
 
 
@@ -79,7 +77,6 @@ app.post("/api/payment",async(req,res)=>{
   })
   res.json({id:session.id})
 })
-
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Backend server is running!");
