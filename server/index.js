@@ -35,23 +35,23 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.send("get request")
-});
-app.post('/', (req, res) => {
-  // Handle the root request here
-  res.send("post request")
-});
-app.put('/', (req, res) => {
-  res.send("put request")
-});
-app.delete('/', (req, res) => {
-  res.send("delete request")
-});
+// app.get('/', (req, res) => {
+//   res.send("get request")
+// });
+// app.post('/', (req, res) => {
+//   // Handle the root request here
+//   res.send("post request")
+// });
+// app.put('/', (req, res) => {
+//   res.send("put request")
+// });
+// app.delete('/', (req, res) => {
+//   res.send("delete request")
+// });
 
-app.get('/favicon.ico', (req, res) => {
-  res.send("get favicon")
-});
+// app.get('/favicon.ico', (req, res) => {
+//   res.send("get favicon")
+// });
 
 
 

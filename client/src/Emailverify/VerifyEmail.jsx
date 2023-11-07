@@ -48,10 +48,10 @@ export default function VerifyEmail() {
     },[params])
   return (
     <>
-        {validurl&&
+        {validurl?
         <SuccessVerify>
             Email verified successfully
-        </SuccessVerify>}
+        </SuccessVerify>:<p>Error</p>}
     </>
   )
 }
