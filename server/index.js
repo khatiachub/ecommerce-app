@@ -6,16 +6,17 @@ const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const cors = require("cors");
-// const bodyParser=require("express").json
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripe=require("stripe")("sk_test_51Ns2YUF4BbozQhllNVAvgMjxWXCMGUPYsYeJ7w0HG6t9iTkyue48mHg7ezOoptPvupFlouF7f5jdQVbsZ5R4RUQG00Vx89CC1J")
 dotenv.config();
-// app.use(bodyParser())
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ limit: '10mb' }));
+const bodyParser=require("express").json
+app.use(bodyParser())
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json({ limit: '10mb' }));
 
 
 const MONGODB_URI = process.env.MONGO_URL ||"mongodb+srv://chubinidzekhatia6:chubinidzekhatia@cluster0.jpfmufi.mongodb.net/shop?retryWrites=true&w=majority"
