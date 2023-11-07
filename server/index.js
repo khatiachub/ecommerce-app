@@ -29,6 +29,9 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
+app.get('/', (req, res) => {
+  res.send("get request")
+});
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
@@ -36,9 +39,7 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.send("get request")
-});
+
 // app.post('/', (req, res) => {
 //   // Handle the root request here
 //   res.send("post request")
