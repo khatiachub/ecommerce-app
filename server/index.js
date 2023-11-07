@@ -49,9 +49,9 @@ app.delete('/', (req, res) => {
   res.send("delete request")
 });
 
-// app.get('/favicon.ico', (req, res) => {
-//   res.send("get favicon")
-// });
+app.get('/favicon.ico', (req, res) => {
+  res.send("get favicon")
+});
 
 
 
