@@ -280,7 +280,7 @@ const Cart = () => {
     const headers={
       "Content-Type":"application/json"
     }
-    const response=await fetch("https://ecommerce-1k48jdnrz-khatia-chubinidzes-projects.vercel.app/api/payment",{
+    const response=await fetch("http://localhost:5003/api/payment",{
       method:"POST",
       headers:headers,
       body:JSON.stringify(body)
