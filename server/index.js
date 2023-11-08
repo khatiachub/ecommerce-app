@@ -32,6 +32,10 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.status(200).send("get request")
 });
+app.get('/api', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+});
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
