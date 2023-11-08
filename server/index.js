@@ -30,7 +30,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.get('/', (req, res) => {
-  res.send("get request")
+  res.status(200).send("get request")
 });
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
