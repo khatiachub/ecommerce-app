@@ -8,7 +8,7 @@ import { useState } from "react";
 const Container = styled.div`
    width:95%;
    margin:0 auto;
-   margin-top:80px;
+   margin-top:50px;
    padding-bottom:100px;
 `;
 
@@ -33,7 +33,7 @@ const Filter = styled.div`
 `;
 
 const FilterText = styled.span`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   margin-right: 20px;
   font-family: 'Roboto Condensed', sans-serif;

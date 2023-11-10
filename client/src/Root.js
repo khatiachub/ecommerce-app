@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
@@ -36,7 +36,7 @@ const NavigateBar=styled.div`
   const Links=styled(Link)`
       color:#fff;
       display:flex;
-      justify-content:color-interpolation-filters;
+      justify-content:center;
       align-items:center;
       &:hover{
         color:teal;
@@ -45,25 +45,19 @@ const NavigateBar=styled.div`
         transition:0.5s;
       }
   `
-//   const Language = styled.option`
-//       font-size: 14px;
-//       cursor: pointer;
-//       margin-left:3px;
-// `;
-//   const Select=styled.select`
-//       border-radius:50%;
-//       color:#fff;
-//       background-color: teal;
-//       border:1px solid #fff;
-//       padding:3px;
-//       height:30px;
-//       margin-bottom:4px;
-//   `
+
 export default function Root() {
   const loginUser = useSelector((state) => state.user.currentUser);
   const quantity=useSelector(state=>state.cart.quantity)
   const favQuantity=useSelector(state=>state.cart.favQuantity)
   const loc=useLocation()
+  useEffect(() => {
+    // Check if the URL contains a hash
+    if (window.location.hash) {
+      // Set the URL without the hash
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
   
   return (
     <div>
@@ -72,34 +66,29 @@ export default function Root() {
       <NavigateBar>
         <Nav>
           <Links to='/'>
-          <HomeOutlinedIcon style={{ marginBottom: 3 ,fontSize:30}}/>
+          <HomeOutlinedIcon style={{ fontSize:34}}/>
           </Links>
           <Links  to={'/cart'}>
           {quantity > 0 ? (
           <Badge badgeContent={quantity} color='primary'>
-                <ShoppingBagOutlinedIcon style={{ marginBottom: 3 ,fontSize:30}} />
+                <ShoppingBagOutlinedIcon style={{fontSize:30}} />
           </Badge>
           ) : (
-          <ShoppingBagOutlinedIcon style={{ marginBottom: 3,fontSize:30}} />
+          <ShoppingBagOutlinedIcon style={{ fontSize:30}} />
            )}
           </Links>
             <Links  to={loginUser?.username?`/userprofile/${loginUser?._id}`:"/login"}>
-                <PersonOutlineOutlinedIcon style={{ marginBottom: 3 ,fontSize:30}}/>      
+                <PersonOutlineOutlinedIcon style={{ fontSize:30}}/>      
             </Links>
             <Links  to={'/wishlist'}>
             {favQuantity > 0 ? (
             <Badge badgeContent={favQuantity} color='primary'>
-               <FavoriteBorderOutlinedIcon />
+               <FavoriteBorderOutlinedIcon style={{  fontSize:30}}/>
             </Badge>
              ) : (
-              <FavoriteBorderOutlinedIcon style={{ marginBottom: 3 ,fontSize:30}}/>
+              <FavoriteBorderOutlinedIcon style={{ fontSize:30}}/>
               )}
             </Links>
-            
-             {/* <Select>
-                 <Language>EN</Language>
-                 <Language>GE</Language>
-            </Select> */}
         </Nav>
       </NavigateBar>
       {loc.pathname==='/users/:id/verify/:token'?'':<Footer/>}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import Announcement from "../components/Announcement";
 import Categories from "../components/Categories";
 import Footer from "../components/Footer";
@@ -6,16 +6,126 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import Slider from "../components/Slider";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CloseIcon from '@mui/icons-material/Close';
+import { recoverPassword } from "../redux/apiCalls";
 
+
+const EmailBox=styled.div`
+  width:40%;
+  height:350px;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background-color:#fff;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+`
+const ButtonClose=styled.button`
+  border:none;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background-color:#f3f3f3;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:absolute;
+  right:15px;
+  top:15px;
+`
+const ButtonArrow=styled.button`
+    border:none;
+    background-color:#fff;
+    position:absolute;
+    left:15px;
+    top:25px;
+`
+const Title=styled.h2`
+  text-align:center;
+  margin-top:25px;
+  font-family: 'Roboto Condensed', sans-serif;
+`
+const Parag=styled.p`
+  text-align:center;
+  margin-top:25px;
+  font-family: 'Roboto Condensed', sans-serif;
+`
+const Input=styled.input`
+  width:200px;
+  height:40px;
+  border-radius:5px;
+  border:1px solid #d3cbcb;
+  margin-top:25px;
+  font-family: 'Roboto Condensed', sans-serif;
+`
+const Button=styled.button`
+   width:200px;
+   height:40px;
+   border-radius:5px;
+   background-color:teal;
+   font-family: 'Roboto Condensed', sans-serif;
+   margin-top:25px;
+   border:none;
+   color:#fff;
+   font-size:17px;
+`
 
 const Home = () => {
+  const loc=useLocation()
+  const[sendemail,setSendemail]=useState(loc.state?.updatePassword)
+  const nav=useNavigate()
+  const closeIconClick=()=>{
+    setSendemail(false)
+  }
+  const backArrowClick=()=>{
+    nav("/login")
+  }
+  const[email,setEmail]=useState('')
+  const handleChange=(e)=>{
+    setEmail(e.target.value)
+  }
+  const sendPasswordOnEmail=()=>{
+    recoverPassword(email)
+  }
+  // useEffect(() => {
+  //   // Get the current URL
+  //   const currentURL = window.location.href;
+
+  //   // Get the base URL without query parameters
+  //   const baseURL = currentURL.split('?')[0];
+
+  //   // Set the new URL without query parameters
+  //   window.history.replaceState({}, document.title, baseURL );
+    
+  // }, []); 
+
+
   return (
     <div>
+      
       <Slider/>
       <Categories/>
       <Products/>
       <Newsletter/>
+     {sendemail&& <EmailBox>
+        <ButtonArrow onClick={backArrowClick}>
+          <ArrowBackIcon/>
+        </ButtonArrow>
+        <ButtonClose onClick={closeIconClick}>
+          <CloseIcon style={{fontSize:15}}/>
+        </ButtonClose>
+        <Title>Forgot your password?</Title>
+        <Parag>Please enter your email address to reset your password</Parag>
+        <Input name='email' onChange={(e)=>handleChange(e)} type="email" placeholder='Email'/>
+        <Button onClick={sendPasswordOnEmail}>Send</Button>
+      </EmailBox>}
     </div>
   );
 };

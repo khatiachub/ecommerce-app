@@ -1,8 +1,6 @@
 
 const {verifyTokenAndAuthorization, verifyTokenAndAdmin} = require("./verifyToken");
 const User=require("../models/User")
-
-
 const router = require("express").Router();
 
 //UPDATE
@@ -13,7 +11,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
       process.env.PASS_SEC
     ).toString();
   }
-
+ 
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,

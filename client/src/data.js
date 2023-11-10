@@ -1,21 +1,21 @@
 export const sliderItems = [
     {
       id: 1,
-      img:"https://static.zara.net/photos///2023/I/0/1/p/6164/166/406/2/w/1102/6164166406_9_1_1.jpg?ts=1688732573843",
+      img: "https://static.zara.net/photos///2023/I/0/1/p/7521/909/800/2/w/1366/7521909800_9_1_1.jpg?ts=1695293695601",
       title: "SUMMER SALE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "f5fafd",
     },
     {
       id: 2,
-      img: "https://static.zara.net/photos///2023/I/0/1/p/7521/909/800/2/w/1366/7521909800_9_1_1.jpg?ts=1695293695601",
+      img: "https://static.zara.net/photos///2023/I/0/1/p/8407/540/093/2/w/1102/8407540093_9_1_1.jpg?ts=1693814010778",
       title: "AUTUMN COLLECTION",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fcf1ed",
     },
     {
       id: 3,
-      img: "https://static.zara.net/photos///2023/I/0/1/p/8407/540/093/2/w/1102/8407540093_9_1_1.jpg?ts=1693814010778",
+      img:"https://static.zara.net/photos///2023/I/0/1/p/6164/166/406/2/w/1102/6164166406_9_1_1.jpg?ts=1688732573843",
       title: "LOUNGEWEAR LOVE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fbf0f4",

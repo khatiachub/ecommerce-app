@@ -192,17 +192,15 @@ const InputSearch=styled.input`
   padding:3px;
 `
 const LinkItem=styled(Link)`
-  width:30px;
-  height:30px;
-  display:flex;
   color:teal;
-  justify-content:center;
-  align-items:center;
   &:hover{
     background-color:teal;
     transition:0.5s;
     color:#fff;
     border-radius:5px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
 `
 

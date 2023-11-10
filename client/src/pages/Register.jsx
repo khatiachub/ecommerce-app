@@ -9,6 +9,7 @@ import { registerSuccess } from "../redux/userRedux";
 import { useForm } from 'react-hook-form'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ErrorMessage } from '@hookform/error-message';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
 const Container = styled.div`
@@ -93,19 +94,26 @@ const Img=styled.img`
     `}
 `
 const SuccessBox=styled.div`
-  width:520px;
+  width:45%;
   height:350px;
   border-radius:5px;
   background-color:teal;
-  position:absolute;
-  top:30%;
+  position:fixed;
+  top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   display:flex;
   justify-content:center;
   align-items: center;
-  padding-left:10px;
-  padding-right:10px;
+  padding-left:15px;
+  padding-right:15px;
+  font-size:30px;
+  text-align:center;
+  color:#fff;
+  @media screen and (max-width:768px) {
+    font-size:20px;
+    width:75%;
+  }
 `
 const ErrorFields=styled.div`
   min-width:50%;
@@ -339,7 +347,7 @@ const Register = () => {
               }
           />
           <Visible>
-           <VisibilityIcon  onClick={()=>setVisiblePassword(!visiblePassword)}/>
+          {visiblePassword?<VisibilityIcon  onClick={()=>setVisiblePassword(false)}/>:<VisibilityOffIcon onClick={()=>setVisiblePassword(true)}/>}
            </Visible>
           </ErrorFields>
           
@@ -352,7 +360,7 @@ const Register = () => {
           style={{border:`${errors.confirmpassword||confirmpassword===''?'1px solid red':'1px solid grey'}`}}
           />
           <Visible>
-           <VisibilityIcon  onClick={()=>setVisibleConfirm(!visibleConfirm)}/>
+           {visibleConfirm?<VisibilityIcon  onClick={()=>setVisibleConfirm(false)}/>:<VisibilityOffIcon onClick={()=>setVisibleConfirm(true)}/>}
            </Visible>
            {confirmpassword===''&&<ErrorMessages>this field is required!</ErrorMessages>}
            {<ErrorMessages>{password===confirmpassword||confirmpassword===''?'':'passwords did not match'}</ErrorMessages>}
@@ -404,7 +412,7 @@ const Register = () => {
               }
           />
           </ErrorFields>
-          {success&&<SuccessBox ><p style={{fontSize:35,color:"#fff",textAlign:"center"}}>You registered successfully! Please verify your account, link is sent to your email.</p></SuccessBox>}
+          {success&&<SuccessBox ><p>You registered successfully! Please verify your account, link is sent to your email.</p></SuccessBox>}
           {error}
           <Agreement>
             By creating an account, I consent to the processing of my personal

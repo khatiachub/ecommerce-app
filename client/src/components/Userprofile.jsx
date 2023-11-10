@@ -11,9 +11,15 @@ import avatar from '../images/avatar.png'
 
 const UserDiv=styled.div`
   display:flex;
-  justify-content:center;
-  align-items: center;
-  flex-direction:column;
+  justify-content:space-between;
+  align-items:baseline;
+  width:93.5%;
+  margin:0 auto;
+  @media screen and (max-width:562px) {
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  }
 `
 
 const UserBox=styled.form`
@@ -25,6 +31,7 @@ const UserBox=styled.form`
   @media screen and (max-width:870px) {
     width:95%;
   }
+  
 `
 const UserName=styled.p`
   margin-top:15px;
@@ -39,25 +46,11 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
   font-family: 'Roboto', sans-serif;
-  margin-top:10px;
+  margin-top:25px;
   height:auto;
 `;
 
-// const LastName=styled.h3`
-    
-// `
-// const Email=styled.h3`
-    
-// `
-// const PhoneNumber=styled.h3`
-    
-// `
-// const Address=styled.h3`
-    
-// `
-// const City=styled.h3`
-    
-// `
+
 const UserImg=styled.img`
     
 `
@@ -73,6 +66,17 @@ const Title=styled.h2`
   font-size:22px;
   margin-top:30px;
   font-family: 'Roboto', sans-serif;
+  @media screen and (max-width:562px) {
+   text-align:center;
+  }
+`
+const Titlediv=styled.div`
+  display:flex;
+  width:100%;
+  margin-top:50px;
+  @media screen and (max-width:562px) {
+   justify-content:center;
+  }
 `
 const Label=styled.label`
   font-size:13px;
@@ -80,10 +84,10 @@ const Label=styled.label`
 `
 const Img=styled.img`
   border-radius:50%;
-  width:260px;
-  height:260px;
-  margin-top:20px;
-  object-fit:contain;
+  width:130px;
+  height:130px;
+  margin-top:25px;
+  object-fit:cover;
 `
 const UserInput=styled.div`
   display:flex;
@@ -96,6 +100,18 @@ const UserInputDiv=styled.div`
   justify-content:space-between;
   width:100%;
 `
+const ButtonsBox=styled.div`
+  display:flex;
+  flex-direction:column;
+  @media screen and (max-width:562px) {
+    justify-content:center;
+    align-items:center;    
+    margin-top:30px;
+  }
+`
+
+
+
 export default function Userprofile() {
     const loginUser = useSelector((state) => state.user?.currentUser);
 
@@ -138,7 +154,7 @@ export default function Userprofile() {
       }
         fetchData();
     },[]); 
-
+   
 
     const handleChange=(e)=>{
       const name=e.target.name
@@ -159,19 +175,24 @@ export default function Userprofile() {
     const deleteImage=()=>{
       DeleteImage(id)
     }
-    
+    const Name=user.name.toLocaleUpperCase()
+    const Surname=user.lastname.toLocaleUpperCase()
+   
   return (
     <>
     <UserDiv>
+      <ButtonsBox>
+      <Title>HELLO, {Name} {Surname}</Title>
       <Img onClick={onImageClick} src={user?.image?user?.image:avatar}/>
       <input style={{display:"none"}} ref={ref} type='file' onChange={handleImageChange}/>
+      <Button style={{marginBottom:25}} onClick={deleteImage}>delete profile picture</Button>
+      <Button style={{marginBottom:25}} onClick={handleClick}>Logout</Button>
+      <Button  onClick={(e)=>handleDelete(e)}>Delete account</Button>
+      </ButtonsBox>
         <UserBox >
-          <div style={{display:"flex",width:"100%",flexDirection:"column",justifyContent:"center",alignItems:"baseline",marginTop:50}} >
-              <Button style={{marginBottom:25}} onClick={deleteImage}>delete profile picture</Button>
-              <Button style={{marginBottom:25}} onClick={handleClick}>Logout</Button>
-              <Button  onClick={(e)=>handleDelete(e)}>Delete account</Button>
+          <Titlediv >
               <Title>YOUR PERSONAL DETAILS</Title>
-          </div>
+          </Titlediv>
           <UserInputDiv >
           <UserInput >
           <Label>Name</Label>

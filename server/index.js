@@ -6,17 +6,17 @@ const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const cors = require("cors");
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripe=require("stripe")("sk_test_51Ns2YUF4BbozQhllNVAvgMjxWXCMGUPYsYeJ7w0HG6t9iTkyue48mHg7ezOoptPvupFlouF7f5jdQVbsZ5R4RUQG00Vx89CC1J")
 dotenv.config();
-const bodyParser=require("express").json
-app.use(bodyParser())
+// const bodyParser=require("express").json
+// app.use(bodyParser())
 
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '10mb' }));
 
 
 const MONGODB_URI = process.env.MONGO_URL ||"mongodb+srv://chubinidzekhatia6:chubinidzekhatia@cluster0.jpfmufi.mongodb.net/shop?retryWrites=true&w=majority"
@@ -32,10 +32,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.status(200).send("get request")
 });
-app.get('/api', (req, res) => {
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-});
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
@@ -44,16 +41,16 @@ app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
 
-// app.post('/', (req, res) => {
-//   // Handle the root request here
-//   res.send("post request")
-// });
-// app.put('/', (req, res) => {
-//   res.send("put request")
-// });
-// app.delete('/', (req, res) => {
-//   res.send("delete request")
-// });
+app.post('/', (req, res) => {
+  // Handle the root request here
+  res.send("post request")
+});
+app.put('/', (req, res) => {
+  res.send("put request")
+});
+app.delete('/', (req, res) => {
+  res.send("delete request")
+});
 
 app.get('/favicon.ico', (req, res) => {
   res.send("get favicon")

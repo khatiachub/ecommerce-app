@@ -15,6 +15,18 @@ export const login = async (dispatch,user,setErrorMessage) => {
     setErrorMessage(true)
   }
 };
+export const recoverPassword=async(email)=>{
+  try{
+    const res=await publicRequest.post("/auth/sendemail",email)
+    // if (res.status === 200) {
+    //   window.location.reload()
+    // }     
+    console.log(res);
+  }catch(err){
+    console.log(err);
+  }
+}
+
 
 export const registerUser = async (dispatch,formData,setSuccess) => {
   try {
@@ -73,6 +85,7 @@ export const deleteProduct=async(productId)=>{
   try{
     const res=await userRequest.delete(`/carts/${productId}`)
     console.log(res);
+
   }catch(err){
     console.log(err);
   }
