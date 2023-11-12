@@ -64,8 +64,8 @@ app.post("/api/payment",async(req,res)=>{
     payment_method_types:["card"],
     line_items:lineItems,
     mode:"payment",
-    success_url:"http://localhost:3001/#/success",
-    cancel_url:"http://localhost:3001/#/cancel"
+    success_url:"https://ecommerce-app-8ymq-client.vercel.app/#/success",
+    cancel_url:"https://ecommerce-app-8ymq-client.vercel.app/#/cancel"
   })
   res.json({id:session.id})
 })
