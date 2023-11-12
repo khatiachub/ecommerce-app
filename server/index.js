@@ -29,7 +29,7 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
-app.get('/', (req, res) => {
+app.use('/', (req, res) => {
   res.status(200).send("get request")
 });
 
@@ -40,17 +40,6 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
-
-app.post('/', (req, res) => {
-  // Handle the root request here
-  res.send("post request")
-});
-app.put('/', (req, res) => {
-  res.send("put request")
-});
-app.delete('/', (req, res) => {
-  res.send("delete request")
-});
 
 app.get('/favicon.ico', (req, res) => {
   res.send("get favicon")
