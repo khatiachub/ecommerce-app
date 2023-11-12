@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 import styled from 'styled-components'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';import MenuIcon from '@mui/icons-material/Menu';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { useSelector } from 'react-redux'
 import {Badge} from "@mui/material"
@@ -51,17 +51,12 @@ export default function Root() {
   const quantity=useSelector(state=>state.cart.quantity)
   const favQuantity=useSelector(state=>state.cart.favQuantity)
   const loc=useLocation()
-  useEffect(() => {
-    // Check if the URL contains a hash
-    if (window.location.hash) {
-      // Set the URL without the hash
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
-  }, []);
+ 
   
   return (
-    <div>
-      {loc.pathname==='/users/:id/verify/:token'?'':<Navbar/>}
+    <div style={{  overflowAnchor: "none "   }}>
+      {/* {loc.pathname==='/users/:id/verify/:token'?'':<Navbar/>} */}
+      <Navbar/>
       <Outlet/>
       <NavigateBar>
         <Nav>
@@ -91,7 +86,8 @@ export default function Root() {
             </Links>
         </Nav>
       </NavigateBar>
-      {loc.pathname==='/users/:id/verify/:token'?'':<Footer/>}
+      {/* {loc.pathname==='/users/:id/verify/:token'?'':<Footer/>} */}
+      <Footer/>
     </div>
   )
 }

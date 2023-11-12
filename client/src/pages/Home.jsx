@@ -94,19 +94,7 @@ const Home = () => {
   const sendPasswordOnEmail=()=>{
     recoverPassword(email)
   }
-  // useEffect(() => {
-  //   // Get the current URL
-  //   const currentURL = window.location.href;
-
-  //   // Get the base URL without query parameters
-  //   const baseURL = currentURL.split('?')[0];
-
-  //   // Set the new URL without query parameters
-  //   window.history.replaceState({}, document.title, baseURL );
-    
-  // }, []); 
-
-
+  
   return (
     <div>
       

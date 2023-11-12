@@ -28,9 +28,9 @@ const UserBox=styled.form`
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  @media screen and (max-width:870px) {
+  /* @media screen and (max-width:870px) {
     width:95%;
-  }
+  } */
   
 `
 const UserName=styled.p`
@@ -66,15 +66,15 @@ const Title=styled.h2`
   font-size:22px;
   margin-top:30px;
   font-family: 'Roboto', sans-serif;
-  @media screen and (max-width:562px) {
+  /* @media screen and (max-width:870px) {
    text-align:center;
-  }
+  } */
 `
 const Titlediv=styled.div`
   display:flex;
   width:100%;
   margin-top:50px;
-  @media screen and (max-width:562px) {
+  @media screen and (max-width:870px) {
    justify-content:center;
   }
 `

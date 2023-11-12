@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, update, recoverPassword } from "../redux/apiCalls";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import UpdatePassword from "./UpdatePassword";
+// import UpdatePassword from "./UpdatePassword";
 import { useForm } from 'react-hook-form'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -128,16 +128,17 @@ const Login = () => {
     }else{
       login(dispatch,{username,password},setErrorMessage)
     }
-    // UpdatePassword(dispatch,{username,password})
   }
   
+  const nav=useNavigate()
   const userName=register("username",{required:true})
   const Password=register("password",{required:true})
   const[visible,setVisible]=useState(false)
+  const[RecoverPassword,setRecoverPassword]=useState(true)
   const handlePasswordUpdate=()=>{
-    // nav("/",{
-    //   state:{updatePassword:updatePassword}
-    // })
+    nav("/",{
+      state:{updatePassword:RecoverPassword}
+    })
   }
  
   return (
@@ -154,7 +155,7 @@ const Login = () => {
           {errors.password&&<Error>This field is mandatory</Error>}
           {(password!==''&&username!=='')&&(errorMessage&&<Error>Wrong credentials!</Error>)}
           <Button onClick={handleClick} disabled={username===""||password===""}>LOGIN</Button>
-          <LinksPassword onClick={handlePasswordUpdate} to='/'>DO NOT YOU REMEMBER THE PASSWORD?</LinksPassword>
+          <LinksPassword onClick={handlePasswordUpdate} >DO NOT YOU REMEMBER THE PASSWORD?</LinksPassword>
           <Links to='/register'>CREATE A NEW ACCOUNT</Links>
         </Form>
       </Wrapper>

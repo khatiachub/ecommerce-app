@@ -10,7 +10,9 @@ const BASE_URL = "https://ecommerce-app-mu-eight.vercel.app/api";
 console.log(TOKEN);
 
 export const publicRequest = axios.create({
-    baseURL: BASE_URL
+    baseURL: BASE_URL,
+    headers:{Accept: "application/json, text/plain, */*",
+    "Content-Type": "application/x-www-form-urlencoded"}
   });
   
   export const userRequest = axios.create({

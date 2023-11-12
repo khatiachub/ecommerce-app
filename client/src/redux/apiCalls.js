@@ -15,7 +15,7 @@ export const login = async (dispatch,user,setErrorMessage) => {
     setErrorMessage(true)
   }
 };
-export const recoverPassword=async(email)=>{
+export const recoverPassword = async (email)=>{
   try{
     const res=await publicRequest.post("/auth/sendemail",email)
     // if (res.status === 200) {

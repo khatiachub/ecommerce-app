@@ -54,7 +54,7 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
             }
           )
           await token.save()
-          const url=`${process.env.BASE_URL}/#/users/${user._id}/verify/${token.token}`
+          const url=`${process.env.BASE_URL}/users/${user._id}/verify/${token.token}`
           await sendEmail(user.email,"verify email",url)
           res.status(201).send({message:"Please verify email, link is sent to your account"})
         } catch (err) {
@@ -65,15 +65,16 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
 
   router.post("/sendemail", async (req, res) => {
     try {
-      const { email } = req.body;
+      let { email } = req.body;
       console.log(req.body.email);
+      
+
       const newUser = await Useremail.findOneAndUpdate(
         { email },
         { $set: { email } },
         { upsert: true, new: true }
       );
-  
-      const url = `${process.env.BASE_URL}/#/users/updatepassword`;
+      const url = `${process.env.BASE_URL}/users/updatepassword`;
       await sendEmail(newUser.email, "Update Password", url);
   
       return res.status(200).json({ message: "Password update email sent successfully" });
@@ -136,7 +137,7 @@ router.post("/signin",async(req,res)=>{
         if(existingToken){
           existingToken.updatedAt = new Date();
           await existingToken.save();
-          const url = `${process.env.BASE_URL}/#/users/${user._id}/verify/${existingToken.token}`;
+          const url = `${process.env.BASE_URL}/users/${user._id}/verify/${existingToken.token}`;
           await sendEmail(user.email, "verify email", url);
       
           return res.status(400).json({ message: "Verification email resent" });
@@ -149,7 +150,7 @@ router.post("/signin",async(req,res)=>{
           )
           await token.save()
           console.log(token);
-            const url=`${process.env.BASE_URL}/#/users/${user._id}/verify/${token.token}`
+            const url=`${process.env.BASE_URL}/users/${user._id}/verify/${token.token}`
             await sendEmail(user.email,"verify email",url)
             return res.status(400).json({message:"Please verify email, link is sent to your account"})
         }

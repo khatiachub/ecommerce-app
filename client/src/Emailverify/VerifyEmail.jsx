@@ -39,7 +39,6 @@ export default function VerifyEmail() {
                 const url=`/auth/${params.id}/verify/${params.token}`
                 const{data}=await userRequest.get(url)
                 setValidurl(true)
-
             }catch(error){
                  setValidurl(false)
             }

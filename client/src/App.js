@@ -4,7 +4,7 @@ import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
-import {BrowserRouter,Route,Navigate,Routes,HashRouter} from "react-router-dom";
+import {BrowserRouter,Route,Navigate,Routes} from "react-router-dom";
 import Success from './pages/Success'
 import { useSelector } from "react-redux";
 import Userprofile from "./components/Userprofile";
@@ -18,10 +18,10 @@ import SearchBar from "./components/SearchBar";
 function App() {
   const loginUser = useSelector((state) => state.user.currentUser);
   return(
-    <HashRouter>
-    <Routes>
-     <Route path="/" element={<Root/>}>
-        <Route index={true} element={<Home/>}/>
+    <BrowserRouter>
+    <Routes >
+     <Route  path="/" element={<Root/>}>
+        <Route index element={<Home/>}/>
         <Route path="/success" element={<Success/>}/>
         <Route path="/products/:category" element={<ProductList/>}/>
         <Route path="/product/:id" element={<Product/>}/>
@@ -35,7 +35,7 @@ function App() {
         <Route path="/searchbar" element={<SearchBar/>}/>
       </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
