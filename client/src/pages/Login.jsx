@@ -106,79 +106,14 @@ const LinksPassword=styled.p`
   cursor: pointer;
   color:#fff;
 `
-
-
-
-
-
-
-
-
-
-
-const EmailBox=styled.div`
-  width:40%;
-  height:350px;
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background-color:#fff;
-  border-radius:10px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-`
-const ButtonClose=styled.button`
-  border:none;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background-color:#f3f3f3;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:absolute;
-  right:15px;
-  top:15px;
-`
-const ButtonArrow=styled.button`
-    border:none;
-    background-color:#fff;
-    position:absolute;
-    left:15px;
-    top:25px;
-`
+ 
 const Title=styled.h2`
   text-align:center;
   margin-top:25px;
   font-family: 'Roboto Condensed', sans-serif;
+  color:#fff;
 `
-const Parag=styled.p`
-  text-align:center;
-  margin-top:25px;
-  font-family: 'Roboto Condensed', sans-serif;
-`
-// const Input=styled.input`
-//   width:200px;
-//   height:40px;
-//   border-radius:5px;
-//   border:1px solid #d3cbcb;
-//   margin-top:25px;
-//   font-family: 'Roboto Condensed', sans-serif;
-// `
-// const Button=styled.button`
-//    width:200px;
-//    height:40px;
-//    border-radius:5px;
-//    background-color:teal;
-//    font-family: 'Roboto Condensed', sans-serif;
-//    margin-top:25px;
-//    border:none;
-//    color:#fff;
-//    font-size:17px;
-// `
+
 
 
 const Login = () => {
@@ -199,29 +134,12 @@ const Login = () => {
   const userName=register("username",{required:true})
   const Password=register("password",{required:true})
   const[visible,setVisible]=useState(false)
-  const[updatePassword,setUpdatePassword]=useState(true)
-  const nav=useNavigate();
   const handlePasswordUpdate=()=>{
     // nav("/",{
     //   state:{updatePassword:updatePassword}
     // })
   }
-  const loc=useLocation()
-  const[sendemail,setSendemail]=useState(true)
-  // const nav=useNavigate()
-  const closeIconClick=()=>{
-    setSendemail(false)
-  }
-  const backArrowClick=()=>{
-    nav("/login")
-  }
-  const[email,setEmail]=useState('')
-  const handleChange=(e)=>{
-    setEmail(e.target.value)
-  }
-  const sendPasswordOnEmail=()=>{
-    recoverPassword(email)
-  }
+ 
   return (
     <Container>
       <Wrapper>
@@ -240,18 +158,6 @@ const Login = () => {
           <Links to='/register'>CREATE A NEW ACCOUNT</Links>
         </Form>
       </Wrapper>
-      {sendemail&& <EmailBox>
-        <ButtonArrow onClick={backArrowClick}>
-          <ArrowBackIcon/>
-        </ButtonArrow>
-        <ButtonClose onClick={closeIconClick}>
-          <CloseIcon style={{fontSize:15}}/>
-        </ButtonClose>
-        <Title>Forgot your password?</Title>
-        <Parag>Please enter your email address to reset your password</Parag>
-        <Input name='email' onChange={(e)=>handleChange(e)} type="email" placeholder='Email'/>
-        <Button onClick={sendPasswordOnEmail}>Send</Button>
-      </EmailBox>}
     </Container>
   );
 };
