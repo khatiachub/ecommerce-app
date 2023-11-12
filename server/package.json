@@ -6,7 +6,6 @@
   
   "scripts": {
     "start":"node index.js",
-    "build": "echo 'Build script placeholder'",
     "devStart": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/khatiachub/ecommerceapi/issues"
   },
-  "homepage": "https://github.com/khatiachub/ecommerceapi#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
