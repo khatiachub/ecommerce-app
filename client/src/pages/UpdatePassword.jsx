@@ -54,7 +54,7 @@ console.log(id);
       try {
         const res = await axios({
           method: 'put', // Use the appropriate HTTP method (put, post, get, etc.)
-          url: `https://ecommerce-app-mu-eight.vercel.app/api/users/${id}`,
+          url: `https://ecommerce-app-six-rose.vercel.app/api/users/${id}`,
           data: user,
           headers: { token: `Bearer ${TOKEN}`}
         });

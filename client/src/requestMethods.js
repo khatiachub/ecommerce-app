@@ -6,7 +6,7 @@ const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
 const currentUser = user && JSON.parse(user).currentUser;
 const TOKEN = currentUser?.accessToken;
 
-const BASE_URL = "https://ecommerce-app-mu-eight.vercel.app/api";
+const BASE_URL = "https://ecommerce-app-six-rose.vercel.app/api";
 console.log(TOKEN);
 
 export const publicRequest = axios.create({

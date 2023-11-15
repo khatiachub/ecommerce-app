@@ -26,7 +26,7 @@ const location=useLocation();
  useEffect(()=>{
         const getProducts=async()=>{
           try{
-            const res=await axios.get("https://ecommerce-app-mu-eight.vercel.app/api/products/")
+            const res=await axios.get("https://ecommerce-app-six-rose.vercel.app/api/products/")
             setProducts(res.data);
           }catch(err){ }
         }
