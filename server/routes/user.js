@@ -5,12 +5,12 @@ const router = require("express").Router();
 
 //UPDATE
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
-  if (req.body.password) {
-      req.body.password = CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.PASS_SEC
-    ).toString();
-  }
+  // if (req.body.password) {
+  //     req.body.password = CryptoJS.AES.encrypt(
+  //     req.body.password,
+  //     process.env.PASS_SEC
+  //   ).toString();
+  // }
  
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -67,7 +67,7 @@ router.get("/find/:id",  verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET ALL USER
-router.get("/", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/",async (req, res) => {
   const query = req.query.new;
   try {
     const users = query

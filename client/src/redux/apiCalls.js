@@ -8,20 +8,23 @@ export const login = async (dispatch,user,setErrorMessage) => {
   try {
     const res = await publicRequest.post("/auth/signin",user);
     dispatch(loginSuccess(res.data));
-    if (res.status === 200) {
-      window.location.reload()
-    } 
+    // if (res.status === 200) {
+    //   window.location.reload()
+    // } 
   } catch (err) {
     setErrorMessage(true)
   }
 };
-export const recoverPassword = async (email)=>{
+export const recoverPassword = async (dispatch,email,setSendemail)=>{
   try{
-    const res=await publicRequest.post("/auth/sendemail",email)
+    const res=await publicRequest.post("/auth/sendemail",{email:email},{ headers: { 'Content-Type': 'application/json' }})
     // if (res.status === 200) {
     //   window.location.reload()
+      setSendemail(false)
+      console.log(res.data);
+      dispatch(loginSuccess(res.data));
+
     // }     
-    console.log(res);
   }catch(err){
     console.log(err);
   }

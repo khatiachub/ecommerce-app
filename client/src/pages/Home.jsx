@@ -11,6 +11,8 @@ import styled from "styled-components";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
 import { recoverPassword } from "../redux/apiCalls";
+import UpdatePassword from "./UpdatePassword";
+import { useDispatch } from "react-redux";
 
 
 const EmailBox=styled.div`
@@ -91,16 +93,16 @@ const Home = () => {
   const handleChange=(e)=>{
     setEmail(e.target.value)
   }
+  const dispatch=useDispatch();
   const sendPasswordOnEmail=()=>{
-    recoverPassword(email)
+    recoverPassword(dispatch,email,setSendemail)
   }
   
   return (
     <div>
-      
+      <UpdatePassword/>
       <Slider/>
       <Categories/>
-      <Products/>
       <Newsletter/>
      {sendemail&& <EmailBox>
         <ButtonArrow onClick={backArrowClick}>

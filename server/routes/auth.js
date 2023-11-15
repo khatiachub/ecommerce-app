@@ -53,6 +53,7 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
               token:crypto.randomBytes(16).toString("hex")
             }
           )
+          
           await token.save()
           const url=`${process.env.BASE_URL}/users/${user._id}/verify/${token.token}`
           await sendEmail(user.email,"verify email",url)
@@ -67,19 +68,31 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
     try {
       let { email } = req.body;
       console.log(req.body.email);
-      
-
+      const user = await User.findOne({ email: req.body.email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }  
       const newUser = await Useremail.findOneAndUpdate(
         { email },
         { $set: { email } },
         { upsert: true, new: true }
       );
-      const url = `${process.env.BASE_URL}/users/updatepassword`;
+      const url = `${process.env.BASE_URL}/users/updatepassword/${user._id}`;
       await sendEmail(newUser.email, "Update Password", url);
-  
-      return res.status(200).json({ message: "Password update email sent successfully" });
+      const accessToken = jwt.sign(
+        {
+          id: user._id,
+          isAdmin: user.isAdmin,
+        },
+        process.env.JWT_SEC,
+        {expiresIn:"10d"}
+      );
+      const userId=user._id
+      if(email){
+        return res.status(200).json({ message: "Password update email sent successfully",accessToken,userId });
+      }
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(500).json(err); 
     }
   });
   

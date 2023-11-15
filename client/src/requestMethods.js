@@ -11,8 +11,8 @@ console.log(TOKEN);
 
 export const publicRequest = axios.create({
     baseURL: BASE_URL,
-    headers:{Accept: "application/json, text/plain, */*",
-    "Content-Type": "application/x-www-form-urlencoded"}
+    // headers:{Accept: "application/json, text/plain, */*",
+    // "Content-Type": "application/x-www-form-urlencoded"}
   });
   
   export const userRequest = axios.create({

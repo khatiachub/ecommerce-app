@@ -29,7 +29,7 @@ function App() {
         <Route path="/login" element={loginUser?<Navigate to='/'/>:<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/userprofile/:id" element={<Userprofile/>}/>
-        <Route path="/updatepassword/:id" element={<UpdatePassword/>}/>
+        <Route path="/users/updatepassword/:id" element={<UpdatePassword/>}/>
         <Route path="/users/:id/verify/:token" element={<VerifyEmail/>}/>
         <Route path="/wishlist" element={<Wishlist/>}/>
         <Route path="/searchbar" element={<SearchBar/>}/>

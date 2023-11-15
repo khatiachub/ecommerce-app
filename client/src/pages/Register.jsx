@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ErrorMessage } from '@hookform/error-message';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { publicRequest, userRequest } from "../requestMethods";
 
 
 const Container = styled.div`
@@ -175,20 +176,6 @@ const Register = () => {
       setImage(reader.result)
     }
   }
-  const handleClick=()=>{
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('lastname', lastname);
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('confirmpassword', confirmpassword);
-    formData.append('address', address);
-    formData.append('city', city);
-    formData.append('phonenumber', phonenumber);
-    formData.append('image', image);
-    registerUser(dispatch,formData,setSuccess)
-  }
 
 
   useEffect(()=>{
@@ -207,12 +194,12 @@ const Register = () => {
 
     const firstName = register('name', { required: true, 
       pattern:{
-        value:/^[A-Za-z]+$/i,
+        value:/^[A-Za-zა-ჰ]+$/i,
         message:"Only symbols are allowed"
       }})
     const lastName = register('lastname', { required: true, 
       pattern:{
-        value:/^[A-Za-z]+$/i,
+        value:/^[A-Za-zა-ჰ]+$/i,
         message:"Only symbols are allowed"
       }})
     const userName = register('username', { required: true,  minLength: 2 })
@@ -244,6 +231,42 @@ const Register = () => {
     }, minLength: 2 })
     const[visiblePassword,setVisiblePassword]=useState(false)
     const[visibleConfirm,setVisibleConfirm]=useState(false)
+    const handleClick=()=>{
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('lastname', lastname);
+      formData.append('username', username);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('confirmpassword', confirmpassword);
+      formData.append('address', address);
+      formData.append('city', city);
+      formData.append('phonenumber', phonenumber);
+      formData.append('image', image);
+      if(password!==confirmpassword){
+        return
+      }else{
+        registerUser(dispatch,formData,setSuccess)
+      }
+    }
+    const[Emails,setEmails]=useState('')
+    const loginUser = useSelector((state) => state.user?.currentUser);
+    useEffect(() => {
+      async function fetchData(){
+        try{
+        const response=await publicRequest.get("users")
+        setEmails(response.data);
+        } catch(error){
+          console.error('Error fetching data:', error);
+        };
+      }
+        fetchData();
+    },[]); 
+    const userEmail=Emails&&Emails.map((email)=>(
+      email.email
+    ))
+    const filteredEmail=userEmail&&userEmail.filter((emails)=>(emails===email))
+
   return (
     <Container>
       <Wrapper>
@@ -316,6 +339,7 @@ const Register = () => {
           style={{border:`${errors.email||email===''?'1px solid red':'1px solid grey'}`}}
           />
            {email===''&&<ErrorMessages>this field is required!</ErrorMessages>}
+           {(filteredEmail[0]&&filteredEmail[0])&&<ErrorMessages>An account already exists with this email</ErrorMessages>}
            <ErrorMessage
               errors={errors}
               name="email"
