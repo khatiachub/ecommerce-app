@@ -29,9 +29,9 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
-// app.get('/', (req, res) => {
-//   res.status(200).send("get request")
-// });
+app.get('/', (req, res) => {
+  res.status(200).send("get request")
+});
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
@@ -41,9 +41,9 @@ app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
 
-app.get('/favicon.ico', (req, res) => {
-  res.send("get favicon")
-});
+// app.get('/favicon.ico', (req, res) => {
+//   res.send("get favicon")
+// });
 
 app.use(express.static(path.join(__dirname, 'build')));
 
