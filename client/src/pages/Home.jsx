@@ -10,7 +10,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
-import { recoverPassword } from "../redux/apiCalls";
+import { recover } from "../redux/apiCalls";
 import UpdatePassword from "./UpdatePassword";
 import { useDispatch } from "react-redux";
 
@@ -95,7 +95,7 @@ const Home = () => {
   }
   const dispatch=useDispatch();
   const sendPasswordOnEmail=()=>{
-    recoverPassword(dispatch,email,setSendemail)
+    recover(dispatch,email,setSendemail)
   }
   
   return (

@@ -1,4 +1,4 @@
-import {  loginSuccess,registerSuccess,loginFailure ,registerFailure} from "./userRedux";
+import {  loginSuccess,registerSuccess,loginFailure ,registerFailure,recoverPassword} from "./userRedux";
 import { publicRequest, userRequest } from "../requestMethods";
 import { addProductId } from "./cartRedux";
 
@@ -15,14 +15,14 @@ export const login = async (dispatch,user,setErrorMessage) => {
     setErrorMessage(true)
   }
 };
-export const recoverPassword = async (dispatch,email,setSendemail)=>{
+export const recover = async (dispatch,email,setSendemail)=>{
   try{
     const res=await publicRequest.post("/auth/sendemail",{email:email},{ headers: { 'Content-Type': 'application/json' }})
     // if (res.status === 200) {
     //   window.location.reload()
       setSendemail(false)
       console.log(res.data);
-      dispatch(loginSuccess(res.data));
+      dispatch(recoverPassword(res.data));
 
     // }     
   }catch(err){

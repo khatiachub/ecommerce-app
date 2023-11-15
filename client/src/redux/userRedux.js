@@ -6,6 +6,7 @@ const userReducer=createSlice({
     initialState:{
         currentUser:null,
         registerUser:null,
+        recoverPassword:null
     },
     reducers:{
        loginSuccess:(state,action)=>{
@@ -16,10 +17,13 @@ const userReducer=createSlice({
        },
        registerFailure:(state,action)=>{
         state.error=true
-       }
+       },
+       recoverPassword:(state,action)=>{
+        state.passwordChange=action.payload
+       },
 
     }
 })
 
-export const {loginSuccess,registerSuccess,registerFailure}=userReducer.actions
+export const {loginSuccess,registerSuccess,registerFailure,recoverPassword}=userReducer.actions
 export default userReducer.reducer

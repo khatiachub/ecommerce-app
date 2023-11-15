@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { update } from '../redux/apiCalls';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { loginSuccess } from '../redux/userRedux';
+import { recoverPassword } from '../redux/userRedux';
 
 
 
@@ -43,25 +43,25 @@ export default function UpdatePassword() {
   })
  
 
-  const TOKEN = useSelector((state) => state.user?.currentUser?.accessToken);
+  const TOKEN = useSelector((state) => state.user?.passwordChange?.accessToken);
   // const id = useSelector((state) => state.user?.currentUser?.userId);
   const params=useParams();
   const id=params.id
 console.log(id);
   
   const UpdateInfo = () => {
-    const recoverPassword = async () => {
+    const recover= async () => {
       try {
         const res = await axios({
           method: 'put', // Use the appropriate HTTP method (put, post, get, etc.)
-          url: `https://ecommerce-app-six-rose.vercel.app/api/users/${id}`,
+          url: `https://ecommerce-app-mu-eight.vercel.app/api/users/${id}`,
           data: user,
           headers: { token: `Bearer ${TOKEN}`}
         });
   
         if (res.status === 200) {
-          dispatch(loginSuccess(res.data));
-          // window.location.reload()
+          dispatch(recoverPassword(res.data));
+          window.location.reload()
         }
   
         console.log(res.data);
@@ -69,7 +69,7 @@ console.log(id);
         console.log(err);
       }
     };
-    recoverPassword();
+    recover();
   };
   
 
