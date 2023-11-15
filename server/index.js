@@ -26,8 +26,11 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
+  
+  
+  
 app.use(cors());
+
 app.use(express.json());
 app.get('/', (req, res) => {
   res.status(200).send("get request")
@@ -41,15 +44,8 @@ app.use("/api/orders", orderRoute);
 app.use(express.static('public'));
 
 
-// app.get('/favicon.ico', (req, res) => {
-//   res.send("get favicon")
-// });
-
-app.use(express.static(path.join(__dirname, 'build')));
-
-// Always serve the main HTML file for any route
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+app.get('/favicon.ico', (req, res) => {
+  res.send("get favicon")
 });
 
 
@@ -75,6 +71,6 @@ app.post("/api/payment",async(req,res)=>{
   res.json({id:session.id})
 })
 
-app.listen(process.env.PORT || 5000, () => {
+app.listen(process.env.PORT || 5006, () => {
   console.log("Backend server is running!");
 });

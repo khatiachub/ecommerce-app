@@ -219,7 +219,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (value === '') {
-      nav("/");
+      return
     } else {
       nav("/searchbar", {
         state: {

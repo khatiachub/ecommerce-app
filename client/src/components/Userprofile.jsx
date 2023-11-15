@@ -139,7 +139,6 @@ export default function Userprofile() {
       image:''
     })
 
-    const[isLoading,setIsLoading]=useState(true)
     const handleUpdate=()=>{
       update(dispatch,id,user)
     }
