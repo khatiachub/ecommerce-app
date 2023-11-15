@@ -58,10 +58,10 @@ console.log(id);
           headers: { token: `Bearer ${TOKEN}`}
         });
   
-        if (res.status === 200) {
+        // if (res.status === 200) {
           dispatch(recoverPassword(res.data));
           window.location.reload()
-        }
+        // }
   
       } catch (err) {
         console.log(err);
