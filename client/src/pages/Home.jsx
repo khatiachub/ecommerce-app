@@ -100,7 +100,6 @@ const Home = () => {
   
   return (
     <div>
-      <UpdatePassword/>
       <Slider/>
       <Categories/>
       <Newsletter/>
