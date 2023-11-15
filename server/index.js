@@ -71,6 +71,6 @@ app.post("/api/payment",async(req,res)=>{
   res.json({id:session.id})
 })
 
-app.listen(process.env.PORT || 5006, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log("Backend server is running!");
 });
