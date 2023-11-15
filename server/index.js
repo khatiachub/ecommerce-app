@@ -29,9 +29,9 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
-app.get('/', (req, res) => {
-  res.status(200).send("get request")
-});
+// app.get('/', (req, res) => {
+//   res.status(200).send("get request")
+// });
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
@@ -45,7 +45,12 @@ app.get('/favicon.ico', (req, res) => {
   res.send("get favicon")
 });
 
+app.use(express.static(path.join(__dirname, 'build')));
 
+// Always serve the main HTML file for any route
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 app.post("/api/payment",async(req,res)=>{
