@@ -271,7 +271,7 @@ const Navbar = () => {
           
           <Right >
           <Search onClick={onSearchClick}>
-            <InputSearch  placeholder="Search" />
+            <InputSearch   placeholder="Search" />
             <InputSearchButton>
              <SearchIcon />
              </InputSearchButton>

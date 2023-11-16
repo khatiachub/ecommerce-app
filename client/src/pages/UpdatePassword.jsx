@@ -43,11 +43,9 @@ export default function UpdatePassword() {
   })
  
 
-  const TOKEN = useSelector((state) => state.user?.passwordChange?.accessToken);
+  const TOKEN = useSelector((state) => state.user?.passwordChange.accessToken);
   const params=useParams();
   const id=params.id
-console.log(id);
-  console.log(TOKEN);
   const UpdateInfo = () => {
     const recover= async () => {
       try {
@@ -59,7 +57,6 @@ console.log(id);
         });
   
         // if (res.status === 200) {
-          dispatch(recoverPassword(res.data));
           window.location.reload()
         // }
   
