@@ -3,7 +3,7 @@ import { publicRequest } from '../requestMethods';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { update } from '../redux/apiCalls';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { recoverPassword } from '../redux/userRedux';
 
@@ -48,7 +48,7 @@ export default function UpdatePassword() {
   const params=useParams();
   const id=params.id
   const TOKEN=params.token
-
+  const nav=useNavigate();
   const UpdateInfo = () => {
     const recover= async () => {
       try {
@@ -59,9 +59,10 @@ export default function UpdatePassword() {
           headers: { token: `Bearer ${TOKEN}`}
         });
   
-        // if (res.status === 200) {
+        if (res.status === 200) {
           window.location.reload()
-        // }
+          nav("/login")
+        }
   
       } catch (err) {
         console.log(err);
