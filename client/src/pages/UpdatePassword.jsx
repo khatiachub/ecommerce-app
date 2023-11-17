@@ -47,9 +47,8 @@ export default function UpdatePassword() {
   // const pass=useSelector((state) => state.user?.passwordChange)
   const params=useParams();
   const id=params.id
-  const TOKEN=params.accessToken
-  console.log(TOKEN);
-console.log(params);
+  const TOKEN=params.token
+
   const UpdateInfo = () => {
     const recover= async () => {
       try {
