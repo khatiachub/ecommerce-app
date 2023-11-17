@@ -77,8 +77,7 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
         { $set: { email } },
         { upsert: true, new: true }
       );
-      const url = `${process.env.BASE_URL}/users/updatepassword/${user._id}/${accessToken}`;
-      await sendEmail(newUser.email, "Update Password", url);
+     
       const accessToken = jwt.sign(
         {
           id: user._id,
@@ -87,6 +86,8 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
         process.env.JWT_SEC,
         {expiresIn:"10d"}
       );
+      const url = `${process.env.BASE_URL}/users/updatepassword/${user._id}/${accessToken}`;
+      await sendEmail(newUser.email, "Update Password", url);
       const userId=user._id
       if(email){
         return res.status(200).json({ message: "Password update email sent successfully",accessToken,userId });
