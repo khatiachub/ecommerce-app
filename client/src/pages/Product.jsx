@@ -252,7 +252,7 @@ const Product = () => {
    if(color){
     nav('/cart')
     dispatch(addProduct({...product,quantity,color,size,image}))
-    addToCart(data,dispatch)
+    // addToCart(data,dispatch)
    }else{
     return
    }

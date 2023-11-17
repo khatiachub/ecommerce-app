@@ -316,7 +316,7 @@ const decrement=(i)=>{
 }
 
 const deleteItem=(index,productId)=>{
-  deleteProduct(productId)
+  // deleteProduct(productId)
   dispatch(removeProduct(index))
 }
   return (

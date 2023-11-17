@@ -28,6 +28,14 @@ const EmailBox=styled.div`
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  z-index:10;
+  padding:15px;
+  @media screen and (max-width:1024px) {
+    width:70%;
+  }
+  @media screen and (max-width:485px) {
+    width:80%;
+  }
 `
 const ButtonClose=styled.button`
   border:none;

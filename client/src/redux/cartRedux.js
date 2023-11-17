@@ -29,7 +29,7 @@ const cartSlice=createSlice({
             const indexToRemove = action.payload;
             const productToRemove = state.products[indexToRemove];
             if (productToRemove) {
-              if(state.quantity>1){
+              if(state.quantity>0){
                 state.quantity -= productToRemove.quantity;
               }
               state.total -= productToRemove.price * productToRemove.quantity;

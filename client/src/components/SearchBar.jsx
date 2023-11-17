@@ -14,9 +14,10 @@ const SearchContainer=styled.div`
     margin:0 auto;
     padding-bottom:20vh;
 `
-const SearchBox=styled.div`
+const EmptySearch=styled.div`
   
 `
+
 export default function SearchBar() {
 const[products,setProducts]=useState([])
 
@@ -38,10 +39,9 @@ const [product,setProduct]=useState([])
 useEffect(()=>{
     setProduct(products&&products.filter((product)=>(product.categories[0].toLowerCase().includes(value.toLowerCase()))))
 },[value])
-
   return (
     <SearchContainer >
-     {value&&product&&product.map((item)=>{
+     {(product&&product.map((item)=>{
         return(
           // <SearchBox  key={item._id}>
           <>
@@ -51,7 +51,7 @@ useEffect(()=>{
           </>
           // </SearchBox>
         )
-      })}  
+      }))}
     </SearchContainer>
   )
 }

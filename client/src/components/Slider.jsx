@@ -22,8 +22,8 @@ const ArrowLeft= styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 50%;
+  transform:translateY(-50%);
   left:10px;
   margin: auto;
   cursor: pointer;
@@ -39,8 +39,8 @@ const ArrowRight= styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 50%;
+  transform:translateY(-50%);
   right: 10px;
   margin: auto;
   cursor: pointer;

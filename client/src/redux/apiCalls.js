@@ -74,24 +74,24 @@ export const DeleteImage=async(id)=>{
    console.log(err);
  }
 }
-export const addToCart=async(data,dispatch)=>{
-  try{
-    const res=await userRequest.post("/carts/",data)
-    console.log(res.data);
-    dispatch(addProductId(res.data))
-  }catch(err){
-    console.log(err);
-  }
-}
+// export const addToCart=async(data,dispatch)=>{
+//   try{
+//     const res=await userRequest.post("/carts/",data)
+//     console.log(res.data);
+//     dispatch(addProductId(res.data))
+//   }catch(err){
+//     console.log(err);
+//   }
+// }
 
-export const deleteProduct=async(productId)=>{
-  try{
-    const res=await userRequest.delete(`/carts/${productId}`)
-    console.log(res);
+// export const deleteProduct=async(productId)=>{
+//   try{
+//     const res=await userRequest.delete(`/carts/${productId}`)
+//     // console.log(res);
 
-  }catch(err){
-    console.log(err);
-  }
-}
+//   }catch(err){
+//     // console.log(err);
+//   }
+// }
 
 
