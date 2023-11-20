@@ -325,7 +325,7 @@ const deleteItem=(index,productId)=>{
         <Title>YOUR BAG</Title>
         <Top>
           <TopButton onClick={ClearCart}>CLEAR CART</TopButton>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton onClick={makePayment} type="filled">CHECKOUT NOW</TopButton>
         </Top>
         {cart.products.length===0?<Text> Your cart is empty..</Text>:''}
         <Bottom>
