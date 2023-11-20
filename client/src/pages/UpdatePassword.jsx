@@ -58,12 +58,7 @@ export default function UpdatePassword() {
           data: user,
           headers: { token: `Bearer ${TOKEN}`}
         });
-  
-        if (res.status === 200) {
-          window.location.reload()
           nav("/login")
-        }
-  
       } catch (err) {
         console.log(err);
       }
