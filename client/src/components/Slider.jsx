@@ -9,8 +9,11 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
-  position: relative;
   overflow: hidden;
+  position: relative;
+  @media screen and (max-width:485px) {
+   height:260px;
+  }
 `;
 
 const ArrowLeft= styled.div`
@@ -29,6 +32,11 @@ const ArrowLeft= styled.div`
   cursor: pointer;
   opacity: 0.5;
   z-index: 2;
+  @media screen and (max-width:485px) {
+    left:20px;
+    width: 30px;
+    height: 30px;
+  }
 `;
 const ArrowRight= styled.div`
   width: 50px;
@@ -46,6 +54,11 @@ const ArrowRight= styled.div`
   cursor: pointer;
   opacity: 0.5;
   z-index: 2;
+  @media screen and (max-width:485px) {
+    right:20px;
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -60,13 +73,15 @@ const Slide = styled.div`
   height: 100vh;
   display: flex;
   align-items: center;
-  background-color: #${(props) => props.bg};
+  /* background-color: #${(props) => props.bg}; */
   background-image:url(${props => props.imageurl});
   background-repeat:no-repeat;
   background-size:cover;
   background-position:top;
+  position: relative;
   @media screen and (max-width:485px) {
-    height:600px;
+    height:300px;
+    background-size:cover;
   }
 `;
 
@@ -80,6 +95,9 @@ const Title = styled.h1`
   font-family: 'Roboto Condensed', sans-serif;
   @media screen and (max-width:485px) {
     font-size:25px;
+    position:absolute;
+    right:20px;
+    top:20px;
   }
 `;
 
@@ -90,7 +108,7 @@ const Desc = styled.p`
   letter-spacing: 3px;
   font-family: 'Roboto Condensed', sans-serif;
   @media screen and (max-width:485px) {
-    font-size: 15px;
+    display:none;
   }
 `;
 
@@ -100,6 +118,9 @@ const Button = styled.button`
   font-family: 'Roboto Condensed', sans-serif;
   background-color: transparent;
   cursor: pointer;
+  @media screen and (max-width:485px) {
+    display:none;
+  }
 `;
 
 const Slider = () => {
