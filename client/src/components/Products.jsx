@@ -9,7 +9,6 @@ const Container = styled.div`
     justify-content: space-between;
     width:100%;
     margin:0 auto;
-    margin-top:40px;
 `;
 
 
