@@ -138,15 +138,17 @@ export default function Userprofile() {
       phonenumber:null,
       image:''
     })
-
-    const handleUpdate=()=>{
+    const handleUpdate=(e)=>{
+      e.preventDefault()
       update(dispatch,id,user)
     }
+    
     useEffect(() => {
       async function fetchData(){
         try{
         const response=await userRequest.get(`users/find/${loginUser._id}`)
         setUser(response.data);
+        console.log(response.data);
         } catch(error){
           console.error('Error fetching data:', error);
         };
@@ -174,6 +176,8 @@ export default function Userprofile() {
     const deleteImage=()=>{
       DeleteImage(id)
     }
+
+    
     const Name=user.name.toLocaleUpperCase()
     const Surname=user.lastname.toLocaleUpperCase()
    
@@ -188,7 +192,7 @@ export default function Userprofile() {
       <Button style={{marginBottom:25}} onClick={handleClick}>Logout</Button>
       <Button  onClick={(e)=>handleDelete(e)}>Delete account</Button>
       </ButtonsBox>
-        <UserBox >
+        <UserBox onSubmit={handleUpdate}>
           <Titlediv >
               <Title>YOUR PERSONAL DETAILS</Title>
           </Titlediv>
@@ -254,7 +258,7 @@ export default function Userprofile() {
           value={user.phonenumber} 
           onChange={(e)=>handleChange(e)}  placeholder="phonenumber" />
           </UserInputDiv>
-          <Button type='update' style={{marginTop:55, alignSelf:"flex-start"}} onClick={handleUpdate}>Update</Button>
+          <Button type='submit' style={{marginTop:55, alignSelf:"flex-start"}} >Update</Button>
         </UserBox>
     </UserDiv>
     </>

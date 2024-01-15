@@ -8,9 +8,9 @@ export const login = async (dispatch,user,setErrorMessage) => {
   try {
     const res = await publicRequest.post("/auth/signin",user);
     dispatch(loginSuccess(res.data));
-    // if (res.status === 200) {
-    //   window.location.reload()
-    // } 
+    if (res.status === 200) {
+      window.location.reload()
+    } 
   } catch (err) {
     setErrorMessage(true)
   }
@@ -45,12 +45,11 @@ export const registerUser = async (dispatch,formData,setSuccess) => {
 export const update=async(dispatch,id,user)=>{
   try {
     const res = await userRequest.put(`/users/${id}`, user);
-    if (res.status === 200) {
-      dispatch(loginSuccess(res.data));
+      // dispatch(loginSuccess(res.data));
       window.location.reload()
-    } 
   } catch (err) {
     console.log(err);
+    console.log('araaaaaaa');
   }
 }
 

@@ -248,6 +248,7 @@ const Register = () => {
       }else{
         registerUser(dispatch,formData,setSuccess)
       }
+      console.log(formData);
     }
     const[Emails,setEmails]=useState('')
     const loginUser = useSelector((state) => state.user?.currentUser);

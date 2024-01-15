@@ -83,9 +83,7 @@ router.post("/signup", upload.single('image'),async(req,res)=>{
           id: user._id,
           isAdmin: user.isAdmin,
         },
-        process.env.JWT_SEC,
-        {expiresIn:"10d"}
-      );
+        process.env.JWT_SEC);
       const url = `${process.env.BASE_URL}/users/updatepassword/${user._id}/${accessToken}`;
       await sendEmail(newUser.email, "Update Password", url);
       const userId=user._id
