@@ -148,7 +148,6 @@ export default function Userprofile() {
         try{
         const response=await userRequest.get(`users/find/${loginUser._id}`)
         setUser(response.data);
-        console.log(response.data);
         } catch(error){
           console.error('Error fetching data:', error);
         };
